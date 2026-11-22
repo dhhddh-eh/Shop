@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Админ-панель — ShopLiveworlds</title>
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <nav class="topbar">
+    <a href="index.html" class="logo">SHOP<span>LIVEWORLDS</span></a>
+    <div class="nav-links">
+      <a href="index.html">Главная</a>
+      <a href="catalog.html">Каталог</a>
+      <a href="reviews.html">Отзывы</a>
+      <a href="faq.html">FAQ</a>
+      <a href="register.html">Регистрация</a>
+      <a href="admin.html">Админ</a>
+    </div>
+  </nav>
+
+  <!-- Экран входа -->
+  <section id="loginScreen" class="faq-page" style="max-width:480px;">
+    <h1 class="faq-title" style="color: var(--dark-red);">АДМИН-ПАНЕЛЬ</h1>
+    <p class="faq-sub" style="color: var(--dark-red);">Вход только для админа</p>
+
+    <div class="faq-item" style="border-color: rgba(164,30,30,0.4); border-left-color: var(--dark-red);">
+      <label class="contact-label" style="display:block; margin-bottom:6px;">Пароль админа</label>
+      <input type="password" id="adminPass" placeholder="Введи пароль"
+             style="width:100%; padding:12px; margin-bottom:14px; border-radius:8px; border:1px solid rgba(255,255,255,0.15); background:#0a0a0f; color:#fff; font-family:inherit; font-size:15px;">
+      <button class="buy-btn" onclick="login()" style="background: linear-gradient(90deg, var(--dark-red), #6b0000);">ВОЙТИ</button>
+      <p id="loginResult" style="margin-top:14px; text-align:center; font-weight:700; min-height:22px;"></p>
+    </div>
+  </section>
+
+  <!-- Панель (скрыта до входа) -->
+  <section id="panelScreen" class="faq-page" style="display:none; max-width:900px;">
+    <h1 class="faq-title" style="color: var(--dark-red);">ЗАЯВКИ</h1>
+    <p class="faq-sub" style="color: var(--dark-red);">Пользователи, зарегистрированные на этом устройстве</p>
+
+    <div id="stats" class="faq-item" style="border-color: rgba(164,30,30,0.4); border-left-color: var(--dark-red); margin-bottom:20px;">
+      <div class="faq-a" id="statsText">Всего: 0</div>
+    </div>
+
+    <div id="usersList"></div>
+
+    <div style="margin-top:20px; display:flex; gap:10px; flex-wrap:wrap;">
+      <button class="buy-btn" onclick="exportUsers()" style="flex:1; min-width:140px;">📥 ЭКСПОРТ</button>
+      <button class="buy-btn" onclick="clearUsers()" style="flex:1; min-width:140px; background: linear-gradient(90deg, var(--dark-red), #6b0000);">🗑 ОЧИСТИТЬ</button>
+      <button class="buy-btn" onclick="logout()" style="flex:1; min-width:140px; background: rgba(255,255,255,0.1);">🚪 ВЫЙТИ</button>
+    </div>
+
+    <div class="faq-item" style="border-color: rgba(164,30,30,0.4); border-left-color: var(--dark-red); margin-top:20px;">
+      <div class="faq-q" style="color: var(--dark-red);">⚠️ Важно</div>
+      <div class="faq-a">
+        Здесь видны <strong>только</strong> пользователи, зарегистрированные на этом телефоне.
+        Заявки с других устройств приходят тебе в <strong>Telegram</strong> (<code>@netuimi67</code>)
+        и на почту <strong>sava231546@mail.ru</strong>.
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div>© ShopLiveworlds — админ-панель</div>
+    <div>sava231546@mail.ru</div>
+  </footer>
+
+  <script>
+    // ПАРОЛЬ АДМИНА - поменяй на свой!
+    var ADMIN_PASSWORD = 'leto2024';
+
+    function login() {
+      var pass = document.getElementById('adminPass').value;
+      if (pass === ADMIN_PASSWORD) {
+        document.getElementById('loginScreen').style.display = 'none';
+        document.getElementById('panelScreen').style.display = 'block';
+        renderUsers();
+      } else {
+        document.getElementById('loginResult').style.color = 'var(--red)';
+        document.getElementById('loginResult').textContent = '✗ Неверный пароль';
+      }
+    }
+
+    function logout() {
+      document.getElementById('loginScreen').style.display = 'block';
+      document.getElementById('panelScreen').style.display = 'none';
+      document.getElementById('adminPass').value = '';
+      document.getElementById('loginResult').textContent = '';
+    }
+
+    function renderUsers() {
+      var users = JSON.parse(localStorage.getItem('slw_users') || '[]');
+      document.getElementById('statsText').innerHTML = 'Всего: <strong>' + users.length + '</strong>';
+
+      var list = document.getElementById('usersList');
+      if (users.length === 0) {
+        list.innerHTML = '<div class="faq-item" style="border-color: rgba(164,30,30,0.4); border-left-color: var(--dark-red);"><div class="faq-a">Заявок пока нет.</div></div>';
+        return;
+      }
+
+      var html = '';
+      for (var i = 0; i < users.length; i++) {
+        var u = users[i];
+        html += '<div class="faq-item" style="border-color: rgba(164,30,30,0.4); border-left-color: var(--dark-red);">' +
+                '<div class="faq-q" style="color: var(--dark-red);">' + escapeHtml(u.nick) + '</div>' +
+                '<div class="faq-a">' +
+                'Email: ' + escapeHtml(u.email) + '<br>' +
+                'Контакт: ' + escapeHtml(u.contact) + '<br>' +
+                'Дата: ' + new Date(u.date).toLocaleString('ru-RU') + '<br>' +
+                'Статус: ' + u.status +
+                '</div></div>';
+      }
+      list.innerHTML = html;
+    }
+
+    function exportUsers() {
+      var users = JSON.parse(localStorage.getItem('slw_users') || '[]');
+      if (users.length === 0) { alert('Нет данных'); return; }
+      var text = 'Заявки ShopLiveworlds:\n\n';
+      for (var i = 0; i < users.length; i++) {
+        var u = users[i];
+        text += (i+1) + '. ' + u.nick + ' | ' + u.email + ' | ' + u.contact + '\n';
+      }
+      // Копируем в буфер
+      var ta = document.createElement('textarea');
+      ta.value = text;
+      document.body.appendChild(ta);
+      ta.select();
+      try { document.execCommand('copy'); } catch(e) {}
+      document.body.removeChild(ta);
+      alert('Список скопирован в буфер обмена');
+    }
+
+    function clearUsers() {
+      if (!confirm('Удалить всех пользователей с этого устройства?')) return;
+      localStorage.removeItem('slw_users');
+      renderUsers();
+    }
+
+    function escapeHtml(s) {
+      return String(s).replace(/[&<>"']/g, function(c) {
+        return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];
+      });
+    }
+  </script>
+
+</body>
+</html>
