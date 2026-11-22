@@ -14,6 +14,8 @@
     <div class="nav-links">
       <a href="index.html">Главная</a>
       <a href="catalog.html">Каталог</a>
+      <a href="reviews.html">Отзывы</a>
+      <a href="faq.html">FAQ</a>
       <a href="#contact">Контакты</a>
     </div>
   </nav>
@@ -36,7 +38,7 @@
         <li>+2 000 000 монет</li>
         <li>Сет (кит) Lite</li>
       </ul>
-      <div class="product-price">СВЯЗАТЬСЯ ДЛЯ ПОКУПКИ</div>
+      <button class="buy-btn" onclick="buy('ЛАЙТ')">КУПИТЬ</button>
     </div>
 
     <div class="product creative">
@@ -52,7 +54,53 @@
         <li>Приват 4 регионов</li>
         <li>3 точки дома</li>
       </ul>
-      <div class="product-price">СВЯЗАТЬСЯ ДЛЯ ПОКУПКИ</div>
+      <button class="buy-btn" onclick="buy('КРЕАТИВ')">КУПИТЬ</button>
+    </div>
+
+    <div class="product premium">
+      <div class="product-badge">ПРИВИЛЕГИЯ</div>
+      <h2>ПРЕМИУМ</h2>
+      <ul class="product-features">
+        <li>Приват 2 точек дома</li>
+        <li>Приват 2 регионов</li>
+        <li>+1 сфера (рандом)</li>
+        <li>+1 голова (рандом)</li>
+        <li>+100 000 монет на баланс</li>
+      </ul>
+      <button class="buy-btn" onclick="buy('ПРЕМИУМ')">КУПИТЬ — 100 ₽</button>
+    </div>
+
+    <div class="product lord">
+      <div class="product-badge">ПРИВИЛЕГИЯ</div>
+      <h2>ЛОРД</h2>
+      <ul class="product-features">
+        <li>Приват 20 точек дома</li>
+        <li>Приват 20 регионов</li>
+        <li>+2 000 000 монет</li>
+      </ul>
+      <button class="buy-btn" onclick="buy('ЛОРД')">КУПИТЬ — 150 ₽</button>
+    </div>
+
+    <div class="product elite">
+      <div class="product-badge">ПРИВИЛЕГИЯ</div>
+      <h2>ЭЛИТА</h2>
+      <ul class="product-features">
+        <li>Приват 40 точек дома</li>
+        <li>Приват 60 регионов</li>
+        <li>+4 000 000 монет</li>
+      </ul>
+      <button class="buy-btn" onclick="buy('ЭЛИТА')">КУПИТЬ — 500 ₽</button>
+    </div>
+
+    <div class="product admin">
+      <div class="product-badge">ПРИВИЛЕГИЯ</div>
+      <h2>АДМИН</h2>
+      <ul class="product-features">
+        <li>Приват неограниченного количества точек дома</li>
+        <li>Приват неограниченного количества регионов</li>
+        <li><strong>Только по доверенности</strong></li>
+      </ul>
+      <button class="buy-btn" onclick="buy('АДМИН (по доверенности)')">СВЯЗАТЬСЯ</button>
     </div>
 
     <div class="product coins">
@@ -63,7 +111,7 @@
         <li>+100 000 бонусных монет</li>
         <li>Зачисление моментально</li>
       </ul>
-      <div class="product-price">СВЯЗАТЬСЯ ДЛЯ ПОКУПКИ</div>
+      <button class="buy-btn" onclick="buy('100 000 монет')">КУПИТЬ</button>
     </div>
 
   </section>
@@ -92,6 +140,10 @@
   </footer>
 
   <script>
+    function buy(product) {
+      var msg = 'Хочу купить ' + product;
+      window.location.href = 'https://t.me/netuimi67?text=' + encodeURIComponent(msg);
+    }
     function copyDiscord(el) {
       var ta = document.createElement('textarea');
       ta.value = 'roblox_admin2';
