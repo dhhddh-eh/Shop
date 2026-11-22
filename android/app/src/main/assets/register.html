@@ -93,9 +93,10 @@
       }
       users.push(user);
       localStorage.setItem('slw_users', JSON.stringify(users));
-
+      
       document.getElementById('regResult').style.color = 'var(--green)';
-      document.getElementById('regResult').textContent = '✓ Заявка отправлена! Открываем Telegram...';
+      document.getElementById('regResult').textContent = '✓ Аккаунт создан! Добро пожаловать в ShopLiveworlds';
+      
 
       // Отправляем заявку в Telegram админу
             var contactLine = contact ? ('Контакт: ' + contact + '\n') : 'Контакт: не указан\n';
