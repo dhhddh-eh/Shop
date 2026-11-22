@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ShopLiveworlds</title>
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <nav class="topbar">
+    <a href="index.html" class="logo">SHOP<span>LIVEWORLDS</span></a>
+    <div class="nav-links">
+      <a href="index.html">Главная</a>
+      <a href="catalog.html">Каталог</a>
+      <a href="#contact">Контакты</a>
+    </div>
+  </nav>
+
+  <section class="hero">
+    <div class="hero-tag">MINECRAFT • LIVEWORLD SERVER</div>
+    <h1 class="hero-title">SHOPLIVEWORLDS</h1>
+
+    <div class="gta-mark">
+      <span class="gta">GTA</span>
+      <span class="vi">VI</span>
+    </div>
+
+    <p class="hero-desc">
+      Это сайт, посвящённый серверу из Minecraft <strong>Liveworld</strong>.
+      Мы любим покупателей, которые берут ответственность на себя при покупке
+      привилегий и монет. <strong>Оплата производится чем угодно!</strong>
+      Покупайте, если хотите!
+    </p>
+
+    <div class="hero-buttons">
+      <a href="catalog.html" class="btn btn-primary">Открыть каталог</a>
+      <a href="#contact" class="btn btn-ghost">Связаться с нами</a>
+    </div>
+  </section>
+
+  <section id="contact" class="contact">
+    <h2>СВЯЗАТЬСЯ С НАМИ</h2>
+    <div class="contact-grid">
+      <div class="contact-card">
+        <div class="contact-label">Телефон</div>
+        <a href="tel:+79870266932">+7 987 026 69 32</a>
+      </div>
+      <div class="contact-card">
+        <div class="contact-label">Telegram</div>
+        <a href="https://t.me/netuimi67" target="_blank" rel="noopener">@netuimi67</a>
+      </div>
+      <div class="contact-card">
+        <div class="contact-label">Discord</div>
+        <a href="#" onclick="copyDiscord(this);return false;">@roblox_admin2</a>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div>© ShopLiveworlds — Minecraft Liveworld</div>
+    <div>Оплата любым способом</div>
+  </footer>
+
+  <script>
+    function copyDiscord(el) {
+      var ta = document.createElement('textarea');
+      ta.value = 'roblox_admin2';
+      document.body.appendChild(ta);
+      ta.select();
+      try { document.execCommand('copy'); } catch(e) {}
+      document.body.removeChild(ta);
+      el.textContent = 'Скопировано!';
+      setTimeout(function(){ el.textContent = '@roblox_admin2'; }, 1500);
+    }
+  </script>
+
+</body>
+</html>
