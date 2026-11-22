@@ -6,6 +6,10 @@
   --pink: #ff2d8f;
   --cyan: #00d9ff;
   --yellow: #ffd60a;
+  --dark-yellow: #d4a017;
+  --red: #ff2d2d;
+  --dark-red: #a41e1e;
+  --purple: #b845ff;
   --green: #2bff88;
   --blue: #3b8dff;
   --text: #f0f0f5;
@@ -43,16 +47,18 @@ body {
   text-decoration: none;
 }
 .logo span { color: var(--pink); }
+.nav-links { display: flex; flex-wrap: wrap; }
 .nav-links a {
   color: var(--text);
   text-decoration: none;
-  margin-left: 16px;
+  margin-left: 14px;
   font-weight: 600;
-  font-size: 13px;
+  font-size: 12.5px;
   letter-spacing: 1px;
 }
 .nav-links a:hover { color: var(--pink); }
 
+/* HERO */
 .hero {
   text-align: center;
   padding: 50px 20px 40px;
@@ -80,7 +86,6 @@ body {
   color: transparent;
   margin-bottom: 24px;
 }
-
 .gta-mark {
   display: inline-flex;
   align-items: baseline;
@@ -110,7 +115,6 @@ body {
   color: transparent;
   line-height: 0.8;
 }
-
 .hero-desc {
   font-size: 15px;
   line-height: 1.7;
@@ -119,7 +123,6 @@ body {
   margin: 0 auto 28px;
 }
 .hero-desc strong { color: var(--text); }
-
 .hero-buttons { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
 .btn {
   padding: 12px 26px;
@@ -128,23 +131,12 @@ body {
   font-size: 13px;
   letter-spacing: 1.5px;
   text-decoration: none;
-  transition: transform .15s;
 }
-.btn-primary {
-  background: linear-gradient(90deg, var(--pink), #a020ff);
-  color: #fff;
-}
-.btn-primary:hover { transform: translateY(-2px); }
-.btn-ghost {
-  border: 1px solid rgba(255,255,255,0.25);
-  color: var(--text);
-}
-.btn-ghost:hover { border-color: var(--pink); color: var(--pink); }
+.btn-primary { background: linear-gradient(90deg, var(--pink), #a020ff); color: #fff; }
+.btn-ghost { border: 1px solid rgba(255,255,255,0.25); color: var(--text); }
 
-.catalog-header {
-  text-align: center;
-  padding: 50px 20px 20px;
-}
+/* CATALOG HEADER */
+.catalog-header { text-align: center; padding: 50px 20px 20px; }
 .catalog-title {
   font-family: 'Bebas Neue', sans-serif;
   font-size: clamp(40px, 10vw, 90px);
@@ -154,13 +146,9 @@ body {
   background-clip: text;
   color: transparent;
 }
-.catalog-sub {
-  color: var(--muted);
-  font-size: 14px;
-  margin-top: 10px;
-  padding: 0 20px;
-}
+.catalog-sub { color: var(--muted); font-size: 14px; margin-top: 10px; padding: 0 20px; }
 
+/* CATALOG GRID */
 .catalog {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -169,12 +157,13 @@ body {
   margin: 30px auto 60px;
   padding: 0 16px;
 }
-
 .product {
   background: var(--bg2);
   border-radius: 14px;
   padding: 24px 22px;
   border: 1px solid rgba(255,255,255,0.08);
+  display: flex;
+  flex-direction: column;
 }
 .product.light { border-top: 4px solid var(--blue); }
 .product.light h2 { color: var(--blue); }
@@ -182,6 +171,14 @@ body {
 .product.creative h2 { color: var(--green); }
 .product.coins { border-top: 4px solid var(--yellow); }
 .product.coins h2 { color: var(--yellow); }
+.product.premium { border-top: 4px solid var(--yellow); }
+.product.premium h2 { color: var(--yellow); }
+.product.lord { border-top: 4px solid var(--dark-yellow); }
+.product.lord h2 { color: var(--dark-yellow); }
+.product.elite { border-top: 4px solid var(--red); }
+.product.elite h2 { color: var(--red); }
+.product.admin { border-top: 4px solid var(--dark-red); }
+.product.admin h2 { color: var(--dark-red); }
 
 .product-badge {
   display: inline-block;
@@ -192,6 +189,7 @@ body {
   background: rgba(255,255,255,0.08);
   color: var(--muted);
   margin-bottom: 12px;
+  align-self: flex-start;
 }
 .product h2 {
   font-family: 'Bebas Neue', sans-serif;
@@ -199,10 +197,7 @@ body {
   letter-spacing: 3px;
   margin-bottom: 16px;
 }
-.product-features {
-  list-style: none;
-  margin-bottom: 20px;
-}
+.product-features { list-style: none; margin-bottom: 20px; flex-grow: 1; }
 .product-features li {
   padding: 7px 0 7px 20px;
   position: relative;
@@ -224,25 +219,117 @@ body {
   font-size: 12px;
   color: var(--cyan);
 }
-.product-price {
-  text-align: center;
-  padding: 12px;
+
+/* BUY BUTTON */
+.buy-btn {
+  display: block;
+  width: 100%;
+  padding: 14px;
+  border: none;
   border-radius: 10px;
   font-weight: 800;
-  font-size: 12px;
+  font-size: 13px;
   letter-spacing: 2px;
-  background: rgba(255,255,255,0.06);
-  color: var(--text);
+  cursor: pointer;
+  font-family: inherit;
+  background: linear-gradient(90deg, var(--pink), #a020ff);
+  color: #fff;
+  transition: transform .15s;
 }
-.product.light .product-price { background: rgba(59,141,255,0.15); color: var(--blue); }
-.product.creative .product-price { background: rgba(43,255,136,0.15); color: var(--green); }
-.product.coins .product-price { background: rgba(255,214,10,0.15); color: var(--yellow); }
+.buy-btn:active { transform: scale(0.97); }
+.product.light .buy-btn { background: linear-gradient(90deg, var(--blue), #5b6fff); }
+.product.creative .buy-btn { background: linear-gradient(90deg, var(--green), #00c46a); color: #0a0a0f; }
+.product.coins .buy-btn { background: linear-gradient(90deg, var(--yellow), #ffb300); color: #0a0a0f; }
+.product.premium .buy-btn { background: linear-gradient(90deg, var(--yellow), #ffb300); color: #0a0a0f; }
+.product.lord .buy-btn { background: linear-gradient(90deg, var(--dark-yellow), #b8860b); color: #fff; }
+.product.elite .buy-btn { background: linear-gradient(90deg, var(--red), #b80000); color: #fff; }
+.product.admin .buy-btn { background: linear-gradient(90deg, var(--dark-red), #6b0000); color: #fff; }
 
-.contact {
-  padding: 60px 20px;
+/* REVIEWS PAGE */
+.reviews-page { padding: 50px 20px 60px; max-width: 900px; margin: 0 auto; }
+.reviews-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(42px, 9vw, 80px);
+  letter-spacing: 5px;
   text-align: center;
-  border-top: 1px solid rgba(255,255,255,0.08);
+  color: var(--yellow);
+  margin-bottom: 12px;
 }
+.reviews-sub {
+  text-align: center;
+  color: var(--yellow);
+  opacity: 0.75;
+  font-size: 14px;
+  margin-bottom: 36px;
+}
+.review-card {
+  background: var(--bg2);
+  border: 1px solid rgba(255,214,10,0.25);
+  border-left: 4px solid var(--yellow);
+  border-radius: 12px;
+  padding: 22px;
+  margin-bottom: 16px;
+}
+.review-name {
+  color: var(--yellow);
+  font-weight: 800;
+  font-size: 15px;
+  margin-bottom: 8px;
+  letter-spacing: 1px;
+}
+.review-stars {
+  color: var(--yellow);
+  font-size: 16px;
+  margin-bottom: 10px;
+  letter-spacing: 2px;
+}
+.review-text {
+  color: #ffe680;
+  font-size: 14.5px;
+  line-height: 1.6;
+  font-style: italic;
+}
+
+/* FAQ PAGE */
+.faq-page { padding: 50px 20px 60px; max-width: 800px; margin: 0 auto; }
+.faq-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(42px, 9vw, 80px);
+  letter-spacing: 5px;
+  text-align: center;
+  color: var(--purple);
+  margin-bottom: 12px;
+}
+.faq-sub {
+  text-align: center;
+  color: var(--purple);
+  opacity: 0.75;
+  font-size: 14px;
+  margin-bottom: 36px;
+}
+.faq-item {
+  background: var(--bg2);
+  border: 1px solid rgba(184,69,255,0.25);
+  border-left: 4px solid var(--purple);
+  border-radius: 12px;
+  padding: 22px;
+  margin-bottom: 16px;
+}
+.faq-q {
+  color: var(--purple);
+  font-weight: 800;
+  font-size: 16px;
+  margin-bottom: 10px;
+}
+.faq-a {
+  color: #d8b0ff;
+  font-size: 14.5px;
+  line-height: 1.65;
+}
+.faq-a strong { color: var(--purple); }
+
+/* CONTACT */
+.contact { padding: 60px 20px; text-align: center; border-top: 1px solid rgba(255,255,255,0.08); }
 .contact h2 {
   font-family: 'Bebas Neue', sans-serif;
   font-size: clamp(32px, 8vw, 56px);
@@ -292,4 +379,4 @@ body {
   flex-wrap: wrap;
   gap: 8px;
   text-align: center;
-    }
+  }
