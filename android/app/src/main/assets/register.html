@@ -98,10 +98,12 @@
       document.getElementById('regResult').textContent = '✓ Заявка отправлена! Открываем Telegram...';
 
       // Отправляем заявку в Telegram админу
+            var contactLine = contact ? ('Контакт: ' + contact + '\n') : 'Контакт: не указан\n';
+
       var msg = '🔔 Новая заявка на регистрацию\n\n' +
                 'Ник: ' + nick + '\n' +
                 'Email: ' + email + '\n' +
-                'Контакт: ' + contact + '\n' +
+                contactLine +
                 'Дата: ' + new Date().toLocaleString('ru-RU');
 
       setTimeout(function() {
