@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Каталог — ShopLiveworlds</title>
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <nav class="topbar">
+    <a href="index.html" class="logo">SHOP<span>LIVEWORLDS</span></a>
+    <div class="nav-links">
+      <a href="index.html">Главная</a>
+      <a href="catalog.html">Каталог</a>
+      <a href="#contact">Контакты</a>
+    </div>
+  </nav>
+
+  <section class="catalog-header">
+    <h1 class="catalog-title">КАТАЛОГ ТОВАРОВ</h1>
+    <p class="catalog-sub">Привилегии, монеты и бонусы для сервера Liveworld</p>
+  </section>
+
+  <section class="catalog">
+
+    <div class="product light">
+      <div class="product-badge">ПРИВИЛЕГИЯ</div>
+      <h2>ЛАЙТ</h2>
+      <ul class="product-features">
+        <li>Команды: <code>/rtp</code>, <code>/home</code>, <code>/ah sell</code>, <code>/ah</code>, <code>/kit</code>, <code>/delete home</code></li>
+        <li>Ключи кейса +10</li>
+        <li>+1 талисман голема</li>
+        <li>+1 сфера киллера</li>
+        <li>+2 000 000 монет</li>
+        <li>Сет (кит) Lite</li>
+      </ul>
+      <div class="product-price">СВЯЗАТЬСЯ ДЛЯ ПОКУПКИ</div>
+    </div>
+
+    <div class="product creative">
+      <div class="product-badge">ПРИВИЛЕГИЯ</div>
+      <h2>КРЕАТИВ</h2>
+      <ul class="product-features">
+        <li>Всё, что в ЛАЙТ</li>
+        <li>+2 талисмана</li>
+        <li>+1 сфера</li>
+        <li>+100 000 бонусных монет</li>
+        <li>+100 000 монет второго бонуса</li>
+        <li>Режим <code>/gamemode creative</code></li>
+        <li>Приват 4 регионов</li>
+        <li>3 точки дома</li>
+      </ul>
+      <div class="product-price">СВЯЗАТЬСЯ ДЛЯ ПОКУПКИ</div>
+    </div>
+
+    <div class="product coins">
+      <div class="product-badge">ВАЛЮТА</div>
+      <h2>100 000 МОНЕТ</h2>
+      <ul class="product-features">
+        <li>Пакет игровой валюты</li>
+        <li>+100 000 бонусных монет</li>
+        <li>Зачисление моментально</li>
+      </ul>
+      <div class="product-price">СВЯЗАТЬСЯ ДЛЯ ПОКУПКИ</div>
+    </div>
+
+  </section>
+
+  <section id="contact" class="contact">
+    <h2>СВЯЗАТЬСЯ С НАМИ</h2>
+    <div class="contact-grid">
+      <div class="contact-card">
+        <div class="contact-label">Телефон</div>
+        <a href="tel:+79870266932">+7 987 026 69 32</a>
+      </div>
+      <div class="contact-card">
+        <div class="contact-label">Telegram</div>
+        <a href="https://t.me/netuimi67" target="_blank" rel="noopener">@netuimi67</a>
+      </div>
+      <div class="contact-card">
+        <div class="contact-label">Discord</div>
+        <a href="#" onclick="copyDiscord(this);return false;">@roblox_admin2</a>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div>© ShopLiveworlds — Minecraft Liveworld</div>
+    <div>Оплата любым способом</div>
+  </footer>
+
+  <script>
+    function copyDiscord(el) {
+      var ta = document.createElement('textarea');
+      ta.value = 'roblox_admin2';
+      document.body.appendChild(ta);
+      ta.select();
+      try { document.execCommand('copy'); } catch(e) {}
+      document.body.removeChild(ta);
+      el.textContent = 'Скопировано!';
+      setTimeout(function(){ el.textContent = '@roblox_admin2'; }, 1500);
+    }
+  </script>
+
+</body>
+</html>
