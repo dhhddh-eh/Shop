@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Регистрация — ShopLiveworlds</title>
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <nav class="topbar">
+    <a href="index.html" class="logo">SHOP<span>LIVEWORLDS</span></a>
+    <div class="nav-links">
+      <a href="index.html">Главная</a>
+      <a href="catalog.html">Каталог</a>
+      <a href="reviews.html">Отзывы</a>
+      <a href="faq.html">FAQ</a>
+      <a href="register.html">Регистрация</a>
+      <a href="admin.html">Админ</a>
+    </div>
+  </nav>
+
+  <section class="faq-page">
+    <h1 class="faq-title" style="color: var(--cyan);">РЕГИСТРАЦИЯ</h1>
+    <p class="faq-sub" style="color: var(--cyan); opacity: 0.8;">Зарегистрируйся, чтобы покупать быстрее</p>
+
+    <form id="regForm" class="faq-item" style="border-color: rgba(0,217,255,0.3); border-left-color: var(--cyan);">
+      <label class="contact-label" style="display:block; margin-bottom:6px;">Ник в Minecraft</label>
+      <input type="text" id="nick" required placeholder="Например: Steve_2024"
+             style="width:100%; padding:12px; margin-bottom:14px; border-radius:8px; border:1px solid rgba(255,255,255,0.15); background:#0a0a0f; color:#fff; font-family:inherit; font-size:15px;">
+
+      <label class="contact-label" style="display:block; margin-bottom:6px;">Email</label>
+      <input type="email" id="email" required placeholder="you@mail.ru"
+             style="width:100%; padding:12px; margin-bottom:14px; border-radius:8px; border:1px solid rgba(255,255,255,0.15); background:#0a0a0f; color:#fff; font-family:inherit; font-size:15px;">
+
+      <label class="contact-label" style="display:block; margin-bottom:6px;">Telegram / Discord</label>
+      <input type="text" id="contact" required placeholder="@your_nick"
+             style="width:100%; padding:12px; margin-bottom:14px; border-radius:8px; border:1px solid rgba(255,255,255,0.15); background:#0a0a0f; color:#fff; font-family:inherit; font-size:15px;">
+
+      <label class="contact-label" style="display:block; margin-bottom:6px;">Пароль</label>
+      <input type="password" id="password" required placeholder="Минимум 6 символов" minlength="6"
+             style="width:100%; padding:12px; margin-bottom:20px; border-radius:8px; border:1px solid rgba(255,255,255,0.15); background:#0a0a0f; color:#fff; font-family:inherit; font-size:15px;">
+
+      <button type="submit" class="buy-btn" style="background: linear-gradient(90deg, var(--cyan), #0088cc); color:#00131a;">ЗАРЕГИСТРИРОВАТЬСЯ</button>
+
+      <p id="regResult" style="margin-top:16px; text-align:center; font-weight:700; color: var(--green); min-height:22px;"></p>
+    </form>
+
+    <div class="faq-item" style="border-color: rgba(0,217,255,0.3); border-left-color: var(--cyan); margin-top:20px;">
+      <div class="faq-q" style="color: var(--cyan);">ℹ️ Что будет после регистрации?</div>
+      <div class="faq-a">
+        Заявка сохранится на твоём устройстве и <strong>автоматически откроется Telegram</strong> с готовым сообщением админу.
+        Админ получит твои данные, подтвердит аккаунт и свяжется с тобой.
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div>© ShopLiveworlds — Minecraft Liveworld</div>
+    <div>Админ: sava231546@mail.ru</div>
+  </footer>
+
+  <script>
+    var ADMIN_TG = 'netuimi67';
+    var ADMIN_EMAIL = 'sava231546@mail.ru';
+
+    document.getElementById('regForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      var nick = document.getElementById('nick').value.trim();
+      var email = document.getElementById('email').value.trim();
+      var contact = document.getElementById('contact').value.trim();
+      var password = document.getElementById('password').value;
+
+      var user = {
+        nick: nick,
+        email: email,
+        contact: contact,
+        password: password,
+        date: new Date().toISOString(),
+        status: 'pending'
+      };
+
+      // Сохраняем в localStorage (только это устройство)
+      var users = JSON.parse(localStorage.getItem('slw_users') || '[]');
+      // Проверка на дубликат ника
+      for (var i = 0; i < users.length; i++) {
+        if (users[i].nick.toLowerCase() === nick.toLowerCase()) {
+          document.getElementById('regResult').style.color = 'var(--red)';
+          document.getElementById('regResult').textContent = 'Ник уже занят';
+          return;
+        }
+      }
+      users.push(user);
+      localStorage.setItem('slw_users', JSON.stringify(users));
+
+      document.getElementById('regResult').style.color = 'var(--green)';
+      document.getElementById('regResult').textContent = '✓ Заявка отправлена! Открываем Telegram...';
+
+      // Отправляем заявку в Telegram админу
+      var msg = '🔔 Новая заявка на регистрацию\n\n' +
+                'Ник: ' + nick + '\n' +
+                'Email: ' + email + '\n' +
+                'Контакт: ' + contact + '\n' +
+                'Дата: ' + new Date().toLocaleString('ru-RU');
+
+      setTimeout(function() {
+        window.location.href = 'https://t.me/' + ADMIN_TG + '?text=' + encodeURIComponent(msg);
+      }, 1200);
+
+      setTimeout(function() {
+        document.getElementById('regForm').reset();
+        document.getElementById('regResult').textContent = '';
+      }, 5000);
+    });
+  </script>
+
+</body>
+</html>
