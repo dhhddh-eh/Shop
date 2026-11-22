@@ -172,6 +172,190 @@
       renderMilestones();
       startPlaytimeTimer();
     }
+        function getTodayKey() {
+      var d = new Date();
+      var m = String(d.getMonth() + 1).padStart(2, '0');
+      var day = String(d.getDate()).padStart(2, '0');
+      return d.getFullYear() + '-' + m + '-' + day;
+    }
+
+    function getDailyPlaytime() {
+      var key = 'slw_daily_' + currentUser.nick + '_' + getTodayKey();
+      return parseInt(localStorage.getItem(key) || '0');
+    }
+
+    function addDailyPlaytime() {
+      var key = 'slw_daily_' + currentUser.nick + '_' + getTodayKey();
+      var sec = parseInt(localStorage.getItem(key) || '0') + 1;
+      localStorage.setItem(key, sec.toString());
+      return sec;
+    }
+
+    function startPlaytimeTimer() {
+      if (playtimeTimer) return;
+      updatePlaytimeDisplay();
+          function getTodayKey() {
+      var d = new Date();
+      var m = String(d.getMonth() + 1).padStart(2, '0');
+      var day = String(d.getDate()).padStart(2, '0');
+      return d.getFullYear() + '-' + m + '-' + day;
+    }
+
+    function getDailyPlaytime() {
+      var key = 'slw_daily_' + currentUser.nick + '_' + getTodayKey();
+      return parseInt(localStorage.getItem(key) || '0');
+    }
+
+    function addDailyPlaytime() {
+      var key = 'slw_daily_' + currentUser.nick + '_' + getTodayKey();
+      var sec = parseInt(localStorage.getItem(key) || '0') + 1;
+      localStorage.setItem(key, sec.toString());
+      return sec;
+    }
+
+    function startPlaytimeTimer() {
+      if (playtimeTimer) return;
+      updatePlaytimeDisplay();
+
+      // Если лимит уже исчерпан — сразу показываем сообщение
+      if (getDailyPlaytime() >= 7200) {
+        showLimitMessage();
+        return;
+      }
+
+      playtimeTimer = setInterval(function() {
+        if (!currentUser) return;
+
+        // Проверка лимита 2 часа в день
+        if (getDailyPlaytime() >= 7200) {
+          clearInterval(playtimeTimer);
+          playtimeTimer = null;
+          updatePlaytimeDisplay();
+          renderMilestones();
+          showLimitMessage();
+          return;
+        }
+
+        var key = 'slw_playtime_' + currentUser.nick;
+        var sec = parseInt(localStorage.getItem(key) || '0') + 1;
+        localStorage.setItem(key, sec.toString());
+        addDailyPlaytime();
+        updatePlaytimeDisplay();
+        renderMilestones();
+      }, 1000);
+    }
+
+    function updatePlaytimeDisplay() {
+      var sec = getPlaytime();
+      var h = Math.floor(sec / 3600);
+      var m = Math.floor((sec % 3600) / 60);
+      var s = sec % 60;
+
+      var daily = getDailyPlaytime();
+      var dh = Math.floor(daily / 3600);
+      var dm = Math.floor((daily % 3600) / 60);
+      var ds = daily % 60;
+      var remaining = Math.max(0, 7200 - daily);
+      var rh = Math.floor(remaining / 3600);
+      var rm = Math.floor((remaining % 3600) / 60);
+      var rs = remaining % 60;
+
+      var el = document.getElementById('pPlaytime');
+      if (remaining > 0) {
+        el.style.color = 'var(--cyan)';
+        el.innerHTML =
+          h + ' ч ' + m + ' м ' + s + ' с<br>' +
+          '<span style="font-size:13px; color:var(--muted);">Сегодня: ' +
+          dh + ' ч ' + dm + ' м ' + ds + ' с / лимит 2 ч (осталось ' +
+          rh + ' ч ' + rm + ' м ' + rs + ' с)</span>';
+      } else {
+        el.style.color = 'var(--red)';
+        el.innerHTML =
+          h + ' ч ' + m + ' м ' + s + ' с<br>' +
+          '<span style="font-size:13px; color:var(--red);">⏱ Лимит на сегодня исчерпан</span>';
+      }
+    }
+
+    function showLimitMessage() {
+      var existing = document.getElementById('limitMessage');
+      if (existing) { existing.style.display = 'block'; return; }
+      var msg = document.createElement('div');
+      msg.id = 'limitMessage';
+      msg.style.cssText = 'padding:16px; margin-top:16px; background:rgba(255,45,45,0.15); border:1px solid rgba(255,45,45,0.4); border-radius:10px; color:var(--red); text-align:center; font-weight:700;';
+      msg.textContent = '⏱ Лимит 2 часа в день исчерпан. Возвращайся завтра!';
+      var card = document.querySelector('.profile-card');
+      if (card) card.parentNode.insertBefore(msg, card.nextSibling);
+    }
+
+      // Если лимит уже исчерпан — сразу показываем сообщение
+      if (getDailyPlaytime() >= 7200) {
+        showLimitMessage();
+        return;
+      }
+
+      playtimeTimer = setInterval(function() {
+        if (!currentUser) return;
+
+        // Проверка лимита 2 часа в день
+        if (getDailyPlaytime() >= 7200) {
+          clearInterval(playtimeTimer);
+          playtimeTimer = null;
+          updatePlaytimeDisplay();
+          renderMilestones();
+          showLimitMessage();
+          return;
+        }
+
+        var key = 'slw_playtime_' + currentUser.nick;
+        var sec = parseInt(localStorage.getItem(key) || '0') + 1;
+        localStorage.setItem(key, sec.toString());
+        addDailyPlaytime();
+        updatePlaytimeDisplay();
+        renderMilestones();
+      }, 1000);
+    }
+
+    function updatePlaytimeDisplay() {
+      var sec = getPlaytime();
+      var h = Math.floor(sec / 3600);
+      var m = Math.floor((sec % 3600) / 60);
+      var s = sec % 60;
+
+      var daily = getDailyPlaytime();
+      var dh = Math.floor(daily / 3600);
+      var dm = Math.floor((daily % 3600) / 60);
+      var ds = daily % 60;
+      var remaining = Math.max(0, 7200 - daily);
+      var rh = Math.floor(remaining / 3600);
+      var rm = Math.floor((remaining % 3600) / 60);
+      var rs = remaining % 60;
+
+      var el = document.getElementById('pPlaytime');
+      if (remaining > 0) {
+        el.style.color = 'var(--cyan)';
+        el.innerHTML =
+          h + ' ч ' + m + ' м ' + s + ' с<br>' +
+          '<span style="font-size:13px; color:var(--muted);">Сегодня: ' +
+          dh + ' ч ' + dm + ' м ' + ds + ' с / лимит 2 ч (осталось ' +
+          rh + ' ч ' + rm + ' м ' + rs + ' с)</span>';
+      } else {
+        el.style.color = 'var(--red)';
+        el.innerHTML =
+          h + ' ч ' + m + ' м ' + s + ' с<br>' +
+          '<span style="font-size:13px; color:var(--red);">⏱ Лимит на сегодня исчерпан</span>';
+      }
+    }
+
+    function showLimitMessage() {
+      var existing = document.getElementById('limitMessage');
+      if (existing) { existing.style.display = 'block'; return; }
+      var msg = document.createElement('div');
+      msg.id = 'limitMessage';
+      msg.style.cssText = 'padding:16px; margin-top:16px; background:rgba(255,45,45,0.15); border:1px solid rgba(255,45,45,0.4); border-radius:10px; color:var(--red); text-align:center; font-weight:700;';
+      msg.textContent = '⏱ Лимит 2 часа в день исчерпан. Возвращайся завтра!';
+      var card = document.querySelector('.profile-card');
+      if (card) card.parentNode.insertBefore(msg, card.nextSibling);
+          }
 
     function togglePass() {
       var el = document.getElementById('pPass');
