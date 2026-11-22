@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Профиль — ShopLiveworlds</title>
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <nav class="topbar">
+    <a href="index.html" class="logo">SHOP<span>LIVEWORLDS</span></a>
+    <div class="nav-links">
+      <a href="index.html">Главная</a>
+      <a href="catalog.html">Каталог</a>
+      <a href="reviews.html">Отзывы</a>
+      <a href="faq.html">FAQ</a>
+      <a href="register.html">Регистрация</a>
+      <a href="profile.html">Профиль</a>
+      <a href="admin.html">Админ</a>
+    </div>
+  </nav>
+
+  <!-- Если не залогинен -->
+  <section id="loginScreen" class="faq-page" style="max-width:480px; display:none;">
+    <h1 class="faq-title" style="color: var(--cyan);">ПРОФИЛЬ</h1>
+    <p class="faq-sub" style="color: var(--cyan);">Войдите, чтобы увидеть профиль</p>
+    <div class="faq-item" style="border-color: rgba(0,217,255,0.3); border-left-color: var(--cyan);">
+      <label class="contact-label" style="display:block; margin-bottom:6px;">Email или ник</label>
+      <input type="text" id="loginEmail" placeholder="you@mail.ru или ник"
+             style="width:100%; padding:12px; margin-bottom:14px; border-radius:8px; border:1px solid rgba(255,255,255,0.15); background:#0a0a0f; color:#fff; font-family:inherit; font-size:15px;">
+      <label class="contact-label" style="display:block; margin-bottom:6px;">Пароль</label>
+      <input type="password" id="loginPass" placeholder="Пароль"
+             style="width:100%; padding:12px; margin-bottom:16px; border-radius:8px; border:1px solid rgba(255,255,255,0.15); background:#0a0a0f; color:#fff; font-family:inherit; font-size:15px;">
+      <button class="buy-btn" onclick="doLogin()" style="background: linear-gradient(90deg, var(--cyan), #0088cc); color:#00131a;">ВОЙТИ</button>
+      <p id="loginMsg" style="margin-top:14px; text-align:center; min-height:20px; font-weight:700;"></p>
+      <p style="text-align:center; margin-top:14px; font-size:13px; color:var(--muted);">
+        Нет аккаунта? <a href="register.html" style="color:var(--cyan);">Зарегистрируйтесь</a>
+      </p>
+    </div>
+  </section>
+
+  <!-- Профиль -->
+  <section id="profileScreen" class="faq-page" style="display:none; max-width:900px;">
+    <h1 class="faq-title" style="color: var(--pink);">ПРОФИЛЬ</h1>
+    <p class="faq-sub" style="color: var(--pink); opacity:0.8;">Твоя личная страница</p>
+
+    <div class="profile-card">
+      <div class="profile-row"><span class="profile-label">Ник:</span><span id="pNick">—</span></div>
+      <div class="profile-row">
+        <span class="profile-label">Password:</span>
+        <span id="pPass">••••••</span>
+        <button class="profile-mini-btn" onclick="togglePass()">👁</button>
+      </div>
+      <div class="profile-row"><span class="profile-label">Gmail:</span><span id="pEmail">—</span></div>
+      <div class="profile-row">
+        <span class="profile-label">Баланс:</span>
+        <span id="pBalance" style="color: var(--yellow); font-weight:800;">0 ₽</span>
+        <button class="profile-mini-btn" onclick="toggleTopup()" style="background: linear-gradient(90deg, var(--yellow), #ffb300); color:#0a0a0f; font-weight:800; padding:6px 14px; border-radius:6px;">Пополнить</button>
+      </div>
+      <div class="profile-row"><span class="profile-label">Купленные:</span><span id="pBought">—</span></div>
+      <div class="profile-row"><span class="profile-label">Статистика:</span><span id="pStats">—</span></div>
+      <div class="profile-row"><span class="profile-label">Отыгранное время:</span><span id="pPlaytime" style="color: var(--cyan); font-weight:800;">0 ч 0 м 0 с</span></div>
+    </div>
+
+    <!-- Пополнение -->
+    <div id="topupSection" class="faq-item" style="display:none; border-color: rgba(255,214,10,0.3); border-left-color: var(--yellow); margin-top:16px;">
+      <div class="faq-q" style="color: var(--yellow);">💳 Выберите способ пополнения</div>
+      <div class="faq-a" style="margin-bottom:12px;">Нажми на удобный способ — откроется Telegram с заявкой.</div>
+      <div class="payment-grid">
+        <button class="payment-btn" onclick="pay('СБП')">СБП</button>
+        <button class="payment-btn" onclick="pay('Т-Банк')">Т-Банк</button>
+        <button class="payment-btn" onclick="pay('Альфа-Банк')">Альфа-Банк</button>
+        <button class="payment-btn" onclick="pay('Сбер-Банк')">Сбер-Банк</button>
+        <button class="payment-btn" onclick="pay('Озон-Банк')">Озон-Банк</button>
+        <button class="payment-btn" onclick="pay('Другой способ')">Другие способы</button>
+      </div>
+    </div>
+
+    <!-- Привилегии за время -->
+    <div class="faq-item" style="border-color: rgba(0,217,255,0.3); border-left-color: var(--cyan); margin-top:20px;">
+      <div class="faq-q" style="color: var(--cyan);">🎁 Привилегии за отыгранное время</div>
+      <div class="faq-a" style="margin-bottom:14px;">Играй на сервере — получай привилегии бесплатно!</div>
+      <div id="milestonesList"></div>
+    </div>
+
+    <button class="buy-btn" onclick="doLogout()" style="background: rgba(255,255,255,0.1); margin-top:20px;">🚪 ВЫЙТИ ИЗ АККАУНТА</button>
+  </section>
+
+  <footer class="footer">
+    <div>© ShopLiveworlds — Minecraft Liveworld</div>
+    <div>v1.4</div>
+  </footer>
+
+  <script>
+    var ADMIN_TG = 'netuimi67';
+    var MILESTONES = [
+      { name: 'ПРЕМИУМ', seconds: 4 * 3600, color: 'var(--yellow)' },
+      { name: 'ЛОРД', seconds: 6 * 3600, color: 'var(--dark-yellow)' },
+      { name: 'КРЕАТИВ', seconds: 10 * 3600, color: 'var(--green)' },
+      { name: 'ЭЛИТА', seconds: 400 * 3600, color: 'var(--red)' }
+    ];
+
+    var currentUser = null;
+    var playtimeTimer = null;
+
+    document.addEventListener('DOMContentLoaded', function() {
+      var savedNick = localStorage.getItem('slw_current_user');
+      if (savedNick) {
+        var users = JSON.parse(localStorage.getItem('slw_users') || '[]');
+        for (var i = 0; i < users.length; i++) {
+          if (users[i].nick === savedNick) { currentUser = users[i]; break; }
+        }
+      }
+      if (currentUser) {
+        showProfile();
+      } else {
+        document.getElementById('loginScreen').style.display = 'block';
+      }
+    });
+
+    function doLogin() {
+      var login = document.getElementById('loginEmail').value.trim();
+      var pass = document.getElementById('loginPass').value;
+      var users = JSON.parse(localStorage.getItem('slw_users') || '[]');
+      var found = null;
+      for (var i = 0; i < users.length; i++) {
+        if ((users[i].email.toLowerCase() === login.toLowerCase() ||
+             users[i].nick.toLowerCase() === login.toLowerCase()) &&
+            users[i].password === pass) {
+          found = users[i]; break;
+        }
+      }
+      if (found) {
+        currentUser = found;
+        localStorage.setItem('slw_current_user', found.nick);
+        document.getElementById('loginMsg').textContent = '';
+        showProfile();
+      } else {
+        document.getElementById('loginMsg').style.color = 'var(--red)';
+        document.getElementById('loginMsg').textContent = '✗ Неверный логин или пароль';
+      }
+    }
+
+    function doLogout() {
+      localStorage.removeItem('slw_current_user');
+      currentUser = null;
+      if (playtimeTimer) { clearInterval(playtimeTimer); playtimeTimer = null; }
+      document.getElementById('loginScreen').style.display = 'block';
+      document.getElementById('profileScreen').style.display = 'none';
+    }
+
+    function showProfile() {
+      document.getElementById('loginScreen').style.display = 'none';
+      document.getElementById('profileScreen').style.display = 'block';
+
+      document.getElementById('pNick').textContent = currentUser.nick;
+      document.getElementById('pEmail').textContent = currentUser.email;
+      document.getElementById('pPass').dataset.full = currentUser.password;
+      document.getElementById('pPass').textContent = '••••••';
+
+      var balance = parseInt(localStorage.getItem('slw_balance_' + currentUser.nick) || '0');
+      document.getElementById('pBalance').textContent = balance.toLocaleString('ru-RU') + ' ₽';
+
+      var bought = JSON.parse(localStorage.getItem('slw_bought_' + currentUser.nick) || '[]');
+      document.getElementById('pBought').textContent = bought.length > 0 ? bought.join(', ') : 'Ничего не куплено';
+
+      var claimed = getClaimed();
+      document.getElementById('pStats').textContent = bought.length + ' покупок • ' + claimed.length + ' привилегий';
+
+      renderMilestones();
+      startPlaytimeTimer();
+    }
+
+    function togglePass() {
+      var el = document.getElementById('pPass');
+      el.textContent = (el.textContent === '••••••') ? el.dataset.full : '••••••';
+    }
+
+    function toggleTopup() {
+      var s = document.getElementById('topupSection');
+      s.style.display = (s.style.display === 'none' || !s.style.display) ? 'block' : 'none';
+    }
+
+    function pay(method) {
+      if (!currentUser) return;
+      var msg = 'Пополнение баланса\n\n' +
+                'Ник: ' + currentUser.nick + '\n' +
+                'Email: ' + currentUser.email + '\n' +
+                'Способ: ' + method + '\n\n' +
+                'Хочу пополнить баланс.';
+      window.location.href = 'https://t.me/' + ADMIN_TG + '?text=' + encodeURIComponent(msg);
+    }
+
+    function startPlaytimeTimer() {
+      if (playtimeTimer) return;
+      updatePlaytimeDisplay();
+      playtimeTimer = setInterval(function() {
+        var key = 'slw_playtime_' + currentUser.nick;
+        var sec = parseInt(localStorage.getItem(key) || '0');
+        sec++;
+        localStorage.setItem(key, sec.toString());
+        updatePlaytimeDisplay();
+        renderMilestones();
+      }, 1000);
+    }
+
+    function getPlaytime() {
+      return parseInt(localStorage.getItem('slw_playtime_' + currentUser.nick) || '0');
+    }
+
+    function updatePlaytimeDisplay() {
+      var sec = getPlaytime();
+      var h = Math.floor(sec / 3600);
+      var m = Math.floor((sec % 3600) / 60);
+      var s = sec % 60;
+      document.getElementById('pPlaytime').textContent = h + ' ч ' + m + ' м ' + s + ' с';
+    }
+
+    function getClaimed() {
+      return JSON.parse(localStorage.getItem('slw_claimed_' + currentUser.nick) || '[]');
+    }
+
+    function renderMilestones() {
+      var sec = getPlaytime();
+      var claimed = getClaimed();
+      var html = '';
+      for (var i = 0; i < MILESTONES.length; i++) {
+        var m = MILESTONES[i];
+        var progress = Math.min(100, Math.floor(sec / m.seconds * 100));
+        var isClaimed = claimed.indexOf(m.name) !== -1;
+        var canClaim = sec >= m.seconds && !isClaimed;
+        var btnText, btnStyle, btnDisabled;
+
+        if (isClaimed) {
+          btnText = '✓ ПОЛУЧЕНО';
+          btnStyle = 'background: rgba(43,255,136,0.2); color: var(--green);';
+          btnDisabled = true;
+        } else if (canClaim) {
+          btnText = 'ПОЛУЧИТЬ';
+          btnStyle = 'background: linear-gradient(90deg, ' + m.color + ', #fff); color:#0a0a0f;';
+          btnDisabled = false;
+        } else {
+          btnText = 'ЕЩЁ ' + Math.ceil((m.seconds - sec) / 3600) + ' Ч';
+          btnStyle = 'background: rgba(255,255,255,0.08); color: var(--muted);';
+          btnDisabled = true;
+        }
+
+        html += '<div class="milestone-card">' +
+                '<div class="milestone-head">' +
+                '<span style="color:' + m.color + '; font-weight:800; font-size:17px;">' + m.name + '</span>' +
+                '<span style="color: var(--muted); font-size:13px;">' + (m.seconds/3600) + ' ч</span>' +
+                '</div>' +
+                '<div class="progress-bar"><div class="progress-fill" style="width:' + progress + '%; background:' + m.color + ';"></div></div>' +
+                '<div style="display:flex; justify-content:space-between; align-items:center; margin-top:10px;">' +
+                '<span style="font-size:12px; color: var(--muted);">' + progress + '%</span>' +
+                '<button class="buy-btn" ' + (btnDisabled ? 'disabled' : '') +
+                ' onclick="claim(\'' + m.name + '\')" ' +
+                'style="width:auto; padding:8px 18px; font-size:12px; ' + btnStyle + '">' + btnText + '</button>' +
+                '</div></div>';
+      }
+      document.getElementById('milestonesList').innerHTML = html;
+    }
+
+    function claim(name) {
+      var claimed = getClaimed();
+      if (claimed.indexOf(name) !== -1) return;
+      var m = null;
+      for (var i = 0; i < MILESTONES.length; i++) {
+        if (MILESTONES[i].name === name) { m = MILESTONES[i]; break; }
+      }
+      if (!m || getPlaytime() < m.seconds) return;
+
+      claimed.push(name);
+      localStorage.setItem('slw_claimed_' + currentUser.nick, JSON.stringify(claimed));
+      renderMilestones();
+
+      var msg = '🎁 Получена привилегия за отыгранное время!\n\n' +
+                'Ник: ' + currentUser.nick + '\n' +
+                'Email: ' + currentUser.email + '\n' +
+                'Привилегия: ' + name + '\n' +
+                'Отыграно: ' + Math.floor(getPlaytime() / 3600) + ' ч';
+      setTimeout(function() {
+        window.location.href = 'https://t.me/' + ADMIN_TG + '?text=' + encodeURIComponent(msg);
+      }, 800);
+    }
+  </script>
+
+</body>
+</html>
