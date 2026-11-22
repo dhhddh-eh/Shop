@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Отзывы — ShopLiveworlds</title>
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <nav class="topbar">
+    <a href="index.html" class="logo">SHOP<span>LIVEWORLDS</span></a>
+    <div class="nav-links">
+      <a href="index.html">Главная</a>
+      <a href="catalog.html">Каталог</a>
+      <a href="reviews.html">Отзывы</a>
+      <a href="faq.html">FAQ</a>
+      <a href="#contact">Контакты</a>
+    </div>
+  </nav>
+
+  <section class="reviews-page">
+    <h1 class="reviews-title">ОТЗЫВЫ</h1>
+    <p class="reviews-sub">Что говорят покупатели ShopLiveworlds</p>
+
+    <div class="review-card">
+      <div class="review-name">Артём</div>
+      <div class="review-stars">★★★★★</div>
+      <div class="review-text">«Купил ЛАЙТ, всё выдали моментально. Продавец отвечает быстро, всё честно. Рекомендую!»</div>
+    </div>
+
+    <div class="review-card">
+      <div class="review-name">Данил</div>
+      <div class="review-stars">★★★★★</div>
+      <div class="review-text">«Взял КРЕАТИВ, теперь летаю на сервере и строю что хочу. Всё пришло в течение 5 минут после оплаты.»</div>
+    </div>
+
+    <div class="review-card">
+      <div class="review-name">Кирилл</div>
+      <div class="review-stars">★★★★★</div>
+      <div class="review-text">«Заказал монеты, оплата прошла без проблем. Сначала сомневался, но всё оказалось честно. Буду брать ещё.»</div>
+    </div>
+
+    <div class="review-card">
+      <div class="review-name">Максим</div>
+      <div class="review-stars">★★★★★</div>
+      <div class="review-text">«Взял ПРЕМИУМ, пришло всё по списку: и сфера, и голова, и монеты. Цена адекватная, продавец адекватный.»</div>
+    </div>
+
+    <div class="review-card">
+      <div class="review-name">Влад</div>
+      <div class="review-stars">★★★★★</div>
+      <div class="review-text">«Брал ЛОРД, приватить 20 регионов — это кайф. Спасибо за быструю выдачу!»</div>
+    </div>
+
+  </section>
+
+  <section id="contact" class="contact">
+    <h2>СВЯЗАТЬСЯ С НАМИ</h2>
+    <div class="contact-grid">
+      <div class="contact-card">
+        <div class="contact-label">Телефон</div>
+        <a href="tel:+79870266932">+7 987 026 69 32</a>
+      </div>
+      <div class="contact-card">
+        <div class="contact-label">Telegram</div>
+        <a href="https://t.me/netuimi67" target="_blank" rel="noopener">@netuimi67</a>
+      </div>
+      <div class="contact-card">
+        <div class="contact-label">Discord</div>
+        <a href="#" onclick="copyDiscord(this);return false;">@roblox_admin2</a>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div>© ShopLiveworlds — Minecraft Liveworld</div>
+    <div>Оплата любым способом</div>
+  </footer>
+
+  <script>
+    function copyDiscord(el) {
+      var ta = document.createElement('textarea');
+      ta.value = 'roblox_admin2';
+      document.body.appendChild(ta);
+      ta.select();
+      try { document.execCommand('copy'); } catch(e) {}
+      document.body.removeChild(ta);
+      el.textContent = 'Скопировано!';
+      setTimeout(function(){ el.textContent = '@roblox_admin2'; }, 1500);
+    }
+  </script>
+
+</body>
+</html>
