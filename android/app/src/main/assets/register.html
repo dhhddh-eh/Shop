@@ -93,6 +93,7 @@
       }
       users.push(user);
       localStorage.setItem('slw_users', JSON.stringify(users));
+            localStorage.setItem('slw_current_user', nick);
       
       document.getElementById('regResult').style.color = 'var(--green)';
       document.getElementById('regResult').textContent = '✓ Аккаунт создан! Добро пожаловать в ShopLiveworlds';
