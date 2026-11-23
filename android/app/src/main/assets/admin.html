@@ -17,6 +17,7 @@
       <a href="reviews.html">Отзывы</a>
       <a href="faq.html">FAQ</a>
       <a href="register.html">Регистрация</a>
+      <a href="profile.html">Профиль</a>
       <a href="admin.html">Админ</a>
     </div>
   </nav>
@@ -47,8 +48,8 @@
     <div id="usersList"></div>
 
     <div style="margin-top:20px; display:flex; gap:10px; flex-wrap:wrap;">
-      <button class="buy-btn" onclick="exportUsers()" style="flex:1; min-width:140px;">добавить</button>
-      <button class="buy-btn" onclick="clearUsers()" style="flex:1; min-width:140px; background: linear-gradient(90deg, var(--dark-red), #6b0000);">выкинуть</button>
+      <button class="buy-btn" onclick="exportUsers()" style="flex:1; min-width:140px;">✓ ОДОБРИТЬ ВСЕХ</button>
+      <button class="buy-btn" onclick="clearUsers()" style="flex:1; min-width:140px; background: linear-gradient(90deg, var(--dark-red), #6b0000);">🗑 ОЧИСТИТЬ</button>
       <button class="buy-btn" onclick="logout()" style="flex:1; min-width:140px; background: rgba(255,255,255,0.1);">🚪 ВЫЙТИ</button>
     </div>
 
@@ -68,8 +69,8 @@
   </footer>
 
   <script>
-    // ПАРОЛЬ АДМИНА - поменяй на свой!
-    var ADMIN_PASSWORD = 'admin2024';
+    // ⚠️ ПАРОЛЬ АДМИНА — меняй только значение в кавычках!
+    var ADMIN_PASSWORD = 'leto2024';
 
     function login() {
       var pass = document.getElementById('adminPass').value;
@@ -92,7 +93,13 @@
 
     function renderUsers() {
       var users = JSON.parse(localStorage.getItem('slw_users') || '[]');
-      document.getElementById('statsText').innerHTML = 'Всего: <strong>' + users.length + '</strong>';
+      var approved = 0;
+      for (var i = 0; i < users.length; i++) {
+        if (users[i].status === 'approved') approved++;
+      }
+      document.getElementById('statsText').innerHTML =
+        'Всего: <strong>' + users.length + '</strong> • ' +
+        'Одобрено: <strong style="color:var(--green)">' + approved + '</strong>';
 
       var list = document.getElementById('usersList');
       if (users.length === 0) {
@@ -103,13 +110,16 @@
       var html = '';
       for (var i = 0; i < users.length; i++) {
         var u = users[i];
+        var statusColor = u.status === 'approved' ? 'var(--green)' : 'var(--yellow)';
+        var statusText = u.status === 'approved' ? '✓ Одобрен' : '⏳ Ожидает';
+
         html += '<div class="faq-item" style="border-color: rgba(164,30,30,0.4); border-left-color: var(--dark-red);">' +
-                '<div class="faq-q" style="color: var(--dark-red);">' + escapeHtml(u.nick) + '</div>' +
+                '<div class="faq-q" style="color: var(--dark-red);">' + escapeHtml(u.nick) +
+                ' <span style="color:' + statusColor + '; font-size:13px;">' + statusText + '</span></div>' +
                 '<div class="faq-a">' +
                 'Email: ' + escapeHtml(u.email) + '<br>' +
-                'Контакт: ' + escapeHtml(u.contact) + '<br>' +
-                'Дата: ' + new Date(u.date).toLocaleString('ru-RU') + '<br>' +
-                'Статус: ' + u.status +
+                'Контакт: ' + (u.contact ? escapeHtml(u.contact) : '<em>не указан</em>') + '<br>' +
+                'Дата: ' + new Date(u.date).toLocaleString('ru-RU') +
                 '</div></div>';
       }
       list.innerHTML = html;
@@ -117,26 +127,40 @@
 
     function exportUsers() {
       var users = JSON.parse(localStorage.getItem('slw_users') || '[]');
-      if (users.length === 0) { alert('Нет данных'); return; }
-      var text = 'Заявки ShopLiveworlds:\n\n';
-      for (var i = 0; i < users.length; i++) {
-        var u = users[i];
-        text += (i+1) + '. ' + u.nick + ' | ' + u.email + ' | ' + u.contact + '\n';
+      if (users.length === 0) {
+        showMessage('Нет заявок для экспорта', 'var(--yellow)');
+        return;
       }
-      // Копируем в буфер
-      var ta = document.createElement('textarea');
-      ta.value = text;
-      document.body.appendChild(ta);
-      ta.select();
-      try { document.execCommand('copy'); } catch(e) {}
-      document.body.removeChild(ta);
-      alert('Список скопирован в буфер обмена');
+      for (var i = 0; i < users.length; i++) {
+        users[i].status = 'approved';
+      }
+      localStorage.setItem('slw_users', JSON.stringify(users));
+      renderUsers();
+      showMessage('✓ Все ' + users.length + ' заявок одобрены!', 'var(--green)');
     }
 
     function clearUsers() {
       if (!confirm('Удалить всех пользователей с этого устройства?')) return;
       localStorage.removeItem('slw_users');
       renderUsers();
+      showMessage('Все заявки удалены', 'var(--red)');
+    }
+
+    function showMessage(text, color) {
+      var msg = document.getElementById('actionMessage');
+      if (!msg) {
+        msg = document.createElement('div');
+        msg.id = 'actionMessage';
+        msg.style.cssText = 'padding:16px; margin:16px 0; border-radius:12px; text-align:center; font-weight:800; font-size:15px; transition:opacity .3s;';
+        var panel = document.getElementById('panelScreen');
+        panel.insertBefore(msg, panel.querySelector('#stats'));
+      }
+      msg.style.background = 'rgba(255,255,255,0.08)';
+      msg.style.color = color || 'var(--text)';
+      msg.textContent = text;
+      msg.style.opacity = '1';
+      clearTimeout(window._msgTimer);
+      window._msgTimer = setTimeout(function() { msg.style.opacity = '0'; }, 3000);
     }
 
     function escapeHtml(s) {
@@ -144,7 +168,7 @@
         return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];
       });
     }
-  
+  </script>
 
 </body>
 </html>
