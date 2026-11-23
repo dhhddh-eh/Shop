@@ -31,7 +31,7 @@
       <label class="contact-label" style="display:block; margin-bottom:6px;">Пароль админа</label>
       <input type="password" id="adminPass" placeholder="Введи пароль"
              style="width:100%; padding:12px; margin-bottom:14px; border-radius:8px; border:1px solid rgba(255,255,255,0.15); background:#0a0a0f; color:#fff; font-family:inherit; font-size:15px;">
-      <button class="buy-btn" onclick="login()" style="background: linear-gradient(90deg, var(--dark-red), #6b0000);">ВОЙТИ</button>
+      <button id="loginBtn" class="buy-btn" style="background: linear-gradient(90deg, var(--dark-red), #6b0000); width:100%;">ВОЙТИ</button>
       <p id="loginResult" style="margin-top:14px; text-align:center; font-weight:700; min-height:22px;"></p>
     </div>
   </section>
@@ -72,16 +72,46 @@
     // ⚠️ ПАРОЛЬ АДМИНА — меняй только значение в кавычках!
     var ADMIN_PASSWORD = 'leto2024';
 
-    function login() {
-      var pass = document.getElementById('adminPass').value;
-      if (pass === ADMIN_PASSWORD) {
-        document.getElementById('loginScreen').style.display = 'none';
-        document.getElementById('panelScreen').style.display = 'block';
-        renderUsers();
-      } else {
-        document.getElementById('loginResult').style.color = 'var(--red)';
-        document.getElementById('loginResult').textContent = '✗ Неверный пароль';
+    // Подключаем кнопку через addEventListener — надёжнее, чем onclick
+    document.addEventListener('DOMContentLoaded', function() {
+      var btn = document.getElementById('loginBtn');
+      if (btn) {
+        btn.addEventListener('click', handleLoginClick);
       }
+      // Enter тоже отправляет форму
+      var passInput = document.getElementById('adminPass');
+      if (passInput) {
+        passInput.addEventListener('keydown', function(e) {
+          if (e.key === 'Enter') handleLoginClick();
+        });
+      }
+    });
+
+    function handleLoginClick() {
+      var btn = document.getElementById('loginBtn');
+      var result = document.getElementById('loginResult');
+
+      // ⭐ Мгновенный отклик — видно, что кнопка нажалась
+      btn.textContent = '...';
+      btn.disabled = true;
+      result.style.color = 'var(--cyan)';
+      result.textContent = 'Проверяю пароль...';
+
+      setTimeout(function() {
+        var pass = document.getElementById('adminPass').value;
+
+        if (pass === ADMIN_PASSWORD) {
+          document.getElementById('loginScreen').style.display = 'none';
+          document.getElementById('panelScreen').style.display = 'block';
+          renderUsers();
+        } else {
+          result.style.color = 'var(--red)';
+          result.textContent = '✗ Неверный пароль';
+        }
+
+        btn.textContent = 'ВОЙТИ';
+        btn.disabled = false;
+      }, 150);
     }
 
     function logout() {
