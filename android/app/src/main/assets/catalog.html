@@ -1,99 +1,400 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Каталог товаров — ShopLiveworlds</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Bebas+Neue&family=Inter:wght@400;600;800&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="style.css" />
-</head>
-<body class="catalog">
-  <div class="bg-glow"></div>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LIVEWORLD — Minecraft Server</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#07040d; --panel:rgba(20,12,32,.75); --panel-solid:#150a22;
+    --line:rgba(255,255,255,.10);
+    --pink:#ff2d95; --pink-2:#ff6ec7; --cyan:#00e5ff;
+    --orange:#ff8c42; --yellow:#ffd166;
+    --green:#6ab04c; --green-2:#8bc34a;
+    --red:#ff4757; --text:#f5ecff; --muted:#a894b8;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{
+    font-family:'Montserrat',system-ui,sans-serif;color:var(--text);
+    background:
+      radial-gradient(circle at 85% 8%,rgba(255,45,149,.18),transparent 42%),
+      radial-gradient(circle at 12% 92%,rgba(0,229,255,.12),transparent 45%),
+      radial-gradient(circle at 50% 50%,rgba(255,140,66,.06),transparent 55%),
+      linear-gradient(180deg,#07040d 0%,#100820 55%,#15092a 100%);
+    background-attachment:fixed;min-height:100vh;overflow-x:hidden;
+  }
+  body::before{
+    content:"";position:fixed;inset:0;z-index:0;pointer-events:none;
+    background-image:
+      linear-gradient(rgba(0,229,255,.05) 1px,transparent 1px),
+      linear-gradient(90deg,rgba(0,229,255,.05) 1px,transparent 1px);
+    background-size:44px 44px;
+    mask-image:linear-gradient(to bottom,transparent 40%,#000 100%);
+    -webkit-mask-image:linear-gradient(to bottom,transparent 40%,#000 100%);
+  }
+  .wrap{position:relative;z-index:1;max-width:1240px;margin:0 auto;padding:20px}
 
-  <header class="topbar">
-    <a href="index.html" class="brand">
-      <svg class="logo" viewBox="0 0 60 60" aria-hidden="true">
-        <defs>
-          <linearGradient id="lg-cat" x1="0" y1="0" x2="1" y2="1">
-            <stop offset="0%" stop-color="#ff2d95"/>
-            <stop offset="50%" stop-color="#ff8a3d"/>
-            <stop offset="100%" stop-color="#7b2ff7"/>
-          </linearGradient>
-        </defs>
-        <circle cx="30" cy="30" r="27" fill="#0b0616" stroke="url(#lg-cat)" stroke-width="3"/>
-        <text x="30" y="41" text-anchor="middle" font-family="Anton, sans-serif" font-size="26" fill="url(#lg-cat)" letter-spacing="1">LW</text>
-      </svg>
-      <span class="brand-text">LIVEWORLD</span>
-    </a>
-    <nav class="main-nav">
-      <a href="index.html">Главная</a>
-      <a href="catalog.html" class="active">Каталог</a>
-      <div class="auth-zone" id="authZone"></div>
-    </nav>
-  </header>
+  header{
+    display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;
+    padding:14px 18px;border-radius:16px;
+    background:linear-gradient(180deg,rgba(30,18,45,.85),rgba(15,8,24,.85));
+    border:1px solid var(--line);backdrop-filter:blur(18px);
+    box-shadow:0 20px 60px rgba(0,0,0,.45),inset 0 1px 0 rgba(255,255,255,.05);
+    position:sticky;top:12px;z-index:20;
+  }
+  .logo{display:flex;align-items:center;gap:12px;cursor:pointer;user-select:none}
+  .logo-mark{
+    width:46px;height:46px;border-radius:12px;display:grid;place-items:center;
+    font-family:'Bebas Neue',sans-serif;font-size:26px;letter-spacing:1px;color:#fff;
+    background:linear-gradient(135deg,var(--pink),var(--orange) 55%,var(--cyan));
+    box-shadow:0 0 30px rgba(255,45,149,.45);
+  }
+  .logo-text{
+    font-family:'Bebas Neue',sans-serif;font-size:26px;letter-spacing:3px;line-height:1;
+    background:linear-gradient(90deg,#fff,var(--yellow) 40%,var(--pink) 75%,var(--cyan));
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+  }
+  .logo-text small{
+    display:block;font-family:Montserrat,sans-serif;font-size:9px;letter-spacing:3px;
+    font-weight:800;color:var(--green-2);margin-top:4px;-webkit-text-fill-color:var(--green-2);
+  }
+  nav{display:flex;gap:4px;flex-wrap:wrap}
+  .nav-btn{
+    background:transparent;color:var(--muted);border:1px solid transparent;
+    font:inherit;font-size:13px;font-weight:700;letter-spacing:.5px;
+    padding:10px 14px;border-radius:10px;cursor:pointer;transition:.22s;
+  }
+  .nav-btn:hover{color:#fff;background:rgba(255,255,255,.06);border-color:var(--line)}
+  .nav-btn.active{
+    color:#fff;background:linear-gradient(135deg,var(--pink),var(--orange));
+    border-color:transparent;box-shadow:0 6px 20px rgba(255,45,149,.35);
+  }
 
-  <main>
-    <div class="promo-banner" id="promoBanner" hidden></div>
-    <h1 class="page-title reveal">КАТАЛОГ ТОВАРОВ</h1>
-    <section class="cards" id="cardsContainer"></section>
+  .page{display:none;animation:fade .35s ease}
+  .page.active{display:block}
+  @keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
 
-    <section class="contact reveal">
-      <h2>Как со мной связаться</h2>
-      <ul>
-        <li>📞 Телефон: <a href="tel:+79870266932">+7 987 026 69 32</a></li>
-        <li>✈️ Telegram: <a href="https://t.me/netuimi67" target="_blank" rel="noopener">@netuimi67</a></li>
-        <li>🎮 Discord: <span>@roblox_admin2</span></li>
-      </ul>
-    </section>
-  </main>
+  .hero{
+    position:relative;overflow:hidden;margin:20px 0 24px;padding:44px 36px;border-radius:20px;
+    background:linear-gradient(120deg,rgba(255,45,149,.18),rgba(123,44,191,.15) 45%,rgba(0,229,255,.10));
+    border:1px solid rgba(255,255,255,.14);box-shadow:0 30px 80px rgba(0,0,0,.4);
+  }
+  .hero::after{
+    content:"";position:absolute;right:-120px;top:-140px;width:380px;height:380px;
+    border-radius:50%;background:radial-gradient(circle,rgba(255,45,149,.35),transparent 65%);
+    filter:blur(10px);pointer-events:none;
+  }
+  .eyebrow{
+    display:inline-block;padding:7px 12px;border-radius:999px;
+    font-size:11px;font-weight:800;letter-spacing:2px;text-transform:uppercase;
+    color:var(--cyan);background:rgba(0,229,255,.08);border:1px solid rgba(0,229,255,.35);
+    margin-bottom:16px;
+  }
+  .hero h1{
+    font-family:'Bebas Neue',sans-serif;font-size:clamp(42px,7vw,84px);
+    line-height:.95;letter-spacing:3px;color:#fff;text-transform:uppercase;
+    margin-bottom:16px;position:relative;z-index:1;
+  }
+  .hero h1 span{
+    background:linear-gradient(90deg,var(--yellow),var(--pink) 55%,var(--cyan));
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+  }
+  .hero p{max-width:640px;color:var(--muted);font-size:15px;line-height:1.7;position:relative;z-index:1}
 
-  <footer class="foot">
-    <span>© ShopLiveworlds — Liveworld Store</span>
-    <span>Not affiliated with Rockstar Games · <a href="admin.html" class="admin-link" title="Админ-панель">⚙️</a></span>
-  </footer>
+  .sec-title{
+    font-family:'Bebas Neue',sans-serif;font-size:26px;letter-spacing:3px;
+    color:#fff;text-transform:uppercase;margin:28px 0 14px;
+    display:flex;align-items:center;gap:12px;
+  }
+  .sec-title::before{
+    content:"";width:5px;height:26px;border-radius:2px;
+    background:linear-gradient(180deg,var(--pink),var(--orange));
+    box-shadow:0 0 12px rgba(255,45,149,.5);
+  }
 
-  <!-- Модалка заказа -->
-  <div class="modal-overlay" id="orderModal" aria-hidden="true">
-    <div class="modal" role="dialog" aria-modal="true">
-      <button class="modal-close" id="modalClose" aria-label="Закрыть">×</button>
-      <h2 class="modal-title">Оформление заказа</h2>
-      <form id="orderForm" class="order-form" novalidate>
-        <label><span>Товар</span><input type="text" id="fieldItem" readonly /></label>
-        <label><span>Ник в игре *</span><input type="text" id="fieldNick" required minlength="2" maxlength="32" placeholder="Steve" /></label>
-        <label><span>Способ связи *</span><input type="text" id="fieldContact" required placeholder="Telegram @username / телефон" /></label>
-        <label><span>Способ оплаты</span><input type="text" id="fieldPayment" placeholder="Карта / СБП / крипта" /></label>
-        <label><span>Комментарий</span><textarea id="fieldComment" rows="3" maxlength="500"></textarea></label>
-        <button type="submit" class="btn-submit">Сформировать заказ</button>
-      </form>
-      <div class="order-result" id="orderResult" hidden>
-        <p class="order-result-title">Заказ готов — отправь его мне:</p>
-        <pre id="orderText" class="order-text"></pre>
-        <div class="order-actions">
-          <a id="sendTelegram" class="btn-tg" href="#" target="_blank" rel="noopener">✈️ Отправить в Telegram</a>
-          <button type="button" id="copyOrder" class="btn-copy">📋 Скопировать</button>
-        </div>
-        <button type="button" id="resetOrder" class="btn-reset">← Новый заказ</button>
-      </div>
-    </div>
-  </div>
+  .features{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px;margin:20px 0}
+  .feature{
+    padding:22px;border-radius:16px;
+    background:linear-gradient(135deg,rgba(30,18,45,.75),rgba(15,8,24,.85));
+    border:1px solid var(--line);transition:.25s;position:relative;overflow:hidden;
+  }
+  .feature::before{
+    content:"";position:absolute;top:0;left:0;width:3px;height:100%;
+    background:linear-gradient(180deg,var(--pink),transparent);
+  }
+  .feature:nth-child(2)::before{background:linear-gradient(180deg,var(--cyan),transparent)}
+  .feature:nth-child(3)::before{background:linear-gradient(180deg,var(--green-2),transparent)}
+  .feature:nth-child(4)::before{background:linear-gradient(180deg,var(--orange),transparent)}
+  .feature:hover{transform:translateY(-4px);border-color:rgba(255,45,149,.4);box-shadow:0 16px 40px rgba(255,45,149,.15)}
+  .feature .fi{font-size:32px;margin-bottom:10px;display:inline-block}
+  .feature h3{font-family:'Bebas Neue',sans-serif;font-size:20px;letter-spacing:2px;margin-bottom:6px;color:#fff}
+  .feature p{color:var(--muted);font-size:13px;line-height:1.6}
 
-  <!-- Модалка регистрации -->
-  <div class="modal-overlay" id="registerModal" aria-hidden="true">
-    <div class="modal" role="dialog" aria-modal="true">
-      <button class="modal-close" id="regClose" aria-label="Закрыть">×</button>
-      <h2 class="modal-title">Регистрация</h2>
-      <form id="registerForm" class="order-form" novalidate>
-        <label><span>Ник в игре *</span><input type="text" id="regNick" required minlength="2" maxlength="32" placeholder="Steve" /></label>
-        <label><span>Email *</span><input type="email" id="regEmail" required placeholder="you@mail.com" /></label>
-        <label><span>Пароль * (мин. 4)</span><input type="password" id="regPassword" required minlength="4" maxlength="64" placeholder="••••••" /></label>
-        <p class="form-error" id="regError" hidden></p>
-        <button type="submit" class="btn-submit">Зарегистрироваться</button>
-      </form>
-    </div>
-  </div>
+  .cat-tabs{display:flex;gap:8px;margin:16px 0;flex-wrap:wrap}
+  .cat-tab{
+    padding:9px 16px;border-radius:999px;font-size:12px;font-weight:800;letter-spacing:1px;
+    text-transform:uppercase;cursor:pointer;transition:.2s;
+    background:rgba(255,255,255,.05);border:1px solid var(--line);color:var(--muted);
+  }
+  .cat-tab.active{color:#0a0a0a;background:linear-gradient(135deg,var(--pink),var(--orange));border-color:transparent}
 
-  <script src="script.js"></script>
-</body>
-</html>
+  .catalog{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:16px 0 24px}
+
+  .product{
+    overflow:hidden;border-radius:16px;display:flex;flex-direction:column;
+    background:linear-gradient(135deg,rgba(30,18,45,.75),rgba(15,8,24,.85));
+    border:1px solid var(--line);transition:.25s;position:relative;
+  }
+  .product:hover{transform:translateY(-4px);border-color:rgba(255,255,255,.25);box-shadow:0 16px 40px rgba(0,0,0,.4)}
+
+  .product-img{
+    height:92px;display:grid;place-items:center;font-size:40px;color:#fff;
+    position:relative;overflow:hidden;
+  }
+  .product-img::after{
+    content:"";position:absolute;inset:0;
+    background:repeating-linear-gradient(45deg,transparent 0 12px,rgba(0,0,0,.08) 12px 24px);
+    pointer-events:none;
+  }
+  .product-tier{
+    position:absolute;top:10px;left:12px;z-index:2;
+    font-family:'Bebas Neue',sans-serif;font-size:11px;letter-spacing:2px;
+    padding:4px 8px;border-radius:6px;
+    background:rgba(0,0,0,.5);color:#fff;backdrop-filter:blur(4px);
+  }
+  .product-body{padding:16px;display:flex;flex-direction:column;gap:8px;flex:1}
+  .product-body h3{
+    font-family:'Bebas Neue',sans-serif;font-size:22px;letter-spacing:2px;color:#fff;
+  }
+  .product-body .tagline{color:var(--muted);font-size:11px;line-height:1.5;font-weight:600;letter-spacing:.5px}
+  .product-features{
+    list-style:none;padding:0;margin:4px 0;
+    display:flex;flex-direction:column;gap:5px;flex:1;
+  }
+  .product-features li{
+    font-size:11.5px;color:#d8cbe8;padding-left:16px;position:relative;
+    line-height:1.45;
+  }
+  .product-features li::before{
+    content:"▸";position:absolute;left:0;color:var(--pink-2);font-weight:800;
+  }
+  .product-price{
+    font-family:'Bebas Neue',sans-serif;font-size:28px;letter-spacing:1px;
+    color:var(--yellow);margin-top:8px;
+  }
+  .buy-btn{
+    padding:11px;border:0;cursor:pointer;border-radius:8px;
+    font:inherit;font-size:12px;font-weight:800;letter-spacing:1px;color:#0a0a0a;
+    background:linear-gradient(135deg,var(--green-2),var(--green));transition:.2s;
+  }
+  .buy-btn:hover{transform:translateY(-2px);box-shadow:0 10px 24px rgba(139,195,74,.4)}
+
+  .panel{
+    padding:26px;border-radius:16px;
+    background:linear-gradient(135deg,rgba(30,18,45,.75),rgba(15,8,24,.85));
+    border:1px solid var(--line);margin:20px 0;
+  }
+  .panel h2{
+    font-family:'Bebas Neue',sans-serif;font-size:22px;letter-spacing:3px;
+    color:#fff;text-transform:uppercase;margin-bottom:16px;
+    display:flex;align-items:center;gap:10px;
+  }
+  .panel h2::before{
+    content:"";width:5px;height:22px;border-radius:2px;
+    background:linear-gradient(180deg,var(--pink),var(--orange));
+  }
+
+  .contact-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px;margin:16px 0}
+  .contact-card{
+    padding:20px;border-radius:14px;display:flex;align-items:center;gap:16px;
+    background:linear-gradient(135deg,rgba(30,18,45,.75),rgba(15,8,24,.85));
+    border:1px solid var(--line);transition:.25s;cursor:pointer;
+  }
+  .contact-card:hover{transform:translateY(-3px);border-color:rgba(0,229,255,.4);box-shadow:0 16px 40px rgba(0,229,255,.12)}
+  .contact-icon{
+    width:54px;height:54px;border-radius:12px;flex:0 0 auto;
+    display:grid;place-items:center;font-size:26px;
+    background:rgba(0,229,255,.1);border:1px solid rgba(0,229,255,.3);
+  }
+  .contact-card:nth-child(2) .contact-icon{background:rgba(255,45,149,.1);border-color:rgba(255,45,149,.3)}
+  .contact-card:nth-child(3) .contact-icon{background:rgba(255,140,66,.1);border-color:rgba(255,140,66,.3)}
+  .contact-body .label{
+    font-size:11px;font-weight:800;letter-spacing:2px;text-transform:uppercase;
+    color:var(--muted);margin-bottom:4px;
+  }
+  .contact-body .value{
+    font-family:'Bebas Neue',sans-serif;font-size:22px;letter-spacing:1px;color:#fff;word-break:break-all;
+  }
+
+  .form{display:flex;flex-direction:column;gap:14px;max-width:560px}
+  .field{display:flex;flex-direction:column;gap:6px}
+  .field label{
+    font-size:11px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);
+  }
+  .field input,.field textarea,.field select{
+    padding:12px 14px;border-radius:10px;background:rgba(0,0,0,.35);
+    border:1px solid var(--line);color:#fff;font:inherit;font-size:14px;outline:0;transition:.2s;
+  }
+  .field input:focus,.field textarea:focus,.field select:focus{
+    border-color:var(--pink);box-shadow:0 0 0 3px rgba(255,45,149,.15);
+  }
+  .field textarea{resize:vertical;min-height:80px;font-family:inherit}
+  .field select option{background:var(--panel-solid);color:#fff}
+  .field .hint{font-size:11px;color:var(--muted);margin-top:2px}
+  .btn{
+    padding:13px 20px;border:0;cursor:pointer;border-radius:10px;
+    font:inherit;font-size:13px;font-weight:800;letter-spacing:.5px;color:#0a0a0a;
+    background:linear-gradient(135deg,var(--pink),var(--orange));transition:.2s;
+  }
+  .btn:hover{transform:translateY(-2px);box-shadow:0 12px 30px rgba(255,45,149,.4)}
+  .btn-ghost{background:rgba(255,255,255,.05);color:#fff;border:1px solid var(--line)}
+  .btn-ghost:hover{background:rgba(255,255,255,.1);box-shadow:none}
+  .btn-green{background:linear-gradient(135deg,var(--green-2),var(--green));color:#0a0a0a}
+  .btn-red{background:linear-gradient(135deg,var(--red),#b81020);color:#fff}
+  .btn-row{display:flex;gap:10px;flex-wrap:wrap}
+
+  .profile-head{display:flex;align-items:center;gap:20px;flex-wrap:wrap;margin-bottom:22px}
+  .avatar{
+    width:96px;height:96px;border-radius:20px;flex:0 0 auto;display:grid;place-items:center;
+    font-family:'Bebas Neue',sans-serif;font-size:44px;color:#fff;
+    background:linear-gradient(135deg,var(--pink),var(--orange),var(--cyan));
+    box-shadow:0 0 30px rgba(255,45,149,.4);
+  }
+  .profile-info h2{font-family:'Bebas Neue',sans-serif;font-size:30px;letter-spacing:2px;color:#fff}
+  .profile-info p{color:var(--muted);font-size:13px}
+
+  .info-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin:16px 0}
+  .info-item{padding:14px 16px;border-radius:12px;background:rgba(0,0,0,.3);border:1px solid var(--line)}
+  .info-item .lbl{font-size:11px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);margin-bottom:4px}
+  .info-item .val{font-size:14px;font-weight:700;color:#fff;word-break:break-all}
+
+  .balance-card{
+    padding:24px;border-radius:16px;margin:16px 0;
+    background:linear-gradient(135deg,rgba(255,209,102,.14),rgba(255,140,66,.10) 50%,rgba(255,45,149,.08));
+    border:1px solid rgba(255,209,102,.3);
+    display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;
+    position:relative;overflow:hidden;
+  }
+  .balance-card::after{
+    content:"";position:absolute;right:-80px;top:-80px;width:220px;height:220px;
+    border-radius:50%;background:radial-gradient(circle,rgba(255,209,102,.25),transparent 65%);
+    pointer-events:none;
+  }
+  .balance-info{position:relative;z-index:1}
+  .balance-info .lbl{
+    font-size:11px;font-weight:800;letter-spacing:2px;text-transform:uppercase;
+    color:var(--yellow);margin-bottom:6px;
+  }
+  .balance-info .amount{
+    font-family:'Bebas Neue',sans-serif;font-size:44px;line-height:1;
+    letter-spacing:2px;
+    background:linear-gradient(90deg,var(--yellow),var(--orange));
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+  }
+  .balance-card .btn{position:relative;z-index:1;padding:14px 24px;font-size:14px}
+
+  .progress-wrap{margin:8px 0}
+  .progress-bar{height:12px;border-radius:999px;overflow:hidden;background:rgba(255,255,255,.08);border:1px solid var(--line)}
+  .progress-fill{height:100%;width:0%;transition:width .5s ease;background:linear-gradient(90deg,var(--cyan),var(--pink));box-shadow:0 0 12px rgba(255,45,149,.5)}
+  .progress-label{display:flex;justify-content:space-between;font-size:11px;color:var(--muted);margin-top:6px;font-weight:700}
+
+  .rewards{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px;margin:14px 0}
+  .reward{
+    padding:16px;border-radius:12px;text-align:center;
+    background:rgba(0,0,0,.3);border:1px solid var(--line);opacity:.45;transition:.25s;
+  }
+  .reward.unlocked{
+    opacity:1;border-color:var(--green);
+    background:linear-gradient(135deg,rgba(106,176,76,.15),rgba(139,195,74,.08));
+    box-shadow:0 0 20px rgba(106,176,76,.2);
+  }
+  .reward-icon{font-size:28px;margin-bottom:6px}
+  .reward-name{font-family:'Bebas Neue',sans-serif;font-size:18px;letter-spacing:2px;color:#fff}
+  .reward-time{font-size:11px;color:var(--muted);margin-top:2px;font-weight:700}
+  .reward-status{font-size:10px;font-weight:800;letter-spacing:1px;margin-top:6px;color:var(--green-2)}
+  .reward.locked .reward-status{color:var(--muted)}
+
+  .admin-login{max-width:420px;margin:20px auto}
+  .admin-actions{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;margin:16px 0}
+  .action-btn{
+    padding:16px;border-radius:12px;border:1px solid var(--line);
+    background:linear-gradient(135deg,rgba(30,18,45,.75),rgba(15,8,24,.85));
+    color:#fff;font:inherit;font-size:13px;font-weight:800;letter-spacing:.5px;
+    cursor:pointer;transition:.22s;display:flex;flex-direction:column;align-items:center;gap:8px;
+    text-align:center;
+  }
+  .action-btn:hover{transform:translateY(-3px);border-color:rgba(255,45,149,.4);box-shadow:0 12px 30px rgba(255,45,149,.15)}
+  .action-btn .ai{font-size:24px}
+  .action-btn.green{border-color:rgba(106,176,76,.3)}
+  .action-btn.green:hover{border-color:var(--green);box-shadow:0 12px 30px rgba(106,176,76,.2)}
+  .action-btn.red{border-color:rgba(255,71,87,.3)}
+  .action-btn.red:hover{border-color:var(--red);box-shadow:0 12px 30px rgba(255,71,87,.2)}
+
+  .admin-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;margin:16px 0}
+  .stat{padding:18px;border-radius:12px;background:rgba(0,0,0,.3);border:1px solid var(--line)}
+  .stat .lbl{font-size:11px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
+  .stat .val{font-family:'Bebas Neue',sans-serif;font-size:32px;letter-spacing:1px;color:var(--pink-2)}
+
+  .list{display:flex;flex-direction:column;gap:8px;margin:12px 0;max-height:360px;overflow-y:auto}
+  .list-item{
+    padding:12px 14px;border-radius:10px;background:rgba(0,0,0,.3);
+    border:1px solid var(--line);display:flex;justify-content:space-between;
+    gap:12px;align-items:center;flex-wrap:wrap;
+  }
+  .list-item .body strong{font-size:13px;color:#fff}
+  .list-item .body span{font-size:11px;color:var(--muted);display:block;margin-top:2px}
+  .list-item .meta{font-size:10px;color:var(--muted);white-space:nowrap}
+  .empty{color:var(--muted);font-size:13px;text-align:center;padding:24px;font-style:italic}
+
+  .toast{
+    position:fixed;right:24px;bottom:24px;z-index:100;padding:14px 20px;border-radius:10px;
+    background:rgba(15,8,24,.96);border:1px solid var(--green);color:#fff;
+    font-size:13px;font-weight:700;
+    box-shadow:0 18px 50px rgba(0,0,0,.6),0 0 24px rgba(106,176,76,.3);
+    opacity:0;transform:translateY(20px);pointer-events:none;transition:.3s;max-width:320px;
+  }
+  .toast.show{opacity:1;transform:none}
+  .toast.error{border-color:var(--red);box-shadow:0 18px 50px rgba(0,0,0,.6),0 0 24px rgba(255,71,87,.3)}
+
+  .modal-overlay{
+    position:fixed;inset:0;z-index:90;
+    background:rgba(0,0,0,.72);backdrop-filter:blur(6px);
+    display:none;align-items:center;justify-content:center;padding:20px;
+    animation:fade .25s ease;
+  }
+  .modal-overlay.show{display:flex}
+  .modal{
+    width:100%;max-width:460px;padding:28px;border-radius:18px;
+    background:linear-gradient(135deg,#1e1230,#100820);
+    border:1px solid rgba(255,209,102,.3);
+    box-shadow:0 30px 80px rgba(0,0,0,.6),0 0 40px rgba(255,209,102,.15);
+    position:relative;
+  }
+  .modal h3{
+    font-family:'Bebas Neue',sans-serif;font-size:24px;letter-spacing:3px;
+    color:#fff;text-transform:uppercase;margin-bottom:6px;
+    display:flex;align-items:center;gap:10px;
+  }
+  .modal h3::before{
+    content:"";width:5px;height:22px;border-radius:2px;
+    background:linear-gradient(180deg,var(--yellow),var(--orange));
+  }
+  .modal .sub{color:var(--muted);font-size:13px;margin-bottom:18px}
+  .modal .close-btn{
+    position:absolute;top:16px;right:16px;
+    width:32px;height:32px;border-radius:8px;border:1px solid var(--line);
+    background:rgba(255,255,255,.05);color:#fff;font-size:18px;
+    cursor:pointer;display:grid;place-items:center;transition:.2s;
+  }
+  .modal .close-btn:hover{background:rgba(255,71,87,.2);border-color:var(--red)}
+  .presets{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:14px 0}
+  .preset{
+    padding:14px 8px;border-radius:12px;cursor:pointer;text-align:center;
+    background:rgba(0,0,0,.4);border:1px solid var(--line);
+    color:#fff;font:inherit;font-weight:800;font-size:15px;
+    transition:.2s;
+  }
+  .preset:hover{border-color:var(--yellow);ba
