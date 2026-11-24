@@ -1,162 +1,173 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Каталог — ShopLiveworlds</title>
-  <link rel="stylesheet" href="style.css">
-  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Каталог товаров — ShopLiveworlds</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Bebas+Neue&family=Inter:wght@400;600;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
 </head>
-<body>
+<body class="catalog">
+  <div class="bg-glow"></div>
 
-  <nav class="topbar">
-    <a href="index.html" class="logo">SHOP<span>LIVEWORLDS</span></a>
-      <div class="nav-links">
+  <header class="topbar">
+    <a href="index.html" class="brand">
+      <svg class="logo" viewBox="0 0 60 60" aria-hidden="true">
+        <defs>
+          <linearGradient id="lg-cat" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stop-color="#ff2d95"/>
+            <stop offset="50%" stop-color="#ff8a3d"/>
+            <stop offset="100%" stop-color="#7b2ff7"/>
+          </linearGradient>
+        </defs>
+        <circle cx="30" cy="30" r="27" fill="#0b0616" stroke="url(#lg-cat)" stroke-width="3"/>
+        <text x="30" y="41" text-anchor="middle" font-family="Anton, sans-serif" font-size="26" fill="url(#lg-cat)" letter-spacing="1">LW</text>
+      </svg>
+      <span class="brand-text">LIVEWORLD</span>
+    </a>
+    <nav class="main-nav">
       <a href="index.html">Главная</a>
-      <a href="catalog.html">Каталог</a>
-      <a href="reviews.html">Отзывы</a>
-      <a href="faq.html">FAQ</a>
-      <a href="index.html">Контакты</a>
-      <a href="register.html">Регистрация</a>
-      <a href="admin.html">Админ</a>
-      </div>
-  </nav>
+      <a href="catalog.html" class="active">Каталог</a>
+      <div class="auth-zone" id="authZone"></div>
+    </nav>
+  </header>
 
-  <section class="catalog-header">
-    <h1 class="catalog-title">КАТАЛОГ ТОВАРОВ</h1>
-    <p class="catalog-sub">Привилегии, монеты и бонусы для сервера Liveworld</p>
-  </section>
+  <main>
+    <h1 class="page-title reveal">КАТАЛОГ ТОВАРОВ</h1>
 
-  <section class="catalog">
+    <section class="cards">
+      <article class="card card-blue reveal">
+        <div class="card-head">
+          <h2>Привилегия ЛАЙТ</h2>
+          <span class="price">LITE</span>
+        </div>
+        <ul>
+          <li>Доступ к командам: <code>/rtp</code>, <code>/home</code>, <code>/ah sell</code>, <code>/ah</code>, <code>/kit</code>, <code>/delhome</code></li>
+          <li>Ключи кейса: <strong>+10</strong></li>
+          <li>Талисман голема: <strong>+1</strong></li>
+          <li>Сфера киллера: <strong>+1</strong></li>
+          <li>Монеты: <strong>+2 000 000</strong></li>
+          <li>Сет (кит) <strong>lite</strong></li>
+        </ul>
+        <button class="btn-buy" data-item="Привилегия ЛАЙТ">Купить</button>
+      </article>
 
-    <div class="product light">
-      <div class="product-badge">ПРИВИЛЕГИЯ</div>
-      <h2>ЛАЙТ</h2>
-      <ul class="product-features">
-        <li>Команды: <code>/rtp</code>, <code>/home</code>, <code>/ah sell</code>, <code>/ah</code>, <code>/kit</code>, <code>/delete home</code></li>
-        <li>Ключи кейса +10</li>
-        <li>+1 талисман голема</li>
-        <li>+1 сфера киллера</li>
-        <li>+2 000 000 монет</li>
-        <li>Сет (кит) Lite</li>
+      <article class="card card-green reveal">
+        <div class="card-head">
+          <h2>Привилегия Креатив</h2>
+          <span class="price">CREATIVE</span>
+        </div>
+        <ul>
+          <li>Всё почти как в ЛАЙТ</li>
+          <li>Талисманы: <strong>+2</strong></li>
+          <li>Сфера: <strong>+1</strong></li>
+          <li>Бонус монет: <strong>+100 000</strong></li>
+          <li>Второй бонус: <strong>+100 000</strong></li>
+          <li>Доступ к режиму <strong>креатив</strong></li>
+          <li>Приват регионов: <strong>4</strong></li>
+          <li>Точки дома: <strong>3</strong></li>
+        </ul>
+        <button class="btn-buy" data-item="Привилегия Креатив">Купить</button>
+      </article>
+
+      <article class="card card-gold reveal">
+        <div class="card-head">
+          <h2>Игровая валюта</h2>
+          <span class="price">100 000</span>
+        </div>
+        <ul>
+          <li>Пакет монет: <strong>100 000</strong></li>
+          <li>Бонус: <strong>+100 000</strong></li>
+          <li>Итого на баланс: <strong>200 000</strong></li>
+        </ul>
+        <button class="btn-buy" data-item="Игровая валюта 100 000 монет">Купить</button>
+      </article>
+    </section>
+
+    <section class="contact reveal">
+      <h2>Как со мной связаться</h2>
+      <ul>
+        <li>📞 Телефон: <a href="tel:+79870266932">+7 987 026 69 32</a></li>
+        <li>✈️ Telegram: <a href="https://t.me/netuimi67" target="_blank" rel="noopener">@netuimi67</a></li>
+        <li>🎮 Discord: <span>@roblox_admin2</span></li>
       </ul>
-      <button class="buy-btn" onclick="buy('ЛАЙТ')">КУПИТЬ</button>
-    </div>
+    </section>
+  </main>
 
-    <div class="product creative">
-      <div class="product-badge">ПРИВИЛЕГИЯ</div>
-      <h2>КРЕАТИВ</h2>
-      <ul class="product-features">
-        <li>Всё, что в ЛАЙТ</li>
-        <li>+2 талисмана</li>
-        <li>+1 сфера</li>
-        <li>+100 000 бонусных монет</li>
-        <li>+100 000 монет второго бонуса</li>
-        <li>Режим <code>/gamemode creative</code></li>
-        <li>Приват 4 регионов</li>
-        <li>3 точки дома</li>
-      </ul>
-      <button class="buy-btn" onclick="buy('КРЕАТИВ')">КУПИТЬ</button>
-    </div>
-
-    <div class="product premium">
-      <div class="product-badge">ПРИВИЛЕГИЯ</div>
-      <h2>ПРЕМИУМ</h2>
-      <ul class="product-features">
-        <li>Приват 2 точек дома</li>
-        <li>Приват 2 регионов</li>
-        <li>+1 сфера (рандом)</li>
-        <li>+1 голова (рандом)</li>
-        <li>+100 000 монет на баланс</li>
-      </ul>
-      <button class="buy-btn" onclick="buy('ПРЕМИУМ')">КУПИТЬ — 100 ₽</button>
-    </div>
-
-    <div class="product lord">
-      <div class="product-badge">ПРИВИЛЕГИЯ</div>
-      <h2>ЛОРД</h2>
-      <ul class="product-features">
-        <li>Приват 20 точек дома</li>
-        <li>Приват 20 регионов</li>
-        <li>+2 000 000 монет</li>
-      </ul>
-      <button class="buy-btn" onclick="buy('ЛОРД')">КУПИТЬ — 150 ₽</button>
-    </div>
-
-    <div class="product elite">
-      <div class="product-badge">ПРИВИЛЕГИЯ</div>
-      <h2>ЭЛИТА</h2>
-      <ul class="product-features">
-        <li>Приват 40 точек дома</li>
-        <li>Приват 60 регионов</li>
-        <li>+4 000 000 монет</li>
-      </ul>
-      <button class="buy-btn" onclick="buy('ЭЛИТА')">КУПИТЬ — 500 ₽</button>
-    </div>
-
-    <div class="product admin">
-      <div class="product-badge">ПРИВИЛЕГИЯ</div>
-      <h2>АДМИН</h2>
-      <ul class="product-features">
-        <li>Приват неограниченного количества точек дома</li>
-        <li>Приват неограниченного количества регионов</li>
-        <li><strong>Только по доверенности</strong></li>
-      </ul>
-      <button class="buy-btn" onclick="buy('АДМИН (по доверенности)')">СВЯЗАТЬСЯ</button>
-    </div>
-
-    <div class="product coins">
-      <div class="product-badge">ВАЛЮТА</div>
-      <h2>100 000 МОНЕТ</h2>
-      <ul class="product-features">
-        <li>Пакет игровой валюты</li>
-        <li>+100 000 бонусных монет</li>
-        <li>Зачисление моментально</li>
-      </ul>
-      <button class="buy-btn" onclick="buy('100 000 монет')">КУПИТЬ</button>
-    </div>
-
-  </section>
-
-  <section id="contact" class="contact">
-    <h2>СВЯЗАТЬСЯ С НАМИ</h2>
-    <div class="contact-grid">
-      <div class="contact-card">
-        <div class="contact-label">Телефон</div>
-        <a href="tel:+79870266932">+7 987 026 69 32</a>
-      </div>
-      <div class="contact-card">
-        <div class="contact-label">Telegram</div>
-        <a href="https://t.me/netuimi67" target="_blank" rel="noopener">@netuimi67</a>
-      </div>
-      <div class="contact-card">
-        <div class="contact-label">Discord</div>
-        <a href="#" onclick="copyDiscord(this);return false;">@roblox_admin2</a>
-      </div>
-    </div>
-  </section>
-
-  <footer class="footer">
-    <div>© ShopLiveworlds — Minecraft Liveworld</div>
-    <div>Оплата любым способом</div>
+  <footer class="foot">
+    <span>© ShopLiveworlds — Liveworld Store</span>
+    <span>Not affiliated with Rockstar Games</span>
   </footer>
 
-  <script>
-    function buy(product) {
-      var msg = 'Хочу купить ' + product;
-      window.location.href = 'https://t.me/netuimi67?text=' + encodeURIComponent(msg);
-    }
-    function copyDiscord(el) {
-      var ta = document.createElement('textarea');
-      ta.value = 'roblox_admin2';
-      document.body.appendChild(ta);
-      ta.select();
-      try { document.execCommand('copy'); } catch(e) {}
-      document.body.removeChild(ta);
-      el.textContent = 'Скопировано!';
-      setTimeout(function(){ el.textContent = '@roblox_admin2'; }, 1500);
-    }
-  </script>
+  <!-- Модалка заказа -->
+  <div class="modal-overlay" id="orderModal" aria-hidden="true">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="orderTitle">
+      <button class="modal-close" id="modalClose" aria-label="Закрыть">×</button>
+      <h2 id="orderTitle" class="modal-title">Оформление заказа</h2>
 
+      <form id="orderForm" class="order-form" novalidate>
+        <label>
+          <span>Товар</span>
+          <input type="text" name="item" id="fieldItem" readonly />
+        </label>
+        <label>
+          <span>Ваш ник в игре *</span>
+          <input type="text" name="nick" id="fieldNick" required minlength="2" maxlength="32" placeholder="Steve" />
+        </label>
+        <label>
+          <span>Способ связи *</span>
+          <input type="text" name="contact" id="fieldContact" required placeholder="Telegram @username / телефон" />
+        </label>
+        <label>
+          <span>Способ оплаты</span>
+          <input type="text" name="payment" id="fieldPayment" placeholder="Карта / СБП / крипта / что угодно" />
+        </label>
+        <label>
+          <span>Комментарий</span>
+          <textarea name="comment" id="fieldComment" rows="3" maxlength="500" placeholder="Необязательно"></textarea>
+        </label>
+        <button type="submit" class="btn-submit">Сформировать заказ</button>
+      </form>
+
+      <div class="order-result" id="orderResult" hidden>
+        <p class="order-result-title">Заказ готов — отправь его мне:</p>
+        <pre id="orderText" class="order-text"></pre>
+        <div class="order-actions">
+          <a id="sendTelegram" class="btn-tg" href="#" target="_blank" rel="noopener">✈️ Отправить в Telegram</a>
+          <button type="button" id="copyOrder" class="btn-copy">📋 Скопировать</button>
+        </div>
+        <button type="button" id="resetOrder" class="btn-reset">← Новый заказ</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Модалка регистрации -->
+  <div class="modal-overlay" id="registerModal" aria-hidden="true">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="regTitle">
+      <button class="modal-close" id="regClose" aria-label="Закрыть">×</button>
+      <h2 id="regTitle" class="modal-title">Регистрация</h2>
+
+      <form id="registerForm" class="order-form" novalidate>
+        <label>
+          <span>Ник в игре *</span>
+          <input type="text" name="nick" id="regNick" required minlength="2" maxlength="32" placeholder="Steve" />
+        </label>
+        <label>
+          <span>Email *</span>
+          <input type="email" name="email" id="regEmail" required placeholder="you@mail.com" />
+        </label>
+        <label>
+          <span>Пароль * (мин. 4 символа)</span>
+          <input type="password" name="password" id="regPassword" required minlength="4" maxlength="64" placeholder="••••••" />
+        </label>
+        <p class="form-error" id="regError" hidden></p>
+        <button type="submit" class="btn-submit">Зарегистрироваться</button>
+      </form>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
 </body>
 </html>
