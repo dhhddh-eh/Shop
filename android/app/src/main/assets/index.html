@@ -120,3 +120,132 @@ footer span{color:var(--pink)}
 #fatal{display:none;margin:20px;padding:20px;border-radius:12px;background:rgba(255,71,87,.15);border:1px solid var(--red);color:#fff;font-family:monospace;font-size:13px;white-space:pre-wrap}
 @media(max-width:780px){.wrap{padding:14px}header{padding:12px 14px;position:static}.hero{padding:26px 22px}.balance-info .amount{font-size:34px}.presets{grid-template-columns:repeat(2,1fr)}}
 </style>
+</head>
+<body>
+
+<div id="fatal"></div>
+
+<div class="wrap">
+
+<header>
+  <div class="logo" onclick="show('home')">
+    <div class="logo-mark">L</div>
+    <div class="logo-text">LIVEWORLD<small>MINECRAFT SERVER</small></div>
+  </div>
+  <nav>
+    <button class="nav-btn active" data-page="home">Главная</button>
+    <button class="nav-btn" data-page="catalog">Каталог</button>
+    <button class="nav-btn" data-page="contacts">Контакты</button>
+    <button class="nav-btn" data-page="register">Регистрация</button>
+    <button class="nav-btn" data-page="profile">Профиль</button>
+    <button class="nav-btn" data-page="admin">Админ</button>
+  </nav>
+</header>
+
+<section id="home" class="page active">
+  <div class="hero">
+    <span class="eyebrow">● Добро пожаловать</span>
+    <h1>Сервер <span>LIVEWORLD</span><br>в стиле GTA</h1>
+    <p>LIVEWORLD — Minecraft-сервер с атмосферой GTA V и GTA VI. Лос-Сантос, свобода, бизнес, фракции. Покупай привилегии, зарабатывай монеты и открывай награды за время в игре.</p>
+  </div>
+  <h2 class="sec-title">Что тебя ждёт</h2>
+  <div class="features">
+    <div class="feature"><div class="fi">🏙</div><h3>Свободный город</h3><p>Районы, бизнесы, транспорт и экономика — всё в духе GTA.</p></div>
+    <div class="feature"><div class="fi">⚔</div><h3>PvP и фракции</h3><p>Вступай в банды, воюй за территории, участвуй в событиях.</p></div>
+    <div class="feature"><div class="fi">🏆</div><h3>Награды</h3><p>Играй дольше — получай ПРЕМИУМ, КРЕАТИВ, Лорд и ЭЛИТУ.</p></div>
+    <div class="feature"><div class="fi">🎮</div><h3>Онлайн 24/7</h3><p>Стабильные серверы, лаунчер и поддержка без выходных.</p></div>
+  </div>
+</section>
+
+<section id="catalog" class="page">
+  <h2 class="sec-title">Каталог привилегий</h2>
+  <div class="cat-tabs">
+    <button class="cat-tab active" data-cat="all">Все</button>
+    <button class="cat-tab" data-cat="privilege">Привилегии</button>
+    <button class="cat-tab" data-cat="coins">Монеты</button>
+  </div>
+  <div class="catalog" id="catalogGrid"></div>
+</section>
+
+<section id="contacts" class="page">
+  <h2 class="sec-title">Контакты</h2>
+  <p style="color:var(--muted);font-size:14px;line-height:1.7;margin-bottom:16px">Пиши нам по любым вопросам. Отвечаем быстро.</p>
+  <div class="contact-grid">
+    <div class="contact-card" onclick="copyText('+79178053161','Телефон')">
+      <div class="contact-icon">📱</div>
+      <div class="contact-body"><div class="label">Телефон</div><div class="value">+7 917 805 31 61</div></div>
+    </div>
+    <div class="contact-card" onclick="copyText('Sovaca2','Telegram')">
+      <div class="contact-icon">✈️</div>
+      <div class="contact-body"><div class="label">Telegram</div><div class="value">@Sovaca2</div></div>
+    </div>
+    <div class="contact-card" onclick="copyText('roblox_admin2','Discord')">
+      <div class="contact-icon">💬</div>
+      <div class="contact-body"><div class="label">Discord</div><div class="value">roblox_admin2</div></div>
+    </div>
+  </div>
+  <p style="color:var(--muted);font-size:12px;margin-top:8px">💡 Нажми на карточку — контакт скопируется.</p>
+</section>
+
+<section id="register" class="page">
+  <h2 class="sec-title">Регистрация</h2>
+  <div class="panel">
+    <div class="form">
+      <div class="field"><label>Ник в Minecraft *</label><input id="reg-mc" placeholder="Steve_LS"></div>
+      <div class="field"><label>Email *</label><input id="reg-email" type="email" placeholder="you@mail.com"></div>
+      <div class="field"><label>Пароль *</label><input id="reg-pass" type="password" placeholder="••••••••"></div>
+      <div class="field"><label>Telegram (необязательно)</label><input id="reg-tg" placeholder="@username"></div>
+      <div class="field"><label>Discord (необязательно)</label><input id="reg-ds" placeholder="username#0000"></div>
+      <button class="btn" onclick="doRegister()">Отправить заявку</button>
+    </div>
+  </div>
+</section>
+
+<section id="profile" class="page">
+  <h2 class="sec-title">Профиль</h2>
+  <div class="panel" id="profilePanel"></div>
+</section>
+
+<section id="admin" class="page">
+  <h2 class="sec-title">Админ</h2>
+  <div id="adminLoginBox" class="admin-login">
+    <div class="panel">
+      <h2 style="justify-content:center">Вход в админ-панель</h2>
+      <div class="form" style="max-width:100%">
+        <div class="field"><label>Пароль</label><input id="admin-pass" type="password" placeholder="••••••••"></div>
+        <button class="btn" onclick="adminLogin()">Войти</button>
+        <p class="hint">Пароль: <b>admin123</b></p>
+      </div>
+    </div>
+  </div>
+  <div id="adminPanelBox" style="display:none"></div>
+</section>
+
+<footer>© 2026 <span>LIVEWORLD</span> · Minecraft Server · GTA V/VI inspired</footer>
+</div>
+
+<div class="modal-overlay" id="topupModal" onclick="if(event.target===this)closeTopup()">
+  <div class="modal">
+    <button class="close-btn" onclick="closeTopup()">×</button>
+    <h3>Пополнить баланс</h3>
+    <p class="sub">Выбери сумму или введи свою. Демо-режим.</p>
+    <div class="presets">
+      <button class="preset" onclick="quickTopup(100)">₽ 100<small>Старт</small></button>
+      <button class="preset" onclick="quickTopup(300)">₽ 300<small>Ходовой</small></button>
+      <button class="preset" onclick="quickTopup(500)">₽ 500<small>Популярный</small></button>
+      <button class="preset" onclick="quickTopup(1000)">₽ 1 000<small>Выгодный</small></button>
+      <button class="preset" onclick="quickTopup(2000)">₽ 2 000<small>Про</small></button>
+      <button class="preset" onclick="quickTopup(5000)">₽ 5 000<small>Макс</small></button>
+    </div>
+    <div class="field" style="margin-top:10px">
+      <label>Своя сумма (₽)</label>
+      <input id="topup-custom" type="number" min="1" step="1" placeholder="Например, 750">
+    </div>
+    <div class="btn-row" style="margin-top:16px">
+      <button class="btn btn-yellow" style="flex:1" onclick="customTopup()">Пополнить</button>
+      <button class="btn btn-ghost" onclick="closeTopup()">Отмена</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
