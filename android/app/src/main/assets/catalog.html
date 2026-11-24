@@ -35,56 +35,9 @@
   </header>
 
   <main>
+    <div class="promo-banner" id="promoBanner" hidden></div>
     <h1 class="page-title reveal">КАТАЛОГ ТОВАРОВ</h1>
-
-    <section class="cards">
-      <article class="card card-blue reveal">
-        <div class="card-head">
-          <h2>Привилегия ЛАЙТ</h2>
-          <span class="price">LITE</span>
-        </div>
-        <ul>
-          <li>Доступ к командам: <code>/rtp</code>, <code>/home</code>, <code>/ah sell</code>, <code>/ah</code>, <code>/kit</code>, <code>/delhome</code></li>
-          <li>Ключи кейса: <strong>+10</strong></li>
-          <li>Талисман голема: <strong>+1</strong></li>
-          <li>Сфера киллера: <strong>+1</strong></li>
-          <li>Монеты: <strong>+2 000 000</strong></li>
-          <li>Сет (кит) <strong>lite</strong></li>
-        </ul>
-        <button class="btn-buy" data-item="Привилегия ЛАЙТ">Купить</button>
-      </article>
-
-      <article class="card card-green reveal">
-        <div class="card-head">
-          <h2>Привилегия Креатив</h2>
-          <span class="price">CREATIVE</span>
-        </div>
-        <ul>
-          <li>Всё почти как в ЛАЙТ</li>
-          <li>Талисманы: <strong>+2</strong></li>
-          <li>Сфера: <strong>+1</strong></li>
-          <li>Бонус монет: <strong>+100 000</strong></li>
-          <li>Второй бонус: <strong>+100 000</strong></li>
-          <li>Доступ к режиму <strong>креатив</strong></li>
-          <li>Приват регионов: <strong>4</strong></li>
-          <li>Точки дома: <strong>3</strong></li>
-        </ul>
-        <button class="btn-buy" data-item="Привилегия Креатив">Купить</button>
-      </article>
-
-      <article class="card card-gold reveal">
-        <div class="card-head">
-          <h2>Игровая валюта</h2>
-          <span class="price">100 000</span>
-        </div>
-        <ul>
-          <li>Пакет монет: <strong>100 000</strong></li>
-          <li>Бонус: <strong>+100 000</strong></li>
-          <li>Итого на баланс: <strong>200 000</strong></li>
-        </ul>
-        <button class="btn-buy" data-item="Игровая валюта 100 000 монет">Купить</button>
-      </article>
-    </section>
+    <section class="cards" id="cardsContainer"></section>
 
     <section class="contact reveal">
       <h2>Как со мной связаться</h2>
@@ -98,39 +51,22 @@
 
   <footer class="foot">
     <span>© ShopLiveworlds — Liveworld Store</span>
-    <span>Not affiliated with Rockstar Games</span>
+    <span>Not affiliated with Rockstar Games · <a href="admin.html" class="admin-link" title="Админ-панель">⚙️</a></span>
   </footer>
 
   <!-- Модалка заказа -->
   <div class="modal-overlay" id="orderModal" aria-hidden="true">
-    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="orderTitle">
+    <div class="modal" role="dialog" aria-modal="true">
       <button class="modal-close" id="modalClose" aria-label="Закрыть">×</button>
-      <h2 id="orderTitle" class="modal-title">Оформление заказа</h2>
-
+      <h2 class="modal-title">Оформление заказа</h2>
       <form id="orderForm" class="order-form" novalidate>
-        <label>
-          <span>Товар</span>
-          <input type="text" name="item" id="fieldItem" readonly />
-        </label>
-        <label>
-          <span>Ваш ник в игре *</span>
-          <input type="text" name="nick" id="fieldNick" required minlength="2" maxlength="32" placeholder="Steve" />
-        </label>
-        <label>
-          <span>Способ связи *</span>
-          <input type="text" name="contact" id="fieldContact" required placeholder="Telegram @username / телефон" />
-        </label>
-        <label>
-          <span>Способ оплаты</span>
-          <input type="text" name="payment" id="fieldPayment" placeholder="Карта / СБП / крипта / что угодно" />
-        </label>
-        <label>
-          <span>Комментарий</span>
-          <textarea name="comment" id="fieldComment" rows="3" maxlength="500" placeholder="Необязательно"></textarea>
-        </label>
+        <label><span>Товар</span><input type="text" id="fieldItem" readonly /></label>
+        <label><span>Ник в игре *</span><input type="text" id="fieldNick" required minlength="2" maxlength="32" placeholder="Steve" /></label>
+        <label><span>Способ связи *</span><input type="text" id="fieldContact" required placeholder="Telegram @username / телефон" /></label>
+        <label><span>Способ оплаты</span><input type="text" id="fieldPayment" placeholder="Карта / СБП / крипта" /></label>
+        <label><span>Комментарий</span><textarea id="fieldComment" rows="3" maxlength="500"></textarea></label>
         <button type="submit" class="btn-submit">Сформировать заказ</button>
       </form>
-
       <div class="order-result" id="orderResult" hidden>
         <p class="order-result-title">Заказ готов — отправь его мне:</p>
         <pre id="orderText" class="order-text"></pre>
@@ -145,23 +81,13 @@
 
   <!-- Модалка регистрации -->
   <div class="modal-overlay" id="registerModal" aria-hidden="true">
-    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="regTitle">
+    <div class="modal" role="dialog" aria-modal="true">
       <button class="modal-close" id="regClose" aria-label="Закрыть">×</button>
-      <h2 id="regTitle" class="modal-title">Регистрация</h2>
-
+      <h2 class="modal-title">Регистрация</h2>
       <form id="registerForm" class="order-form" novalidate>
-        <label>
-          <span>Ник в игре *</span>
-          <input type="text" name="nick" id="regNick" required minlength="2" maxlength="32" placeholder="Steve" />
-        </label>
-        <label>
-          <span>Email *</span>
-          <input type="email" name="email" id="regEmail" required placeholder="you@mail.com" />
-        </label>
-        <label>
-          <span>Пароль * (мин. 4 символа)</span>
-          <input type="password" name="password" id="regPassword" required minlength="4" maxlength="64" placeholder="••••••" />
-        </label>
+        <label><span>Ник в игре *</span><input type="text" id="regNick" required minlength="2" maxlength="32" placeholder="Steve" /></label>
+        <label><span>Email *</span><input type="email" id="regEmail" required placeholder="you@mail.com" /></label>
+        <label><span>Пароль * (мин. 4)</span><input type="password" id="regPassword" required minlength="4" maxlength="64" placeholder="••••••" /></label>
         <p class="form-error" id="regError" hidden></p>
         <button type="submit" class="btn-submit">Зарегистрироваться</button>
       </form>
