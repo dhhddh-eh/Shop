@@ -8,14 +8,8 @@
 <style>
   :root{
     --bg:#0a0414;
-    --pink:#ff2d95;
-    --cyan:#00e5ff;
-    --orange:#ff8a3d;
-    --yellow:#ffd166;
-    --purple:#7b2cbf;
-    --text:#f6eaff;
-    --muted:#b6a3c8;
-    --line:rgba(255,255,255,.12);
+    --pink:#ff2d95;--cyan:#00e5ff;--orange:#ff8a3d;--yellow:#ffd166;--purple:#7b2cbf;
+    --text:#f6eaff;--muted:#b6a3c8;--line:rgba(255,255,255,.12);
     --glow:0 0 30px rgba(255,45,149,.45);
   }
   *{box-sizing:border-box}
@@ -39,16 +33,13 @@
   }
   .wrap{position:relative;z-index:1;max-width:1180px;margin:0 auto;padding:22px}
 
-  /* HEADER */
   header{
-    display:flex;align-items:center;justify-content:space-between;
-    gap:18px;flex-wrap:wrap;
-    padding:16px 20px;border-radius:20px;
-    background:rgba(20,10,34,.7);border:1px solid var(--line);
-    backdrop-filter:blur(18px);
+    display:flex;align-items:center;justify-content:space-between;gap:18px;flex-wrap:wrap;
+    padding:16px 20px;border-radius:20px;background:rgba(20,10,34,.7);
+    border:1px solid var(--line);backdrop-filter:blur(18px);
     box-shadow:0 20px 60px rgba(0,0,0,.35);
   }
-  .logo{display:flex;align-items:center;gap:12px;text-decoration:none;color:#fff}
+  .logo{display:flex;align-items:center;gap:12px;text-decoration:none;color:#fff;cursor:pointer}
   .logo-mark{
     width:44px;height:44px;border-radius:12px;display:grid;place-items:center;
     font-family:'Bebas Neue',sans-serif;font-size:24px;letter-spacing:1px;
@@ -60,20 +51,22 @@
     letter-spacing:4px;color:var(--muted);font-weight:700;margin-top:4px}
 
   nav{display:flex;gap:6px;flex-wrap:wrap}
-  nav a{
-    color:var(--muted);text-decoration:none;font-size:13px;font-weight:700;
-    padding:10px 14px;border-radius:11px;border:1px solid transparent;
-    transition:.25s;
+  .nav-btn{
+    background:transparent;color:var(--muted);font:inherit;font-size:13px;font-weight:700;
+    padding:10px 14px;border-radius:11px;border:1px solid transparent;cursor:pointer;transition:.25s;
   }
-  nav a:hover{color:#fff;background:rgba(255,255,255,.06);border-color:var(--line)}
-  nav a.active{
+  .nav-btn:hover{color:#fff;background:rgba(255,255,255,.06);border-color:var(--line)}
+  .nav-btn.active{
     color:#fff;
     background:linear-gradient(135deg,rgba(255,45,149,.22),rgba(0,229,255,.08));
     border-color:rgba(255,45,149,.4);
     box-shadow:inset 0 0 18px rgba(255,45,149,.15);
   }
 
-  /* HERO */
+  .page{display:none;animation:fade .35s ease}
+  .page.active{display:block}
+  @keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+
   .hero{
     position:relative;overflow:hidden;margin:22px 0;
     padding:40px 36px;border-radius:26px;
@@ -84,7 +77,7 @@
   .hero::after{
     content:"";position:absolute;right:-100px;top:-120px;width:360px;height:360px;
     border-radius:50%;background:radial-gradient(circle,rgba(255,45,149,.35),transparent 65%);
-    filter:blur(10px);
+    filter:blur(10px);pointer-events:none;
   }
   .eyebrow{
     display:inline-block;padding:7px 12px;border-radius:999px;
@@ -98,23 +91,10 @@
     background:linear-gradient(90deg,#fff 10%,var(--yellow) 35%,var(--pink) 65%,var(--cyan) 100%);
     -webkit-background-clip:text;background-clip:text;color:transparent;
   }
-  .hero p{margin:16px 0 22px;max-width:560px;color:var(--muted);font-size:14px;line-height:1.7}
-  .btns{display:flex;gap:12px;flex-wrap:wrap;position:relative;z-index:1}
-  .btn{
-    padding:13px 22px;border-radius:12px;font:inherit;font-size:13px;font-weight:800;
-    cursor:pointer;border:1px solid transparent;transition:.25s;
-  }
-  .btn-p{color:#fff;background:linear-gradient(135deg,var(--pink),#ff6a3d);box-shadow:0 12px 30px rgba(255,45,149,.35)}
-  .btn-p:hover{transform:translateY(-2px);box-shadow:0 16px 40px rgba(255,45,149,.5)}
-  .btn-g{color:#fff;background:rgba(255,255,255,.06);border-color:var(--line)}
-  .btn-g:hover{background:rgba(255,255,255,.12)}
+  .hero p{margin:16px 0 22px;max-width:560px;color:var(--muted);font-size:14px;line-height:1.7;position:relative;z-index:1}
 
-  /* STATS */
   .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:22px}
-  .stat{
-    padding:18px;border-radius:18px;background:rgba(20,10,34,.65);
-    border:1px solid var(--line);backdrop-filter:blur(14px);
-  }
+  .stat{padding:18px;border-radius:18px;background:rgba(20,10,34,.65);border:1px solid var(--line);backdrop-filter:blur(14px)}
   .stat .lbl{font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted)}
   .stat .val{font-family:'Bebas Neue',sans-serif;font-size:36px;letter-spacing:1px;margin:6px 0 2px}
   .stat .tr{font-size:11px;font-weight:700;color:var(--cyan)}
@@ -122,26 +102,19 @@
   .stat:nth-child(3) .tr{color:var(--yellow)}
   .stat:nth-child(4) .tr{color:var(--orange)}
 
-  /* PANELS */
   .grid{display:grid;grid-template-columns:1.4fr 1fr;gap:16px}
-  .panel{
-    padding:22px;border-radius:22px;background:rgba(20,10,34,.65);
-    border:1px solid var(--line);backdrop-filter:blur(16px);
-  }
+  .panel{padding:22px;border-radius:22px;background:rgba(20,10,34,.65);border:1px solid var(--line);backdrop-filter:blur(16px)}
   .panel h2{margin:0 0 16px;font-size:13px;letter-spacing:1px;text-transform:uppercase}
   .panel h2 span{color:var(--cyan)}
 
   .list{display:flex;flex-direction:column;gap:10px}
   .row{
     display:flex;align-items:center;gap:14px;padding:14px;border-radius:14px;
-    background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);
-    transition:.2s;
+    background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);transition:.2s;
   }
   .row:hover{background:rgba(255,255,255,.08);transform:translateX(3px)}
-  .ico{
-    width:38px;height:38px;flex:0 0 auto;border-radius:11px;display:grid;place-items:center;
-    font-size:16px;background:rgba(0,229,255,.1);border:1px solid rgba(0,229,255,.25);color:var(--cyan);
-  }
+  .ico{width:38px;height:38px;flex:0 0 auto;border-radius:11px;display:grid;place-items:center;
+    font-size:16px;background:rgba(0,229,255,.1);border:1px solid rgba(0,229,255,.25);color:var(--cyan)}
   .row:nth-child(2) .ico{background:rgba(255,45,149,.1);border-color:rgba(255,45,149,.25);color:var(--pink)}
   .row:nth-child(3) .ico{background:rgba(255,209,102,.1);border-color:rgba(255,209,102,.25);color:var(--yellow)}
   .row:nth-child(4) .ico{background:rgba(255,138,61,.1);border-color:rgba(255,138,61,.25);color:var(--orange)}
@@ -153,7 +126,7 @@
   .q{
     display:flex;align-items:center;gap:14px;padding:14px;border-radius:14px;cursor:pointer;
     background:linear-gradient(135deg,rgba(255,255,255,.06),rgba(255,255,255,.02));
-    border:1px solid var(--line);transition:.25s;
+    border:1px solid var(--line);transition:.25s;text-align:left;font:inherit;color:inherit;
   }
   .q:hover{transform:translateY(-2px);border-color:rgba(255,45,149,.4);box-shadow:0 0 24px rgba(255,45,149,.12)}
   .q .qi{width:40px;height:40px;border-radius:11px;display:grid;place-items:center;font-size:17px;color:#fff;
@@ -161,8 +134,104 @@
   .q:nth-child(2) .qi{background:linear-gradient(135deg,var(--cyan),#0077ff);box-shadow:0 0 30px rgba(0,229,255,.3)}
   .q:nth-child(3) .qi{background:linear-gradient(135deg,var(--orange),var(--yellow));box-shadow:0 0 30px rgba(255,138,61,.3)}
   .q:nth-child(4) .qi{background:linear-gradient(135deg,#8a2be2,var(--pink));box-shadow:var(--glow)}
+  .q:nth-child(5) .qi{background:linear-gradient(135deg,var(--yellow),var(--orange));box-shadow:0 0 30px rgba(255,209,102,.3)}
   .q b{display:block;font-size:13px;margin-bottom:3px}
   .q small{font-size:11px;color:var(--muted);line-height:1.4}
+
+  /* CATALOG */
+  .catalog{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:16px;margin-top:22px}
+  .card{
+    overflow:hidden;border-radius:20px;background:rgba(20,10,34,.7);
+    border:1px solid var(--line);backdrop-filter:blur(14px);transition:.25s;display:flex;flex-direction:column;
+  }
+  .card:hover{transform:translateY(-4px);border-color:rgba(255,45,149,.4);box-shadow:0 20px 40px rgba(255,45,149,.15)}
+  .card-img{
+    height:130px;position:relative;
+    background:linear-gradient(135deg,var(--pink),var(--purple),var(--cyan));
+    display:grid;place-items:center;font-size:52px;color:#fff;text-shadow:0 4px 20px rgba(0,0,0,.5);
+  }
+  .card:nth-child(2) .card-img{background:linear-gradient(135deg,var(--cyan),#0077ff,var(--purple))}
+  .card:nth-child(3) .card-img{background:linear-gradient(135deg,var(--orange),var(--pink),var(--purple))}
+  .card:nth-child(4) .card-img{background:linear-gradient(135deg,var(--yellow),var(--orange),var(--pink))}
+  .card:nth-child(5) .card-img{background:linear-gradient(135deg,#8a2be2,var(--cyan))}
+  .card:nth-child(6) .card-img{background:linear-gradient(135deg,var(--pink),var(--yellow))}
+  .card-body{padding:16px;display:flex;flex-direction:column;gap:8px;flex:1}
+  .card-body h3{margin:0;font-size:15px}
+  .card-body p{margin:0;font-size:12px;color:var(--muted);line-height:1.5;flex:1}
+  .price{font-family:'Bebas Neue',sans-serif;font-size:24px;color:var(--yellow);letter-spacing:1px}
+  .buy{
+    margin-top:6px;padding:10px;border-radius:10px;border:0;cursor:pointer;
+    font:inherit;font-size:12px;font-weight:800;color:#fff;
+    background:linear-gradient(135deg,var(--pink),#ff6a3d);transition:.2s;
+  }
+  .buy:hover{transform:translateY(-2px);box-shadow:0 10px 25px rgba(255,45,149,.4)}
+
+  /* FORM */
+  .form{display:grid;gap:14px;max-width:520px}
+  .field{display:flex;flex-direction:column;gap:6px}
+  .field label{font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted)}
+  .field input,.field textarea,.field select{
+    padding:12px 14px;border-radius:12px;background:rgba(255,255,255,.05);
+    border:1px solid var(--line);color:#fff;font:inherit;font-size:13px;outline:0;transition:.2s;
+  }
+  .field input:focus,.field textarea:focus,.field select:focus{border-color:var(--pink);box-shadow:0 0 0 3px rgba(255,45,149,.15)}
+  .field textarea{resize:vertical;min-height:100px}
+  .field select option{background:#160a26;color:#fff}
+  .submit{
+    padding:13px;border-radius:12px;border:0;cursor:pointer;
+    font:inherit;font-size:13px;font-weight:800;color:#fff;
+    background:linear-gradient(135deg,var(--pink),#ff6a3d);transition:.2s;
+  }
+  .submit:hover{transform:translateY(-2px);box-shadow:0 12px 30px rgba(255,45,149,.4)}
+  .ok{color:var(--cyan);font-size:12px;font-weight:700;margin-top:4px}
+
+  /* PROFILE */
+  .profile{display:flex;gap:20px;align-items:center;flex-wrap:wrap;margin-top:8px}
+  .avatar{
+    width:96px;height:96px;border-radius:26px;display:grid;place-items:center;
+    font-family:'Bebas Neue',sans-serif;font-size:42px;
+    background:linear-gradient(135deg,var(--pink),var(--orange));
+    box-shadow:var(--glow);
+  }
+  .profile-info h2{margin:0 0 4px;font-size:22px;font-family:'Bebas Neue',sans-serif;letter-spacing:1px}
+  .profile-info p{margin:0;color:var(--muted);font-size:12px}
+
+  /* ADMIN */
+  .admin-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:14px;margin-top:22px}
+  .admin-card{padding:20px;border-radius:18px;background:rgba(20,10,34,.7);border:1px solid var(--line)}
+  .admin-card .lbl{font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);font-weight:700}
+  .admin-card .val{font-family:'Bebas Neue',sans-serif;font-size:38px;margin:6px 0}
+
+  /* REVIEWS */
+  .reviews{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin-top:22px}
+  .review{
+    padding:20px;border-radius:20px;background:rgba(20,10,34,.7);
+    border:1px solid var(--line);backdrop-filter:blur(14px);transition:.25s;
+  }
+  .review:hover{transform:translateY(-3px);border-color:rgba(255,45,149,.4);box-shadow:0 16px 34px rgba(255,45,149,.12)}
+  .review-head{display:flex;align-items:center;gap:12px;margin-bottom:12px}
+  .review-avatar{
+    width:44px;height:44px;border-radius:12px;display:grid;place-items:center;
+    font-family:'Bebas Neue',sans-serif;font-size:22px;color:#fff;
+    background:linear-gradient(135deg,var(--pink),var(--purple));box-shadow:var(--glow);flex:0 0 auto;
+  }
+  .review:nth-child(2n) .review-avatar{background:linear-gradient(135deg,var(--cyan),#0077ff)}
+  .review:nth-child(3n) .review-avatar{background:linear-gradient(135deg,var(--orange),var(--yellow))}
+  .review-name{font-size:14px;font-weight:700}
+  .review-date{font-size:11px;color:var(--muted)}
+  .stars{color:var(--yellow);font-size:14px;letter-spacing:2px;margin-bottom:8px}
+  .review-text{margin:0;font-size:13px;color:var(--muted);line-height:1.6}
+  .empty{color:var(--muted);font-size:13px;text-align:center;padding:30px}
+
+  /* TOAST */
+  .toast{
+    position:fixed;right:24px;bottom:24px;z-index:50;padding:14px 20px;border-radius:14px;
+    background:rgba(18,10,30,.95);border:1px solid rgba(0,229,255,.35);
+    color:#fff;font-size:13px;font-weight:700;
+    box-shadow:0 18px 50px rgba(0,0,0,.5),0 0 24px rgba(0,229,255,.15);
+    opacity:0;transform:translateY(20px);pointer-events:none;transition:.3s;
+  }
+  .toast.show{opacity:1;transform:none}
 
   footer{text-align:center;color:var(--muted);font-size:12px;padding:26px 0 8px}
 
@@ -171,11 +240,10 @@
     .grid{grid-template-columns:1fr}
   }
   @media(max-width:600px){
-    .stats{grid-template-columns:1fr 1fr}
     header{padding:14px}
     .hero{padding:26px 22px}
-    nav a{font-size:12px;padding:8px 10px}
-    .btns .btn{flex:1}
+    .nav-btn{font-size:12px;padding:8px 10px}
+    .stats{grid-template-columns:1fr 1fr}
   }
   @media(max-width:380px){.stats{grid-template-columns:1fr}}
 </style>
@@ -183,95 +251,128 @@
 <body>
 <div class="wrap">
 
-  <!-- HEADER + NAV -->
   <header>
-    <a href="#" class="logo">
+    <a class="logo" onclick="show('home')">
       <div class="logo-mark">V</div>
       <div class="logo-text">VICEAPP<small>GITHUB BUILD</small></div>
     </a>
     <nav>
-      <a href="#" class="active">Главная</a>
-      <a href="#catalog">Каталог</a>
-      <a href="#contacts">Контакты</a>
-      <a href="#register">Регистрация</a>
-      <a href="#profile">Профиль</a>
-      <a href="#admin">Админ</a>
+      <button class="nav-btn active" data-page="home">Главная</button>
+      <button class="nav-btn" data-page="catalog">Каталог</button>
+      <button class="nav-btn" data-page="reviews">Отзывы</button>
+      <button class="nav-btn" data-page="contacts">Контакты</button>
+      <button class="nav-btn" data-page="register">Регистрация</button>
+      <button class="nav-btn" data-page="profile">Профиль</button>
+      <button class="nav-btn" data-page="admin">Админ</button>
     </nav>
   </header>
 
-  <!-- HERO -->
-  <section class="hero">
-    <span class="eyebrow">● Neon Edition</span>
-    <h1>Vice Vibes<br>Only</h1>
-    <p>Стильный интерфейс в палитре заката Vice City — розовый неон, кибер-циан и золото. Полностью адаптивный, готов к GitHub Pages.</p>
-    <div class="btns">
-      <button class="btn btn-p" onclick="alert('Поехали!')">Начать</button>
-      <button class="btn btn-g" onclick="document.getElementById('catalog').scrollIntoView({behavior:'smooth'})">Каталог</button>
+  <!-- ГЛАВНАЯ -->
+  <section id="home" class="page active">
+    <div class="hero">
+      <span class="eyebrow">● Neon Edition</span>
+      <h1>Vice Vibes<br>Only</h1>
+      <p>Стильный интерфейс в палитре заката Vice City — розовый неон, кибер-циан и золото. Полностью адаптивный, готов к GitHub Pages.</p>
+    </div>
+
+    <div class="stats">
+      <div class="stat"><div class="lbl">Пользователи</div><div class="val">1 284</div><div class="tr">▲ +12% за неделю</div></div>
+      <div class="stat"><div class="lbl">Заказы</div><div class="val">328</div><div class="tr">▲ +8% за день</div></div>
+      <div class="stat"><div class="lbl">Отзывы</div><div class="val">96%</div><div class="tr">средний рейтинг</div></div>
+      <div class="stat"><div class="lbl">Онлайн</div><div class="val">42</div><div class="tr">сейчас на сайте</div></div>
+    </div>
+
+    <div class="grid">
+      <div class="panel">
+        <h2>Последние действия <span>· live</span></h2>
+        <div class="list">
+          <div class="row"><div class="ico">★</div><div class="row-body"><strong>Новый отзыв</strong><span>Anna_M выставила 5 звёзд товару «Neon Phone»</span></div><div class="meta">2 мин</div></div>
+          <div class="row"><div class="ico">👤</div><div class="row-body"><strong>Регистрация</strong><span>MiamiVice99 создал аккаунт</span></div><div class="meta">14 мин</div></div>
+          <div class="row"><div class="ico">⚙</div><div class="row-body"><strong>Обновление каталога</strong><span>Добавлено 6 новых позиций</span></div><div class="meta">1 ч</div></div>
+          <div class="row"><div class="ico">⚡</div><div class="row-body"><strong>Оплата</strong><span>Заказ #4210 подтверждён</span></div><div class="meta">2 ч</div></div>
+        </div>
+      </div>
+      <div class="panel">
+        <h2>Быстрые действия</h2>
+        <div class="quick">
+          <button class="q" onclick="show('profile')"><div class="qi">👤</div><div><b>Профиль</b><small>Настройки аккаунта</small></div></button>
+          <button class="q" onclick="show('catalog')"><div class="qi">📦</div><div><b>Каталог</b><small>Управление товарами</small></div></button>
+          <button class="q" onclick="show('reviews')"><div class="qi">★</div><div><b>Отзывы</b><small>Читать и писать</small></div></button>
+          <button class="q" onclick="show('register')"><div class="qi">✍</div><div><b>Регистрация</b><small>Создать аккаунт</small></div></button>
+          <button class="q" onclick="show('admin')"><div class="qi">🛡</div><div><b>Админ</b><small>Панель управления</small></div></button>
+        </div>
+      </div>
     </div>
   </section>
 
-  <!-- STATS -->
-  <div class="stats">
-    <div class="stat"><div class="lbl">Пользователи</div><div class="val">1 284</div><div class="tr">▲ +12% за неделю</div></div>
-    <div class="stat"><div class="lbl">Заказы</div><div class="val">328</div><div class="tr">▲ +8% за день</div></div>
-    <div class="stat"><div class="lbl">Отзывы</div><div class="val">96%</div><div class="tr">средний рейтинг</div></div>
-    <div class="stat"><div class="lbl">Онлайн</div><div class="val">42</div><div class="tr">сейчас на сайте</div></div>
-  </div>
+  <!-- КАТАЛОГ -->
+  <section id="catalog" class="page">
+    <div class="hero" style="padding:26px 30px">
+      <span class="eyebrow">● Каталог</span>
+      <h1 style="font-size:clamp(36px,5vw,60px)">Товары</h1>
+      <p>6 позиций в наличии. Нажми «Купить» — покажу уведомление.</p>
+    </div>
+    <div class="catalog" id="catalogGrid"></div>
+  </section>
 
-  <!-- CONTENT GRID -->
-  <div class="grid">
+  <!-- ОТЗЫВЫ -->
+  <section id="reviews" class="page">
+    <div class="hero" style="padding:26px 30px">
+      <span class="eyebrow">● Отзывы</span>
+      <h1 style="font-size:clamp(36px,5vw,60px)">Что говорят</h1>
+      <p>Реальные отзывы наших покупателей. Оставь свой — он появится в списке.</p>
+    </div>
 
-    <!-- Последние действия -->
-    <div class="panel" id="catalog">
-      <h2>Последние действия <span>· live</span></h2>
+    <div class="grid">
+      <div class="panel">
+        <h2>Все отзывы <span id="rev-count">· 0</span></h2>
+        <div class="reviews" id="reviewsList"></div>
+      </div>
+
+      <div class="panel">
+        <h2>Оставить отзыв</h2>
+        <div class="form">
+          <div class="field"><label>Имя</label><input id="rev-name" placeholder="Твоё имя"></div>
+          <div class="field">
+            <label>Оценка</label>
+            <select id="rev-stars">
+              <option value="5">★★★★★ — Отлично</option>
+              <option value="4">★★★★☆ — Хорошо</option>
+              <option value="3">★★★☆☆ — Нормально</option>
+              <option value="2">★★☆☆☆ — Плохо</option>
+              <option value="1">★☆☆☆☆ — Ужасно</option>
+            </select>
+          </div>
+          <div class="field"><label>Отзыв</label><textarea id="rev-text" placeholder="Расскажи о впечатлениях..."></textarea></div>
+          <button class="submit" onclick="addReview()">Опубликовать</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- КОНТАКТЫ -->
+  <section id="contacts" class="page">
+    <div class="panel" style="margin-top:22px">
+      <h2>Контакты</h2>
       <div class="list">
-        <div class="row">
-          <div class="ico">★</div>
-          <div class="row-body"><strong>Новый отзыв</strong><span>Anna_M выставила 5 звёзд товару «Neon Phone»</span></div>
-          <div class="meta">2 мин</div>
-        </div>
-        <div class="row">
-          <div class="ico">👤</div>
-          <div class="row-body"><strong>Регистрация</strong><span>Пользователь MiamiVice99 создал аккаунт</span></div>
-          <div class="meta">14 мин</div>
-        </div>
-        <div class="row">
-          <div class="ico">⚙</div>
-          <div class="row-body"><strong>Обновление каталога</strong><span>Добавлено 6 новых позиций</span></div>
-          <div class="meta">1 ч</div>
-        </div>
-        <div class="row">
-          <div class="ico">⚡</div>
-          <div class="row-body"><strong>Оплата</strong><span>Заказ #4210 подтверждён</span></div>
-          <div class="meta">2 ч</div>
-        </div>
+        <div class="row"><div class="ico">✉</div><div class="row-body"><strong>Email</strong><span>hello@viceapp.dev</span></div></div>
+        <div class="row"><div class="ico">📱</div><div class="row-body"><strong>Телефон</strong><span>+7 (999) 555-67-67</span></div></div>
+        <div class="row"><div class="ico">🌐</div><div class="row-body"><strong>GitHub</strong><span>github.com/viceapp</span></div></div>
+        <div class="row"><div class="ico">💬</div><div class="row-body"><strong>Discord</strong><span>discord.gg/viceapp</span></div></div>
+      </div>
+      <div class="form" style="margin-top:20px">
+        <div class="field"><label>Имя</label><input id="c-name" placeholder="Твоё имя"></div>
+        <div class="field"><label>Сообщение</label><textarea id="c-msg" placeholder="Напиши что-нибудь..."></textarea></div>
+        <button class="submit" onclick="sendContact()">Отправить</button>
+        <div class="ok" id="c-ok" style="display:none">✓ Сообщение отправлено!</div>
       </div>
     </div>
+  </section>
 
-    <!-- Быстрые действия -->
-    <div class="panel" id="contacts">
-      <h2>Быстрые действия</h2>
-      <div class="quick">
-        <div class="q" id="profile"><div class="qi">👤</div><div><b>Профиль</b><small>Настройки аккаунта и аватар</small></div></div>
-        <div class="q"><div class="qi">📦</div><div><b>Каталог</b><small>Управление товарами</small></div></div>
-        <div class="q" id="register"><div class="qi">✍</div><div><b>Регистрация</b><small>Создать нового пользователя</small></div></div>
-        <div class="q" id="admin"><div class="qi">🛡</div><div><b>Админ</b><small>Панель управления</small></div></div>
-      </div>
-    </div>
-
-  </div>
-
-  <footer>© 2026 VICEAPP — GTA VI inspired UI · Made with 💗 for GitHub Pages</footer>
-</div>
-
-<script>
-  // Подсветка активного пункта меню при клике
-  document.querySelectorAll('nav a').forEach(a => {
-    a.addEventListener('click', e => {
-      document.querySelectorAll('nav a').forEach(x => x.classList.remove('active'));
-      a.classList.add('active');
-    });
-  });
-</script>
-</body>
-</html>
+  <!-- РЕГИСТРАЦИЯ -->
+  <section id="register" class="page">
+    <div class="panel" style="margin-top:22px">
+      <h2>Регистрация</h2>
+      <div class="form">
+        <div class="field"><label>Логин</label><input id="r-login" placeholder="MiamiVice99"></div>
+        <div class="field
