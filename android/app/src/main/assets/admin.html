@@ -1,204 +1,169 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Админ-панель — ShopLiveworlds</title>
-  <link rel="stylesheet" href="style.css">
-  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Bebas+Neue&family=Inter:wght@400;600;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
 </head>
-<body>
+<body class="admin">
+  <div class="bg-glow"></div>
 
-  <nav class="topbar">
-    <a href="index.html" class="logo">SHOP<span>LIVEWORLDS</span></a>
-    <div class="nav-links">
-      <a href="index.html">Главная</a>
-      <a href="catalog.html">Каталог</a>
-      <a href="reviews.html">Отзывы</a>
-      <a href="faq.html">FAQ</a>
-      <a href="register.html">Регистрация</a>
-      <a href="profile.html">Профиль</a>
-      <a href="admin.html">Админ</a>
-    </div>
-  </nav>
+  <header class="topbar">
+    <a href="index.html" class="brand">
+      <svg class="logo" viewBox="0 0 60 60" aria-hidden="true">
+        <defs><linearGradient id="lg-adm" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stop-color="#ff2d95"/><stop offset="100%" stop-color="#7b2ff7"/>
+        </linearGradient></defs>
+        <circle cx="30" cy="30" r="27" fill="#0b0616" stroke="url(#lg-adm)" stroke-width="3"/>
+        <text x="30" y="41" text-anchor="middle" font-family="Anton" font-size="26" fill="url(#lg-adm)">LW</text>
+      </svg>
+      <span class="brand-text">ADMIN</span>
+    </a>
+    <nav class="main-nav">
+      <a href="index.html">← На сайт</a>
+      <button id="logoutBtn" class="btn-logout" hidden>Выйти</button>
+    </nav>
+  </header>
 
-  <!-- Экран входа -->
-  <section id="loginScreen" class="faq-page" style="max-width:480px;">
-    <h1 class="faq-title" style="color: var(--dark-red);">АДМИН-ПАНЕЛЬ</h1>
-    <p class="faq-sub" style="color: var(--dark-red);">Вход только для админа</p>
-
-    <div class="faq-item" style="border-color: rgba(164,30,30,0.4); border-left-color: var(--dark-red);">
-      <label class="contact-label" style="display:block; margin-bottom:6px;">Пароль админа</label>
-      <input type="password" id="adminPass" placeholder="Введи пароль"
-             style="width:100%; padding:12px; margin-bottom:14px; border-radius:8px; border:1px solid rgba(255,255,255,0.15); background:#0a0a0f; color:#fff; font-family:inherit; font-size:15px;">
-      <button id="loginBtn" class="buy-btn" style="background: linear-gradient(90deg, var(--dark-red), #6b0000); width:100%;">ВОЙТИ</button>
-      <p id="loginResult" style="margin-top:14px; text-align:center; font-weight:700; min-height:22px;"></p>
-    </div>
+  <!-- Экран логина -->
+  <section class="admin-login" id="loginScreen">
+    <h1 class="page-title">ВХОД В АДМИНКУ</h1>
+    <form id="loginForm" class="admin-form-narrow">
+      <label><span>Пароль</span>
+        <input type="password" id="loginPassword" required placeholder="••••••" />
+      </label>
+      <p class="form-error" id="loginError" hidden></p>
+      <button type="submit" class="btn-submit">Войти</button>
+      <p class="hint">По умолчанию: <code>admin123</code> — сразу смени в Настройках</p>
+    </form>
   </section>
 
-  <!-- Панель (скрыта до входа) -->
-  <section id="panelScreen" class="faq-page" style="display:none; max-width:900px;">
-    <h1 class="faq-title" style="color: var(--dark-red);">ЗАЯВКИ</h1>
-    <p class="faq-sub" style="color: var(--dark-red);">Пользователи, зарегистрированные на этом устройстве</p>
-
-    <div id="stats" class="faq-item" style="border-color: rgba(164,30,30,0.4); border-left-color: var(--dark-red); margin-bottom:20px;">
-      <div class="faq-a" id="statsText">Всего: 0</div>
+  <!-- Дашборд -->
+  <section class="admin-dashboard" id="dashboard" hidden>
+    <div class="admin-tabs">
+      <button class="tab active" data-tab="items">📦 Товары</button>
+      <button class="tab" data-tab="promos">🎉 Акции</button>
+      <button class="tab" data-tab="orders">🧾 Заказы</button>
+      <button class="tab" data-tab="banner">📢 Баннер</button>
+      <button class="tab" data-tab="settings">⚙️ Настройки</button>
     </div>
 
-    <div id="usersList"></div>
-
-    <div style="margin-top:20px; display:flex; gap:10px; flex-wrap:wrap;">
-      <button class="buy-btn" onclick="exportUsers()" style="flex:1; min-width:140px;">✓ ОДОБРИТЬ ВСЕХ</button>
-      <button class="buy-btn" onclick="clearUsers()" style="flex:1; min-width:140px; background: linear-gradient(90deg, var(--dark-red), #6b0000);">🗑 ОЧИСТИТЬ</button>
-      <button class="buy-btn" onclick="logout()" style="flex:1; min-width:140px; background: rgba(255,255,255,0.1);">🚪 ВЫЙТИ</button>
+    <!-- ТОВАРЫ -->
+    <div class="tab-content active" id="tab-items">
+      <h2 class="admin-title">Управление товарами</h2>
+      <form id="itemForm" class="admin-form">
+        <input type="hidden" id="itemEditId" />
+        <div class="grid-2">
+          <label><span>Название *</span><input type="text" id="itemName" required /></label>
+          <label><span>Тип</span>
+            <select id="itemType">
+              <option value="privilege">Привилегия</option>
+              <option value="case">Кейс</option>
+              <option value="coins">Монеты</option>
+              <option value="other">Другое</option>
+            </select>
+          </label>
+          <label><span>Цена (₽) — оставь пусто, если нет</span><input type="number" id="itemPrice" min="0" step="1" /></label>
+          <label><span>Метка вместо цены</span><input type="text" id="itemPriceLabel" placeholder="LITE / CREATIVE" /></label>
+          <label><span>Цвет</span>
+            <select id="itemColor">
+              <option value="blue">Синий</option>
+              <option value="green">Зелёный</option>
+              <option value="gold">Золотой</option>
+              <option value="yellow">Ярко-жёлтый</option>
+              <option value="rainbow">Радужный</option>
+              <option value="cyan">Голубой</option>
+              <option value="purple">Фиолетовый</option>
+            </select>
+          </label>
+        </div>
+        <label><span>Описание (по одной строке)</span>
+          <textarea id="itemList" rows="4" placeholder="Доступ к /kit&#10;+100 000 монет"></textarea>
+        </label>
+        <div class="form-actions">
+          <button type="submit" class="btn-submit" id="itemSubmitBtn">Добавить товар</button>
+          <button type="button" class="btn-copy" id="itemCancelBtn" hidden>Отмена</button>
+        </div>
+      </form>
+      <div id="itemsTable" class="admin-table-wrap"></div>
     </div>
 
-    <div class="faq-item" style="border-color: rgba(164,30,30,0.4); border-left-color: var(--dark-red); margin-top:20px;">
-      <div class="faq-q" style="color: var(--dark-red);">⚠️ Важно</div>
-      <div class="faq-a">
-        Здесь видны <strong>только</strong> пользователи, зарегистрированные на этом телефоне.
-        Заявки с других устройств приходят тебе в <strong>Telegram</strong> (<code>@netuimi67</code>)
-        и на почту <strong>sava231546@mail.ru</strong>.
+    <!-- АКЦИИ -->
+    <div class="tab-content" id="tab-promos">
+      <h2 class="admin-title">Акции и распродажи</h2>
+      <form id="promoForm" class="admin-form">
+        <div class="grid-2">
+          <label><span>Название акции *</span><input type="text" id="promoName" required placeholder="Чёрная пятница" /></label>
+          <label><span>Скидка % *</span><input type="number" id="promoDiscount" required min="1" max="99" value="20" /></label>
+          <label><span>Действует до (необязательно)</span><input type="datetime-local" id="promoUntil" /></label>
+          <label><span>Применять к</span>
+            <select id="promoScope">
+              <option value="all">Всем товарам</option>
+              <option value="specific">Выбранным</option>
+            </select>
+          </label>
+        </div>
+        <div id="promoItemsBlock" hidden>
+          <p class="hint">Отметь товары:</p>
+          <div id="promoItemsList" class="promo-items-list"></div>
+        </div>
+        <button type="submit" class="btn-submit">Создать акцию</button>
+      </form>
+      <div id="promosTable" class="admin-table-wrap"></div>
+    </div>
+
+    <!-- ЗАКАЗЫ -->
+    <div class="tab-content" id="tab-orders">
+      <h2 class="admin-title">Заказы</h2>
+      <div class="form-actions" style="margin-bottom:16px">
+        <button class="btn-copy" id="exportOrdersBtn">💾 Экспорт JSON</button>
+        <button class="btn-reset" id="clearOrdersBtn">🗑 Очистить все</button>
+      </div>
+      <div id="ordersTable" class="admin-table-wrap"></div>
+    </div>
+
+    <!-- БАННЕР -->
+    <div class="tab-content" id="tab-banner">
+      <h2 class="admin-title">Баннер на каталоге</h2>
+      <form id="bannerForm" class="admin-form">
+        <label><span>Текст баннера</span>
+          <textarea id="bannerText" rows="2" placeholder="🔥 Скидка 20% на всё до конца недели!"></textarea>
+        </label>
+        <label class="checkbox-label">
+          <input type="checkbox" id="bannerActive" /> Показывать баннер
+        </label>
+        <button type="submit" class="btn-submit">Сохранить</button>
+      </form>
+    </div>
+
+    <!-- НАСТРОЙКИ -->
+    <div class="tab-content" id="tab-settings">
+      <h2 class="admin-title">Настройки</h2>
+      <form id="passwordForm" class="admin-form">
+        <label><span>Новый пароль админки (мин. 6)</span><input type="password" id="newPassword" minlength="6" required /></label>
+        <button type="submit" class="btn-submit">Сменить пароль</button>
+        <p class="hint" id="passwordMsg" hidden></p>
+      </form>
+      <hr style="margin:24px 0;border-color:rgba(255,255,255,0.1)">
+      <div class="admin-form">
+        <p><strong>Резервная копия данных</strong></p>
+        <div class="form-actions">
+          <button class="btn-copy" id="exportAllBtn">💾 Экспорт всех данных</button>
+          <label class="btn-copy" style="cursor:pointer">
+            📂 Импорт
+            <input type="file" id="importFile" accept=".json" hidden />
+          </label>
+        </div>
+        <p class="hint" style="margin-top:16px"><strong>Опасная зона</strong></p>
+        <button class="btn-reset" id="resetAllBtn">💥 Сброс к заводским настройкам</button>
       </div>
     </div>
   </section>
 
-  <footer class="footer">
-    <div>© ShopLiveworlds — админ-панель</div>
-    <div>sava231546@mail.ru</div>
-  </footer>
-
-  <script>
-    // ⚠️ ПАРОЛЬ АДМИНА — меняй только значение в кавычках!
-    var ADMIN_PASSWORD = 'leto2024';
-
-    // Подключаем кнопку через addEventListener — надёжнее, чем onclick
-    document.addEventListener('DOMContentLoaded', function() {
-      var btn = document.getElementById('loginBtn');
-      if (btn) {
-        btn.addEventListener('click', handleLoginClick);
-      }
-      // Enter тоже отправляет форму
-      var passInput = document.getElementById('adminPass');
-      if (passInput) {
-        passInput.addEventListener('keydown', function(e) {
-          if (e.key === 'Enter') handleLoginClick();
-        });
-      }
-    });
-
-    function handleLoginClick() {
-      var btn = document.getElementById('loginBtn');
-      var result = document.getElementById('loginResult');
-
-      // ⭐ Мгновенный отклик — видно, что кнопка нажалась
-      btn.textContent = '...';
-      btn.disabled = true;
-      result.style.color = 'var(--cyan)';
-      result.textContent = 'Проверяю пароль...';
-
-      setTimeout(function() {
-        var pass = document.getElementById('adminPass').value;
-
-        if (pass === ADMIN_PASSWORD) {
-          document.getElementById('loginScreen').style.display = 'none';
-          document.getElementById('panelScreen').style.display = 'block';
-          renderUsers();
-        } else {
-          result.style.color = 'var(--red)';
-          result.textContent = '✗ Неверный пароль';
-        }
-
-        btn.textContent = 'ВОЙТИ';
-        btn.disabled = false;
-      }, 150);
-    }
-
-    function logout() {
-      document.getElementById('loginScreen').style.display = 'block';
-      document.getElementById('panelScreen').style.display = 'none';
-      document.getElementById('adminPass').value = '';
-      document.getElementById('loginResult').textContent = '';
-    }
-
-    function renderUsers() {
-      var users = JSON.parse(localStorage.getItem('slw_users') || '[]');
-      var approved = 0;
-      for (var i = 0; i < users.length; i++) {
-        if (users[i].status === 'approved') approved++;
-      }
-      document.getElementById('statsText').innerHTML =
-        'Всего: <strong>' + users.length + '</strong> • ' +
-        'Одобрено: <strong style="color:var(--green)">' + approved + '</strong>';
-
-      var list = document.getElementById('usersList');
-      if (users.length === 0) {
-        list.innerHTML = '<div class="faq-item" style="border-color: rgba(164,30,30,0.4); border-left-color: var(--dark-red);"><div class="faq-a">Заявок пока нет.</div></div>';
-        return;
-      }
-
-      var html = '';
-      for (var i = 0; i < users.length; i++) {
-        var u = users[i];
-        var statusColor = u.status === 'approved' ? 'var(--green)' : 'var(--yellow)';
-        var statusText = u.status === 'approved' ? '✓ Одобрен' : '⏳ Ожидает';
-
-        html += '<div class="faq-item" style="border-color: rgba(164,30,30,0.4); border-left-color: var(--dark-red);">' +
-                '<div class="faq-q" style="color: var(--dark-red);">' + escapeHtml(u.nick) +
-                ' <span style="color:' + statusColor + '; font-size:13px;">' + statusText + '</span></div>' +
-                '<div class="faq-a">' +
-                'Email: ' + escapeHtml(u.email) + '<br>' +
-                'Контакт: ' + (u.contact ? escapeHtml(u.contact) : '<em>не указан</em>') + '<br>' +
-                'Дата: ' + new Date(u.date).toLocaleString('ru-RU') +
-                '</div></div>';
-      }
-      list.innerHTML = html;
-    }
-
-    function exportUsers() {
-      var users = JSON.parse(localStorage.getItem('slw_users') || '[]');
-      if (users.length === 0) {
-        showMessage('Нет заявок для экспорта', 'var(--yellow)');
-        return;
-      }
-      for (var i = 0; i < users.length; i++) {
-        users[i].status = 'approved';
-      }
-      localStorage.setItem('slw_users', JSON.stringify(users));
-      renderUsers();
-      showMessage('✓ Все ' + users.length + ' заявок одобрены!', 'var(--green)');
-    }
-
-    function clearUsers() {
-      if (!confirm('Удалить всех пользователей с этого устройства?')) return;
-      localStorage.removeItem('slw_users');
-      renderUsers();
-      showMessage('Все заявки удалены', 'var(--red)');
-    }
-
-    function showMessage(text, color) {
-      var msg = document.getElementById('actionMessage');
-      if (!msg) {
-        msg = document.createElement('div');
-        msg.id = 'actionMessage';
-        msg.style.cssText = 'padding:16px; margin:16px 0; border-radius:12px; text-align:center; font-weight:800; font-size:15px; transition:opacity .3s;';
-        var panel = document.getElementById('panelScreen');
-        panel.insertBefore(msg, panel.querySelector('#stats'));
-      }
-      msg.style.background = 'rgba(255,255,255,0.08)';
-      msg.style.color = color || 'var(--text)';
-      msg.textContent = text;
-      msg.style.opacity = '1';
-      clearTimeout(window._msgTimer);
-      window._msgTimer = setTimeout(function() { msg.style.opacity = '0'; }, 3000);
-    }
-
-    function escapeHtml(s) {
-      return String(s).replace(/[&<>"']/g, function(c) {
-        return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];
-      });
-    }
-  </script>
-
+  <script src="admin.js"></script>
 </body>
 </html>
