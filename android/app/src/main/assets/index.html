@@ -1,88 +1,277 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>ShopLiveworlds — Liveworld Store</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Bebas+Neue&family=Inter:wght@400;600;800&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="style.css" />
-</head>
-<body class="home">
-  <div class="bg-glow"></div>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ViceApp — GTA VI style</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0a0414;
+    --pink:#ff2d95;
+    --cyan:#00e5ff;
+    --orange:#ff8a3d;
+    --yellow:#ffd166;
+    --purple:#7b2cbf;
+    --text:#f6eaff;
+    --muted:#b6a3c8;
+    --line:rgba(255,255,255,.12);
+    --glow:0 0 30px rgba(255,45,149,.45);
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0;min-height:100vh;color:var(--text);
+    font-family:Montserrat,system-ui,sans-serif;
+    background:
+      radial-gradient(circle at 80% 10%,rgba(255,138,61,.22),transparent 40%),
+      radial-gradient(circle at 10% 90%,rgba(0,229,255,.15),transparent 45%),
+      linear-gradient(180deg,#0a0414 0%,#160a26 60%,#1c0b2e 100%);
+    background-attachment:fixed;
+  }
+  body::before{
+    content:"";position:fixed;inset:0;z-index:0;pointer-events:none;
+    background-image:
+      linear-gradient(rgba(0,229,255,.06) 1px,transparent 1px),
+      linear-gradient(90deg,rgba(0,229,255,.06) 1px,transparent 1px);
+    background-size:44px 44px;
+    mask-image:linear-gradient(to bottom,transparent 40%,#000 100%);
+    -webkit-mask-image:linear-gradient(to bottom,transparent 40%,#000 100%);
+  }
+  .wrap{position:relative;z-index:1;max-width:1180px;margin:0 auto;padding:22px}
 
-  <header class="topbar">
-    <a href="index.html" class="brand">
-      <svg class="logo" viewBox="0 0 60 60" aria-hidden="true">
-        <defs>
-          <linearGradient id="lg-home" x1="0" y1="0" x2="1" y2="1">
-            <stop offset="0%" stop-color="#ff2d95"/>
-            <stop offset="50%" stop-color="#ff8a3d"/>
-            <stop offset="100%" stop-color="#7b2ff7"/>
-          </linearGradient>
-        </defs>
-        <circle cx="30" cy="30" r="27" fill="#0b0616" stroke="url(#lg-home)" stroke-width="3"/>
-        <text x="30" y="41" text-anchor="middle" font-family="Anton, sans-serif" font-size="26" fill="url(#lg-home)" letter-spacing="1">LW</text>
-      </svg>
-      <span class="brand-text">LIVEWORLD</span>
+  /* HEADER */
+  header{
+    display:flex;align-items:center;justify-content:space-between;
+    gap:18px;flex-wrap:wrap;
+    padding:16px 20px;border-radius:20px;
+    background:rgba(20,10,34,.7);border:1px solid var(--line);
+    backdrop-filter:blur(18px);
+    box-shadow:0 20px 60px rgba(0,0,0,.35);
+  }
+  .logo{display:flex;align-items:center;gap:12px;text-decoration:none;color:#fff}
+  .logo-mark{
+    width:44px;height:44px;border-radius:12px;display:grid;place-items:center;
+    font-family:'Bebas Neue',sans-serif;font-size:24px;letter-spacing:1px;
+    background:linear-gradient(135deg,var(--pink),var(--purple),var(--cyan));
+    box-shadow:var(--glow);
+  }
+  .logo-text{font-family:'Bebas Neue',sans-serif;font-size:26px;letter-spacing:2px;line-height:1}
+  .logo-text small{display:block;font-family:Montserrat,sans-serif;font-size:9px;
+    letter-spacing:4px;color:var(--muted);font-weight:700;margin-top:4px}
+
+  nav{display:flex;gap:6px;flex-wrap:wrap}
+  nav a{
+    color:var(--muted);text-decoration:none;font-size:13px;font-weight:700;
+    padding:10px 14px;border-radius:11px;border:1px solid transparent;
+    transition:.25s;
+  }
+  nav a:hover{color:#fff;background:rgba(255,255,255,.06);border-color:var(--line)}
+  nav a.active{
+    color:#fff;
+    background:linear-gradient(135deg,rgba(255,45,149,.22),rgba(0,229,255,.08));
+    border-color:rgba(255,45,149,.4);
+    box-shadow:inset 0 0 18px rgba(255,45,149,.15);
+  }
+
+  /* HERO */
+  .hero{
+    position:relative;overflow:hidden;margin:22px 0;
+    padding:40px 36px;border-radius:26px;
+    background:linear-gradient(120deg,rgba(255,45,149,.18),rgba(123,44,191,.15) 50%,rgba(0,229,255,.10));
+    border:1px solid rgba(255,255,255,.14);
+    box-shadow:0 30px 80px rgba(0,0,0,.4);
+  }
+  .hero::after{
+    content:"";position:absolute;right:-100px;top:-120px;width:360px;height:360px;
+    border-radius:50%;background:radial-gradient(circle,rgba(255,45,149,.35),transparent 65%);
+    filter:blur(10px);
+  }
+  .eyebrow{
+    display:inline-block;padding:7px 12px;border-radius:999px;
+    font-size:11px;font-weight:800;letter-spacing:2px;text-transform:uppercase;
+    color:var(--cyan);background:rgba(0,229,255,.08);border:1px solid rgba(0,229,255,.3);
+    margin-bottom:16px;
+  }
+  .hero h1{
+    margin:0;font-family:'Bebas Neue',sans-serif;
+    font-size:clamp(46px,7vw,88px);line-height:.92;letter-spacing:2px;text-transform:uppercase;
+    background:linear-gradient(90deg,#fff 10%,var(--yellow) 35%,var(--pink) 65%,var(--cyan) 100%);
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+  }
+  .hero p{margin:16px 0 22px;max-width:560px;color:var(--muted);font-size:14px;line-height:1.7}
+  .btns{display:flex;gap:12px;flex-wrap:wrap;position:relative;z-index:1}
+  .btn{
+    padding:13px 22px;border-radius:12px;font:inherit;font-size:13px;font-weight:800;
+    cursor:pointer;border:1px solid transparent;transition:.25s;
+  }
+  .btn-p{color:#fff;background:linear-gradient(135deg,var(--pink),#ff6a3d);box-shadow:0 12px 30px rgba(255,45,149,.35)}
+  .btn-p:hover{transform:translateY(-2px);box-shadow:0 16px 40px rgba(255,45,149,.5)}
+  .btn-g{color:#fff;background:rgba(255,255,255,.06);border-color:var(--line)}
+  .btn-g:hover{background:rgba(255,255,255,.12)}
+
+  /* STATS */
+  .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:22px}
+  .stat{
+    padding:18px;border-radius:18px;background:rgba(20,10,34,.65);
+    border:1px solid var(--line);backdrop-filter:blur(14px);
+  }
+  .stat .lbl{font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted)}
+  .stat .val{font-family:'Bebas Neue',sans-serif;font-size:36px;letter-spacing:1px;margin:6px 0 2px}
+  .stat .tr{font-size:11px;font-weight:700;color:var(--cyan)}
+  .stat:nth-child(2) .tr{color:var(--pink)}
+  .stat:nth-child(3) .tr{color:var(--yellow)}
+  .stat:nth-child(4) .tr{color:var(--orange)}
+
+  /* PANELS */
+  .grid{display:grid;grid-template-columns:1.4fr 1fr;gap:16px}
+  .panel{
+    padding:22px;border-radius:22px;background:rgba(20,10,34,.65);
+    border:1px solid var(--line);backdrop-filter:blur(16px);
+  }
+  .panel h2{margin:0 0 16px;font-size:13px;letter-spacing:1px;text-transform:uppercase}
+  .panel h2 span{color:var(--cyan)}
+
+  .list{display:flex;flex-direction:column;gap:10px}
+  .row{
+    display:flex;align-items:center;gap:14px;padding:14px;border-radius:14px;
+    background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);
+    transition:.2s;
+  }
+  .row:hover{background:rgba(255,255,255,.08);transform:translateX(3px)}
+  .ico{
+    width:38px;height:38px;flex:0 0 auto;border-radius:11px;display:grid;place-items:center;
+    font-size:16px;background:rgba(0,229,255,.1);border:1px solid rgba(0,229,255,.25);color:var(--cyan);
+  }
+  .row:nth-child(2) .ico{background:rgba(255,45,149,.1);border-color:rgba(255,45,149,.25);color:var(--pink)}
+  .row:nth-child(3) .ico{background:rgba(255,209,102,.1);border-color:rgba(255,209,102,.25);color:var(--yellow)}
+  .row:nth-child(4) .ico{background:rgba(255,138,61,.1);border-color:rgba(255,138,61,.25);color:var(--orange)}
+  .row-body strong{display:block;font-size:13px;margin-bottom:3px}
+  .row-body span{font-size:12px;color:var(--muted);line-height:1.5}
+  .row .meta{margin-left:auto;font-size:11px;color:var(--muted);white-space:nowrap}
+
+  .quick{display:grid;gap:10px}
+  .q{
+    display:flex;align-items:center;gap:14px;padding:14px;border-radius:14px;cursor:pointer;
+    background:linear-gradient(135deg,rgba(255,255,255,.06),rgba(255,255,255,.02));
+    border:1px solid var(--line);transition:.25s;
+  }
+  .q:hover{transform:translateY(-2px);border-color:rgba(255,45,149,.4);box-shadow:0 0 24px rgba(255,45,149,.12)}
+  .q .qi{width:40px;height:40px;border-radius:11px;display:grid;place-items:center;font-size:17px;color:#fff;
+    background:linear-gradient(135deg,var(--pink),var(--purple));box-shadow:var(--glow)}
+  .q:nth-child(2) .qi{background:linear-gradient(135deg,var(--cyan),#0077ff);box-shadow:0 0 30px rgba(0,229,255,.3)}
+  .q:nth-child(3) .qi{background:linear-gradient(135deg,var(--orange),var(--yellow));box-shadow:0 0 30px rgba(255,138,61,.3)}
+  .q:nth-child(4) .qi{background:linear-gradient(135deg,#8a2be2,var(--pink));box-shadow:var(--glow)}
+  .q b{display:block;font-size:13px;margin-bottom:3px}
+  .q small{font-size:11px;color:var(--muted);line-height:1.4}
+
+  footer{text-align:center;color:var(--muted);font-size:12px;padding:26px 0 8px}
+
+  @media(max-width:900px){
+    .stats{grid-template-columns:1fr 1fr}
+    .grid{grid-template-columns:1fr}
+  }
+  @media(max-width:600px){
+    .stats{grid-template-columns:1fr 1fr}
+    header{padding:14px}
+    .hero{padding:26px 22px}
+    nav a{font-size:12px;padding:8px 10px}
+    .btns .btn{flex:1}
+  }
+  @media(max-width:380px){.stats{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- HEADER + NAV -->
+  <header>
+    <a href="#" class="logo">
+      <div class="logo-mark">V</div>
+      <div class="logo-text">VICEAPP<small>GITHUB BUILD</small></div>
     </a>
-    <nav class="main-nav">
-      <a href="index.html" class="active">Главная</a>
-      <a href="catalog.html">Каталог</a>
-      <div class="auth-zone" id="authZone"><!-- заполняется JS --></div>
+    <nav>
+      <a href="#" class="active">Главная</a>
+      <a href="#catalog">Каталог</a>
+      <a href="#contacts">Контакты</a>
+      <a href="#register">Регистрация</a>
+      <a href="#profile">Профиль</a>
+      <a href="#admin">Админ</a>
     </nav>
   </header>
 
-  <main class="hero">
-    <p class="kicker reveal">Minecraft Server Store</p>
-    <h1 class="title reveal">ShopLiveworlds</h1>
-
-    <div class="gta-sign reveal" aria-label="GTA VI">
-      <span class="gta">GTA</span>
-      <span class="gta-vi">VI</span>
+  <!-- HERO -->
+  <section class="hero">
+    <span class="eyebrow">● Neon Edition</span>
+    <h1>Vice Vibes<br>Only</h1>
+    <p>Стильный интерфейс в палитре заката Vice City — розовый неон, кибер-циан и золото. Полностью адаптивный, готов к GitHub Pages.</p>
+    <div class="btns">
+      <button class="btn btn-p" onclick="alert('Поехали!')">Начать</button>
+      <button class="btn btn-g" onclick="document.getElementById('catalog').scrollIntoView({behavior:'smooth'})">Каталог</button>
     </div>
+  </section>
 
-    <p class="desc reveal">
-      Это сайт посвящён серверу из Minecraft <strong>Liveworld</strong>.
-      Мы любим покупателей, которые берут ответственность на себя при покупке
-      привилегий и монет. Оплата производится чем угодно!
-      Покупайте, если хотите!
-    </p>
-
-    <a href="catalog.html" class="cta reveal">Открыть каталог →</a>
-  </main>
-
-  <footer class="foot">
-    <span>© ShopLiveworlds — Liveworld Store</span>
-    <span>Not affiliated with Rockstar Games · <a href="admin.html" class="admin-link" title="Админ-панель">⚙️</a></span>
-  </footer>
-
-  <!-- Модалка регистрации -->
-  <div class="modal-overlay" id="registerModal" aria-hidden="true">
-    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="regTitle">
-      <button class="modal-close" id="regClose" aria-label="Закрыть">×</button>
-      <h2 id="regTitle" class="modal-title">Регистрация</h2>
-
-      <form id="registerForm" class="order-form" novalidate>
-        <label>
-          <span>Ник в игре *</span>
-          <input type="text" name="nick" id="regNick" required minlength="2" maxlength="32" placeholder="Steve" />
-        </label>
-        <label>
-          <span>Email *</span>
-          <input type="email" name="email" id="regEmail" required placeholder="you@mail.com" />
-        </label>
-        <label>
-          <span>Пароль * (мин. 4 символа)</span>
-          <input type="password" name="password" id="regPassword" required minlength="4" maxlength="64" placeholder="••••••" />
-        </label>
-        <p class="form-error" id="regError" hidden></p>
-        <button type="submit" class="btn-submit">Зарегистрироваться</button>
-      </form>
-    </div>
+  <!-- STATS -->
+  <div class="stats">
+    <div class="stat"><div class="lbl">Пользователи</div><div class="val">1 284</div><div class="tr">▲ +12% за неделю</div></div>
+    <div class="stat"><div class="lbl">Заказы</div><div class="val">328</div><div class="tr">▲ +8% за день</div></div>
+    <div class="stat"><div class="lbl">Отзывы</div><div class="val">96%</div><div class="tr">средний рейтинг</div></div>
+    <div class="stat"><div class="lbl">Онлайн</div><div class="val">42</div><div class="tr">сейчас на сайте</div></div>
   </div>
 
-  <script src="script.js"></script>
+  <!-- CONTENT GRID -->
+  <div class="grid">
+
+    <!-- Последние действия -->
+    <div class="panel" id="catalog">
+      <h2>Последние действия <span>· live</span></h2>
+      <div class="list">
+        <div class="row">
+          <div class="ico">★</div>
+          <div class="row-body"><strong>Новый отзыв</strong><span>Anna_M выставила 5 звёзд товару «Neon Phone»</span></div>
+          <div class="meta">2 мин</div>
+        </div>
+        <div class="row">
+          <div class="ico">👤</div>
+          <div class="row-body"><strong>Регистрация</strong><span>Пользователь MiamiVice99 создал аккаунт</span></div>
+          <div class="meta">14 мин</div>
+        </div>
+        <div class="row">
+          <div class="ico">⚙</div>
+          <div class="row-body"><strong>Обновление каталога</strong><span>Добавлено 6 новых позиций</span></div>
+          <div class="meta">1 ч</div>
+        </div>
+        <div class="row">
+          <div class="ico">⚡</div>
+          <div class="row-body"><strong>Оплата</strong><span>Заказ #4210 подтверждён</span></div>
+          <div class="meta">2 ч</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Быстрые действия -->
+    <div class="panel" id="contacts">
+      <h2>Быстрые действия</h2>
+      <div class="quick">
+        <div class="q" id="profile"><div class="qi">👤</div><div><b>Профиль</b><small>Настройки аккаунта и аватар</small></div></div>
+        <div class="q"><div class="qi">📦</div><div><b>Каталог</b><small>Управление товарами</small></div></div>
+        <div class="q" id="register"><div class="qi">✍</div><div><b>Регистрация</b><small>Создать нового пользователя</small></div></div>
+        <div class="q" id="admin"><div class="qi">🛡</div><div><b>Админ</b><small>Панель управления</small></div></div>
+      </div>
+    </div>
+
+  </div>
+
+  <footer>© 2026 VICEAPP — GTA VI inspired UI · Made with 💗 for GitHub Pages</footer>
+</div>
+
+<script>
+  // Подсветка активного пункта меню при клике
+  document.querySelectorAll('nav a').forEach(a => {
+    a.addEventListener('click', e => {
+      document.querySelectorAll('nav a').forEach(x => x.classList.remove('active'));
+      a.classList.add('active');
+    });
+  });
+</script>
 </body>
 </html>
