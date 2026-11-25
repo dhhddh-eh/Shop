@@ -1,251 +1,414 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ru">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>LIVEWORLD — Minecraft Server</title>
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:wght@400;600;700;800&display=swap" rel="stylesheet">
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+<title>Leonida Companion</title>
 <style>
-:root{--line:rgba(255,255,255,.10);--pink:#ff2d95;--cyan:#00e5ff;--orange:#ff8c42;--yellow:#ffd166;--green:#6ab04c;--green-2:#8bc34a;--red:#ff4757;--text:#f5ecff;--muted:#a894b8;--solid:#150a22}
-*{box-sizing:border-box;margin:0;padding:0}
-body{font-family:'Montserrat',system-ui,sans-serif;color:var(--text);min-height:100vh;background:radial-gradient(circle at 85% 8%,rgba(255,45,149,.18),transparent 42%),radial-gradient(circle at 12% 92%,rgba(0,229,255,.12),transparent 45%),linear-gradient(180deg,#07040d 0%,#100820 55%,#15092a 100%);background-attachment:fixed}
-.wrap{max-width:1240px;margin:0 auto;padding:20px}
-header{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;padding:14px 18px;border-radius:16px;background:linear-gradient(180deg,rgba(30,18,45,.85),rgba(15,8,24,.85));border:1px solid var(--line);box-shadow:0 20px 60px rgba(0,0,0,.45);position:sticky;top:12px;z-index:20}
-.logo{display:flex;align-items:center;gap:12px;cursor:pointer}
-.logo-mark{width:46px;height:46px;border-radius:12px;display:grid;place-items:center;font-family:'Bebas Neue',sans-serif;font-size:26px;color:#fff;background:linear-gradient(135deg,var(--pink),var(--orange) 55%,var(--cyan));box-shadow:0 0 30px rgba(255,45,149,.45)}
-.logo-text{font-family:'Bebas Neue',sans-serif;font-size:26px;letter-spacing:3px;line-height:1;background:linear-gradient(90deg,#fff,var(--yellow) 40%,var(--pink) 75%,var(--cyan));-webkit-background-clip:text;background-clip:text;color:transparent}
-.logo-text small{display:block;font-family:Montserrat;font-size:9px;letter-spacing:3px;font-weight:800;color:var(--green-2);margin-top:4px;-webkit-text-fill-color:var(--green-2)}
-nav{display:flex;gap:4px;flex-wrap:wrap}
-.nav-btn{background:transparent;color:var(--muted);border:1px solid transparent;font:inherit;font-size:13px;font-weight:700;padding:10px 14px;border-radius:10px;cursor:pointer;transition:.22s}
-.nav-btn:hover{color:#fff;background:rgba(255,255,255,.06);border-color:var(--line)}
-.nav-btn.active{color:#fff;background:linear-gradient(135deg,var(--pink),var(--orange));border-color:transparent;box-shadow:0 6px 20px rgba(255,45,149,.35)}
-.page{display:none}.page.active{display:block}
-.hero{margin:20px 0 24px;padding:44px 36px;border-radius:20px;background:linear-gradient(120deg,rgba(255,45,149,.18),rgba(123,44,191,.15) 45%,rgba(0,229,255,.10));border:1px solid rgba(255,255,255,.14)}
-.eyebrow{display:inline-block;padding:7px 12px;border-radius:999px;font-size:11px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--cyan);background:rgba(0,229,255,.08);border:1px solid rgba(0,229,255,.35);margin-bottom:16px}
-.hero h1{font-family:'Bebas Neue',sans-serif;font-size:clamp(42px,7vw,84px);line-height:.95;letter-spacing:3px;color:#fff;text-transform:uppercase;margin-bottom:16px}
-.hero h1 span{background:linear-gradient(90deg,var(--yellow),var(--pink) 55%,var(--cyan));-webkit-background-clip:text;background-clip:text;color:transparent}
-.hero p{max-width:640px;color:var(--muted);font-size:15px;line-height:1.7}
-.sec-title{font-family:'Bebas Neue',sans-serif;font-size:26px;letter-spacing:3px;color:#fff;text-transform:uppercase;margin:28px 0 14px;display:flex;align-items:center;gap:12px}
-.sec-title::before{content:"";width:5px;height:26px;border-radius:2px;background:linear-gradient(180deg,var(--pink),var(--orange))}
-.features{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px;margin:20px 0}
-.feature{padding:22px;border-radius:16px;background:linear-gradient(135deg,rgba(30,18,45,.75),rgba(15,8,24,.85));border:1px solid var(--line)}
-.feature .fi{font-size:32px;margin-bottom:10px;display:inline-block}
-.feature h3{font-family:'Bebas Neue',sans-serif;font-size:20px;letter-spacing:2px;margin-bottom:6px;color:#fff}
-.feature p{color:var(--muted);font-size:13px;line-height:1.6}
-.cat-tabs{display:flex;gap:8px;margin:16px 0;flex-wrap:wrap}
-.cat-tab{padding:9px 16px;border-radius:999px;font-size:12px;font-weight:800;letter-spacing:1px;text-transform:uppercase;cursor:pointer;transition:.2s;background:rgba(255,255,255,.05);border:1px solid var(--line);color:var(--muted)}
-.cat-tab.active{color:#0a0a0a;background:linear-gradient(135deg,var(--pink),var(--orange));border-color:transparent}
-.catalog{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin:16px 0 24px}
-.product{overflow:hidden;border-radius:16px;display:flex;flex-direction:column;background:linear-gradient(135deg,rgba(30,18,45,.75),rgba(15,8,24,.85));border:1px solid var(--line)}
-.product-img{height:92px;display:grid;place-items:center;font-size:40px;color:#fff;position:relative}
-.product-tier{position:absolute;top:10px;left:12px;font-family:'Bebas Neue',sans-serif;font-size:11px;letter-spacing:2px;padding:4px 8px;border-radius:6px;background:rgba(0,0,0,.5);color:#fff}
-.product-body{padding:16px;display:flex;flex-direction:column;gap:8px;flex:1}
-.product-body h3{font-family:'Bebas Neue',sans-serif;font-size:22px;letter-spacing:2px;color:#fff}
-.product-features{list-style:none;padding:0;margin:4px 0;display:flex;flex-direction:column;gap:5px;flex:1}
-.product-features li{font-size:11.5px;color:#d8cbe8;padding-left:16px;position:relative;line-height:1.45}
-.product-features li::before{content:"▸";position:absolute;left:0;color:var(--pink);font-weight:800}
-.product-price{font-family:'Bebas Neue',sans-serif;font-size:28px;color:var(--yellow);margin-top:8px}
-.buy-btn{padding:11px;border:0;cursor:pointer;border-radius:8px;font:inherit;font-size:12px;font-weight:800;color:#0a0a0a;background:linear-gradient(135deg,var(--green-2),var(--green))}
-.panel{padding:26px;border-radius:16px;background:linear-gradient(135deg,rgba(30,18,45,.75),rgba(15,8,24,.85));border:1px solid var(--line);margin:20px 0}
-.panel h2{font-family:'Bebas Neue',sans-serif;font-size:22px;letter-spacing:3px;color:#fff;text-transform:uppercase;margin-bottom:16px;display:flex;align-items:center;gap:10px}
-.panel h2::before{content:"";width:5px;height:22px;border-radius:2px;background:linear-gradient(180deg,var(--pink),var(--orange))}
-.contact-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px;margin:16px 0}
-.contact-card{padding:20px;border-radius:14px;display:flex;align-items:center;gap:16px;cursor:pointer;background:linear-gradient(135deg,rgba(30,18,45,.75),rgba(15,8,24,.85));border:1px solid var(--line)}
-.contact-icon{width:54px;height:54px;border-radius:12px;flex:0 0 auto;display:grid;place-items:center;font-size:26px;background:rgba(0,229,255,.1);border:1px solid rgba(0,229,255,.3)}
-.contact-body .label{font-size:11px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:4px}
-.contact-body .value{font-family:'Bebas Neue',sans-serif;font-size:22px;color:#fff;word-break:break-all}
-.form{display:flex;flex-direction:column;gap:14px;max-width:560px}
-.field{display:flex;flex-direction:column;gap:6px}
-.field label{font-size:11px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted)}
-.field input,.field textarea,.field select{padding:12px 14px;border-radius:10px;background:rgba(0,0,0,.35);border:1px solid var(--line);color:#fff;font:inherit;font-size:14px;outline:0}
-.field input:focus,.field textarea:focus,.field select:focus{border-color:var(--pink)}
-.field textarea{resize:vertical;min-height:80px;font-family:inherit}
-.field select option{background:var(--solid);color:#fff}
-.field .hint{font-size:11px;color:var(--muted);margin-top:2px}
-.btn{padding:13px 20px;border:0;cursor:pointer;border-radius:10px;font:inherit;font-size:13px;font-weight:800;color:#0a0a0a;background:linear-gradient(135deg,var(--pink),var(--orange))}
-.btn-ghost{background:rgba(255,255,255,.05);color:#fff;border:1px solid var(--line)}
-.btn-green{background:linear-gradient(135deg,var(--green-2),var(--green));color:#0a0a0a}
-.btn-red{background:linear-gradient(135deg,var(--red),#b81020);color:#fff}
-.btn-yellow{background:linear-gradient(135deg,#ffd166,#f5a623);color:#0a0a0a;box-shadow:0 0 24px rgba(255,209,102,.35)}
-.btn-row{display:flex;gap:10px;flex-wrap:wrap}
-.profile-head{display:flex;align-items:center;gap:20px;flex-wrap:wrap;margin-bottom:22px}
-.avatar{width:96px;height:96px;border-radius:20px;display:grid;place-items:center;font-family:'Bebas Neue',sans-serif;font-size:44px;color:#fff;background:linear-gradient(135deg,var(--pink),var(--orange),var(--cyan))}
-.profile-info h2{font-family:'Bebas Neue',sans-serif;font-size:30px;color:#fff}
-.profile-info p{color:var(--muted);font-size:13px}
-.info-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin:16px 0}
-.info-item{padding:14px 16px;border-radius:12px;background:rgba(0,0,0,.3);border:1px solid var(--line)}
-.info-item .lbl{font-size:11px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);margin-bottom:4px}
-.info-item .val{font-size:14px;font-weight:700;color:#fff;word-break:break-all}
-.balance-card{padding:24px;border-radius:16px;margin:16px 0;background:linear-gradient(135deg,rgba(255,209,102,.14),rgba(255,140,66,.10) 50%,rgba(255,45,149,.08));border:1px solid rgba(255,209,102,.3);display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap}
-.balance-info .lbl{font-size:11px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--yellow);margin-bottom:6px}
-.balance-info .amount{font-family:'Bebas Neue',sans-serif;font-size:44px;line-height:1;letter-spacing:2px;background:linear-gradient(90deg,var(--yellow),var(--orange));-webkit-background-clip:text;background-clip:text;color:transparent}
-.progress-bar{height:12px;border-radius:999px;overflow:hidden;background:rgba(255,255,255,.08);border:1px solid var(--line)}
-.progress-fill{height:100%;transition:width .5s ease;background:linear-gradient(90deg,var(--cyan),var(--pink))}
-.progress-label{display:flex;justify-content:space-between;font-size:11px;color:var(--muted);margin-top:6px;font-weight:700}
-.rewards{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px;margin:14px 0}
-.reward{padding:16px;border-radius:12px;text-align:center;background:rgba(0,0,0,.3);border:1px solid var(--line);opacity:.45}
-.reward.unlocked{opacity:1;border-color:var(--green);background:linear-gradient(135deg,rgba(106,176,76,.15),rgba(139,195,74,.08))}
-.reward-icon{font-size:28px;margin-bottom:6px}
-.reward-name{font-family:'Bebas Neue',sans-serif;font-size:18px;color:#fff}
-.reward-time{font-size:11px;color:var(--muted);margin-top:2px;font-weight:700}
-.reward-status{font-size:10px;font-weight:800;margin-top:6px;color:var(--green-2)}
-.reward.locked .reward-status{color:var(--muted)}
-.admin-login{max-width:420px;margin:20px auto}
-.admin-actions{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;margin:16px 0}
-.action-btn{padding:16px;border-radius:12px;border:1px solid var(--line);background:linear-gradient(135deg,rgba(30,18,45,.75),rgba(15,8,24,.85));color:#fff;font:inherit;font-size:13px;font-weight:800;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:8px;text-align:center}
-.action-btn .ai{font-size:24px}
-.admin-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;margin:16px 0}
-.stat{padding:18px;border-radius:12px;background:rgba(0,0,0,.3);border:1px solid var(--line)}
-.stat .lbl{font-size:11px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
-.stat .val{font-family:'Bebas Neue',sans-serif;font-size:32px;color:var(--pink)}
-.list{display:flex;flex-direction:column;gap:8px;margin:12px 0;max-height:360px;overflow-y:auto}
-.list-item{padding:12px 14px;border-radius:10px;background:rgba(0,0,0,.3);border:1px solid var(--line);display:flex;justify-content:space-between;gap:12px;align-items:center;flex-wrap:wrap}
-.list-item .body strong{font-size:13px;color:#fff}
-.list-item .body span{font-size:11px;color:var(--muted);display:block;margin-top:2px}
-.list-item .meta{font-size:10px;color:var(--muted);white-space:nowrap}
-.empty{color:var(--muted);font-size:13px;text-align:center;padding:24px;font-style:italic}
-.toast{position:fixed;right:24px;bottom:24px;z-index:100;padding:14px 20px;border-radius:10px;background:rgba(15,8,24,.96);border:1px solid var(--green);color:#fff;font-size:13px;font-weight:700;opacity:0;transform:translateY(20px);pointer-events:none;transition:.3s;max-width:320px}
-.toast.show{opacity:1;transform:none}.toast.error{border-color:var(--red)}
-.modal-overlay{position:fixed;inset:0;z-index:90;background:rgba(0,0,0,.72);display:none;align-items:center;justify-content:center;padding:20px}
-.modal-overlay.show{display:flex}
-.modal{width:100%;max-width:460px;padding:28px;border-radius:18px;background:linear-gradient(135deg,#1e1230,#100820);border:1px solid rgba(255,209,102,.3);position:relative}
-.modal h3{font-family:'Bebas Neue',sans-serif;font-size:24px;letter-spacing:3px;color:#fff;margin-bottom:6px}
-.modal .sub{color:var(--muted);font-size:13px;margin-bottom:18px}
-.modal .close-btn{position:absolute;top:16px;right:16px;width:32px;height:32px;border-radius:8px;border:1px solid var(--line);background:rgba(255,255,255,.05);color:#fff;font-size:18px;cursor:pointer}
-.presets{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:14px 0}
-.preset{padding:14px 8px;border-radius:12px;cursor:pointer;text-align:center;background:rgba(0,0,0,.4);border:1px solid var(--line);color:#fff;font:inherit;font-weight:800;font-size:15px}
-.preset small{display:block;font-size:10px;color:var(--muted);margin-top:2px;font-weight:600}
-footer{text-align:center;color:var(--muted);font-size:12px;padding:30px 0 10px;border-top:1px solid var(--line);margin-top:30px}
-footer span{color:var(--pink)}
-#fatal{display:none;margin:20px;padding:20px;border-radius:12px;background:rgba(255,71,87,.15);border:1px solid var(--red);color:#fff;font-family:monospace;font-size:13px;white-space:pre-wrap}
-@media(max-width:780px){.wrap{padding:14px}header{padding:12px 14px;position:static}.hero{padding:26px 22px}.balance-info .amount{font-size:34px}.presets{grid-template-columns:repeat(2,1fr)}}
+  :root {
+    --pink:   #ff3ea5;
+    --cyan:   #39e6ff;
+    --orange: #ff8a3d;
+    --violet: #8a5bff;
+    --bg:     #0b0714;
+    --panel:  #17101f;
+    --panel2: #1e1529;
+    --stroke: #2f2440;
+    --text:   #f5f2ff;
+    --muted:  #9b8fb5;
+  }
+  * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  html, body { height: 100%; margin: 0; }
+  body {
+    font-family: Arial, system-ui, sans-serif;
+    color: var(--text);
+    background: #0b0714;
+    overflow: hidden;
+  }
+
+  /* ---- Каркас ---- */
+  .phone {
+    position: fixed;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: min(420px, 100vw);
+    height: min(900px, 100dvh);
+    display: flex;
+    flex-direction: column;
+    background: linear-gradient(180deg, #1a0f24 0%, #0b0714 60%, #0f0818 100%);
+    border: 1px solid var(--stroke);
+    border-radius: 28px;
+    overflow: hidden;
+    box-shadow: 0 20px 60px rgba(0,0,0,.7);
+  }
+  @media (max-width: 480px) {
+    .phone { border-radius: 0; border: none; width: 100vw; height: 100dvh; }
+  }
+
+  /* ---- Topbar ---- */
+  .topbar {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 16px 18px 10px;
+    font-size: 12px; letter-spacing: .18em; text-transform: uppercase;
+    color: var(--muted);
+  }
+  .topbar .brand {
+    font-family: Impact, "Arial Narrow", sans-serif;
+    font-size: 18px;
+    letter-spacing: .08em;
+    color: var(--pink);              /* вместо градиента — сплошной цвет */
+  }
+  .topbar .clock { font-family: Impact, "Arial Narrow", sans-serif; font-size: 16px; color: var(--text); }
+
+  /* ---- Wallet ---- */
+  .wallet {
+    margin: 0 16px 8px;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 14px 16px;
+    border-radius: 16px;
+    background: var(--panel);        /* плотный фон вместо blur */
+    border: 1px solid var(--stroke);
+  }
+  .wallet .label { font-size: 11px; letter-spacing: .22em; text-transform: uppercase; color: var(--muted); }
+  .wallet .amount {
+    font-family: Impact, "Arial Narrow", sans-serif;
+    font-size: 32px; line-height: 1; letter-spacing: .04em;
+    color: var(--cyan);              /* сплошной цвет */
+  }
+  .wallet .chip {
+    font-size: 11px; padding: 6px 10px; border-radius: 999px;
+    color: #141014; font-weight: 800; letter-spacing: .08em;
+    background: var(--pink);
+  }
+
+  /* ---- Screen ---- */
+  .screen {
+    flex: 1; overflow-y: auto; padding: 6px 16px 110px;
+    scrollbar-width: none;
+  }
+  .screen::-webkit-scrollbar { display: none; }
+  .screen > section { display: none; }
+  .screen > section.active { display: block; }
+
+  h2 {
+    font-family: Impact, "Arial Narrow", sans-serif;
+    font-size: 22px; letter-spacing: .06em; margin: 16px 2px 10px;
+    color: var(--text);
+  }
+
+  /* ---- Map ---- */
+  .map {
+    position: relative;
+    height: 280px;
+    border-radius: 18px;
+    overflow: hidden;
+    border: 1px solid var(--stroke);
+    background: linear-gradient(135deg, #12121f, #17102a 50%, #0f1a1f);
+  }
+  .map::before {
+    content: ""; position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(255,255,255,.06) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,.06) 1px, transparent 1px);
+    background-size: 26px 26px;
+  }
+  .pin {
+    position: absolute; z-index: 2;
+    width: 26px; height: 26px; border-radius: 50%;
+    display: grid; place-items: center;
+    font-size: 12px;
+    background: var(--pink);
+    transform: translate(-50%, -50%);
+    box-shadow: 0 4px 12px rgba(255,62,165,.4);
+  }
+  .pin.c1 { left: 26%; top: 40%; background: var(--cyan); box-shadow: 0 4px 12px rgba(57,230,255,.4); }
+  .pin.c2 { left: 68%; top: 46%; background: var(--orange); box-shadow: 0 4px 12px rgba(255,138,61,.4); }
+  .pin.c3 { left: 46%; top: 74%; background: var(--violet); box-shadow: 0 4px 12px rgba(138,91,255,.4); }
+
+  .you {
+    position: absolute; left: 50%; top: 55%; z-index: 3;
+    width: 12px; height: 12px; border-radius: 50%;
+    background: #fff;
+    transform: translate(-50%,-50%);
+    box-shadow: 0 0 0 5px rgba(255,255,255,.15), 0 0 16px 4px rgba(57,230,255,.7);
+  }
+
+  .map-legend {
+    position: absolute; z-index: 4; left: 10px; bottom: 10px;
+    display: flex; gap: 6px;
+  }
+  .map-legend button {
+    border: 1px solid var(--stroke);
+    background: #1a1226;
+    color: var(--text);
+    padding: 6px 10px; border-radius: 999px; font-size: 10px;
+    letter-spacing: .1em; text-transform: uppercase; font-weight: 700;
+    cursor: pointer;
+  }
+  .map-legend button.on { background: var(--pink); color: #140f1a; border-color: transparent; }
+
+  /* ---- Mission cards ---- */
+  .mission {
+    display: flex; gap: 12px; align-items: center;
+    padding: 12px 14px;
+    margin-bottom: 10px;
+    border-radius: 14px;
+    background: var(--panel);        /* плотный фон */
+    border: 1px solid var(--stroke);
+    cursor: pointer;
+  }
+  .mission:active { background: var(--panel2); }
+  .mission .ico {
+    width: 42px; height: 42px; flex: none; border-radius: 10px;
+    display: grid; place-items: center; font-size: 18px;
+    background: var(--pink);
+  }
+  .mission.c2 .ico { background: var(--cyan); }
+  .mission.c3 .ico { background: var(--orange); }
+  .mission .title { font-weight: 700; font-size: 14px; }
+  .mission .meta  { font-size: 11px; color: var(--muted); margin-top: 2px; }
+  .mission .pay   {
+    margin-left: auto;
+    font-family: Impact, "Arial Narrow", sans-serif;
+    font-size: 18px; color: var(--cyan);
+  }
+
+  /* ---- Profile ---- */
+  .profile-hero {
+    display: flex; align-items: center; gap: 14px;
+    padding: 14px; border-radius: 16px;
+    background: var(--panel); border: 1px solid var(--stroke);
+  }
+  .avatar {
+    width: 56px; height: 56px; border-radius: 50%;
+    background: var(--pink);
+    display: grid; place-items: center;
+    font-family: Impact, "Arial Narrow", sans-serif;
+    font-size: 22px; color: #141014;
+  }
+  .profile-hero h3 { margin: 0; font-size: 16px; }
+  .profile-hero p  { margin: 4px 0 0; color: var(--muted); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; }
+
+  .stats { display: grid; grid-template-columns: repeat(3,1fr); gap: 8px; margin-top: 12px; }
+  .stat {
+    padding: 12px 10px; border-radius: 12px;
+    background: var(--panel); border: 1px solid var(--stroke);
+    text-align: center;
+  }
+  .stat b { display: block; font-family: Impact, "Arial Narrow", sans-serif; font-size: 22px; }
+  .stat span { font-size: 10px; letter-spacing: .16em; text-transform: uppercase; color: var(--muted); }
+
+  /* ---- Tabbar ---- */
+  .tabbar {
+    position: absolute; left: 10px; right: 10px; bottom: 12px;
+    display: flex; justify-content: space-around;
+    padding: 6px;
+    border-radius: 18px;
+    background: #140d20;              /* плотный фон */
+    border: 1px solid var(--stroke);
+  }
+  .tabbar button {
+    flex: 1; border: none; background: transparent; color: var(--muted);
+    padding: 10px 6px; border-radius: 12px; cursor: pointer;
+    display: flex; flex-direction: column; align-items: center; gap: 2px;
+    font-size: 9px; letter-spacing: .14em; text-transform: uppercase; font-weight: 700;
+  }
+  .tabbar button .i { font-size: 18px; }
+  .tabbar button.active { color: var(--text); background: var(--panel2); }
+  .tabbar button.active .i { color: var(--pink); }
+
+  /* ---- Toast ---- */
+  .toast {
+    position: absolute; left: 50%; bottom: 88px;
+    transform: translate(-50%, 20px);
+    background: var(--pink);
+    color: #140f1a; font-weight: 800; font-size: 12px;
+    padding: 10px 16px; border-radius: 999px;
+    opacity: 0; pointer-events: none;
+    transition: all .3s ease;
+    white-space: nowrap;
+  }
+  .toast.show { opacity: 1; transform: translate(-50%, 0); }
 </style>
 </head>
 <body>
-
-<div id="fatal"></div>
-
-<div class="wrap">
-
-<header>
-  <div class="logo" onclick="show('home')">
-    <div class="logo-mark">L</div>
-    <div class="logo-text">LIVEWORLD<small>MINECRAFT SERVER</small></div>
-  </div>
-  <nav>
-    <button class="nav-btn active" data-page="home">Главная</button>
-    <button class="nav-btn" data-page="catalog">Каталог</button>
-    <button class="nav-btn" data-page="contacts">Контакты</button>
-    <button class="nav-btn" data-page="register">Регистрация</button>
-    <button class="nav-btn" data-page="profile">Профиль</button>
-    <button class="nav-btn" data-page="admin">Админ</button>
-  </nav>
-</header>
-
-<section id="home" class="page active">
-  <div class="hero">
-    <span class="eyebrow">● Добро пожаловать</span>
-    <h1>Сервер <span>LIVEWORLD</span><br>в стиле GTA</h1>
-    <p>LIVEWORLD — Minecraft-сервер с атмосферой GTA V и GTA VI. Лос-Сантос, свобода, бизнес, фракции. Покупай привилегии, зарабатывай монеты и открывай награды за время в игре.</p>
-  </div>
-  <h2 class="sec-title">Что тебя ждёт</h2>
-  <div class="features">
-    <div class="feature"><div class="fi">🏙</div><h3>Свободный город</h3><p>Районы, бизнесы, транспорт и экономика — всё в духе GTA.</p></div>
-    <div class="feature"><div class="fi">⚔</div><h3>PvP и фракции</h3><p>Вступай в банды, воюй за территории, участвуй в событиях.</p></div>
-    <div class="feature"><div class="fi">🏆</div><h3>Награды</h3><p>Играй дольше — получай ПРЕМИУМ, КРЕАТИВ, Лорд и ЭЛИТУ.</p></div>
-    <div class="feature"><div class="fi">🎮</div><h3>Онлайн 24/7</h3><p>Стабильные серверы, лаунчер и поддержка без выходных.</p></div>
-  </div>
-</section>
-
-<section id="catalog" class="page">
-  <h2 class="sec-title">Каталог привилегий</h2>
-  <div class="cat-tabs">
-    <button class="cat-tab active" data-cat="all">Все</button>
-    <button class="cat-tab" data-cat="privilege">Привилегии</button>
-    <button class="cat-tab" data-cat="coins">Монеты</button>
-  </div>
-  <div class="catalog" id="catalogGrid"></div>
-</section>
-
-<section id="contacts" class="page">
-  <h2 class="sec-title">Контакты</h2>
-  <p style="color:var(--muted);font-size:14px;line-height:1.7;margin-bottom:16px">Пиши нам по любым вопросам. Отвечаем быстро.</p>
-  <div class="contact-grid">
-    <div class="contact-card" onclick="copyText('+79178053161','Телефон')">
-      <div class="contact-icon">📱</div>
-      <div class="contact-body"><div class="label">Телефон</div><div class="value">+7 917 805 31 61</div></div>
+  <div class="phone">
+    <div class="topbar">
+      <div class="brand">LEONIDA · COMPANION</div>
+      <div class="clock" id="clock">00:00</div>
     </div>
-    <div class="contact-card" onclick="copyText('Sovaca2','Telegram')">
-      <div class="contact-icon">✈️</div>
-      <div class="contact-body"><div class="label">Telegram</div><div class="value">@Sovaca2</div></div>
-    </div>
-    <div class="contact-card" onclick="copyText('roblox_admin2','Discord')">
-      <div class="contact-icon">💬</div>
-      <div class="contact-body"><div class="label">Discord</div><div class="value">roblox_admin2</div></div>
-    </div>
-  </div>
-  <p style="color:var(--muted);font-size:12px;margin-top:8px">💡 Нажми на карточку — контакт скопируется.</p>
-</section>
 
-<section id="register" class="page">
-  <h2 class="sec-title">Регистрация</h2>
-  <div class="panel">
-    <div class="form">
-      <div class="field"><label>Ник в Minecraft *</label><input id="reg-mc" placeholder="Steve_LS"></div>
-      <div class="field"><label>Email *</label><input id="reg-email" type="email" placeholder="you@mail.com"></div>
-      <div class="field"><label>Пароль *</label><input id="reg-pass" type="password" placeholder="••••••••"></div>
-      <div class="field"><label>Telegram (необязательно)</label><input id="reg-tg" placeholder="@username"></div>
-      <div class="field"><label>Discord (необязательно)</label><input id="reg-ds" placeholder="username#0000"></div>
-      <button class="btn" onclick="doRegister()">Отправить заявку</button>
-    </div>
-  </div>
-</section>
-
-<section id="profile" class="page">
-  <h2 class="sec-title">Профиль</h2>
-  <div class="panel" id="profilePanel"></div>
-</section>
-
-<section id="admin" class="page">
-  <h2 class="sec-title">Админ</h2>
-  <div id="adminLoginBox" class="admin-login">
-    <div class="panel">
-      <h2 style="justify-content:center">Вход в админ-панель</h2>
-      <div class="form" style="max-width:100%">
-        <div class="field"><label>Пароль</label><input id="admin-pass" type="password" placeholder="••••••••"></div>
-        <button class="btn" onclick="adminLogin()">Войти</button>
-        <p class="hint">Пароль: <b>admin123</b></p>
+    <div class="wallet">
+      <div>
+        <div class="label">Наличные</div>
+        <div class="amount" id="money">$ 12 480</div>
       </div>
+      <div class="chip">VICE CITY</div>
     </div>
+
+    <div class="screen" id="screen">
+      <section id="tab-map" class="active">
+        <h2>Карта Леониды</h2>
+        <div class="map">
+          <div class="you"></div>
+          <div class="pin c1">🔥</div>
+          <div class="pin c2">💎</div>
+          <div class="pin c3">🎯</div>
+          <div class="map-legend">
+            <button class="on">Миссии</button>
+            <button>Магазины</button>
+            <button>Укрытия</button>
+          </div>
+        </div>
+        <h2>Рядом с тобой</h2>
+        <div class="mission c2" data-pay="850">
+          <div class="ico">🏝️</div>
+          <div>
+            <div class="title">Пляжная вечеринка</div>
+            <div class="meta">Ocean Drive · 400 м</div>
+          </div>
+          <div class="pay">+850</div>
+        </div>
+        <div class="mission c3" data-pay="2400">
+          <div class="ico">🚗</div>
+          <div>
+            <div class="title">Угон тачки</div>
+            <div class="meta">Little Havana · 1.2 км</div>
+          </div>
+          <div class="pay">+2400</div>
+        </div>
+      </section>
+
+      <section id="tab-missions">
+        <h2>Доступные миссии</h2>
+        <div class="mission" data-pay="5000">
+          <div class="ico">💼</div>
+          <div>
+            <div class="title">Ограбление в Port Gellhorn</div>
+            <div class="meta">Сложность: высокая · 15 мин</div>
+          </div>
+          <div class="pay">+5000</div>
+        </div>
+        <div class="mission c2" data-pay="1200">
+          <div class="ico">📦</div>
+          <div>
+            <div class="title">Курьерская доставка</div>
+            <div class="meta">Сложность: низкая · 5 мин</div>
+          </div>
+          <div class="pay">+1200</div>
+        </div>
+        <div class="mission c3" data-pay="3200">
+          <div class="ico">🎸</div>
+          <div>
+            <div class="title">Охрана концерта</div>
+            <div class="meta">Сложность: средняя · 10 мин</div>
+          </div>
+          <div class="pay">+3200</div>
+        </div>
+        <div class="mission" data-pay="7800">
+          <div class="ico">💎</div>
+          <div>
+            <div class="title">Кража бриллиантов</div>
+            <div class="meta">Сложность: очень высокая</div>
+          </div>
+          <div class="pay">+7800</div>
+        </div>
+      </section>
+
+      <section id="tab-profile">
+        <h2>Профиль</h2>
+        <div class="profile-hero">
+          <div class="avatar">JL</div>
+          <div>
+            <h3>Jason &amp; Lucia</h3>
+            <p>Level 42 · Vice City</p>
+          </div>
+        </div>
+
+        <div class="stats">
+          <div class="stat"><b id="s-missions">0</b><span>Миссий</span></div>
+          <div class="stat"><b id="s-cash">0</b><span>Заработано</span></div>
+          <div class="stat"><b>42</b><span>Уровень</span></div>
+        </div>
+
+        <h2>Настройки</h2>
+        <div class="mission c2">
+          <div class="ico">🎵</div>
+          <div>
+            <div class="title">Музыка</div>
+            <div class="meta">Radio: Wave 103</div>
+          </div>
+        </div>
+        <div class="mission c3">
+          <div class="ico">🌙</div>
+          <div>
+            <div class="title">Ночной режим</div>
+            <div class="meta">Включён</div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <nav class="tabbar">
+      <button class="active" data-tab="tab-map"><span class="i">🗺️</span>Карта</button>
+      <button data-tab="tab-missions"><span class="i">🎯</span>Миссии</button>
+      <button data-tab="tab-profile"><span class="i">👤</span>Профиль</button>
+    </nav>
+
+    <div class="toast" id="toast"></div>
   </div>
-  <div id="adminPanelBox" style="display:none"></div>
-</section>
 
-<footer>© 2026 <span>LIVEWORLD</span> · Minecraft Server · GTA V/VI inspired</footer>
-</div>
+<script>
+  const clock = document.getElementById('clock');
+  const tick = () => {
+    const d = new Date();
+    clock.textContent = String(d.getHours()).padStart(2,'0') + ':' + String(d.getMinutes()).padStart(2,'0');
+  };
+  tick(); setInterval(tick, 15000);
 
-<div class="modal-overlay" id="topupModal" onclick="if(event.target===this)closeTopup()">
-  <div class="modal">
-    <button class="close-btn" onclick="closeTopup()">×</button>
-    <h3>Пополнить баланс</h3>
-    <p class="sub">Выбери сумму или введи свою. Демо-режим.</p>
-    <div class="presets">
-      <button class="preset" onclick="quickTopup(100)">₽ 100<small>Старт</small></button>
-      <button class="preset" onclick="quickTopup(300)">₽ 300<small>Ходовой</small></button>
-      <button class="preset" onclick="quickTopup(500)">₽ 500<small>Популярный</small></button>
-      <button class="preset" onclick="quickTopup(1000)">₽ 1 000<small>Выгодный</small></button>
-      <button class="preset" onclick="quickTopup(2000)">₽ 2 000<small>Про</small></button>
-      <button class="preset" onclick="quickTopup(5000)">₽ 5 000<small>Макс</small></button>
-    </div>
-    <div class="field" style="margin-top:10px">
-      <label>Своя сумма (₽)</label>
-      <input id="topup-custom" type="number" min="1" step="1" placeholder="Например, 750">
-    </div>
-    <div class="btn-row" style="margin-top:16px">
-      <button class="btn btn-yellow" style="flex:1" onclick="customTopup()">Пополнить</button>
-      <button class="btn btn-ghost" onclick="closeTopup()">Отмена</button>
-    </div>
-  </div>
-</div>
+  document.querySelectorAll('.tabbar button').forEach(btn => btn.addEventListener('click', () => {
+    document.querySelectorAll('.tabbar button').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    document.querySelectorAll('#screen > section').forEach(s => s.classList.remove('active'));
+    document.getElementById(btn.dataset.tab).classList.add('active');
+  }));
 
-<div class="toast" id="toast"></div>
+  let money = 12480;
+  let missionsDone = 0;
+  let totalEarned = 0;
+
+  const moneyEl   = document.getElementById('money');
+  const sMissions = document.getElementById('s-missions');
+  const sCash     = document.getElementById('s-cash');
+  const toast     = document.getElementById('toast');
+
+  const fmt = n => '$ ' + n.toLocaleString('ru-RU').replace(/\u00A0/g, ' ');
+  let toastTimer;
+  const showToast = msg => {
+    toast.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => toast.classList.remove('show'), 1800);
+  };
+
+  document.querySelectorAll('.mission[data-pay]').forEach(m => {
+    m.addEventListener('click', () => {
+      const pay = +m.dataset.pay;
+      money += pay; missionsDone++; totalEarned += pay;
+      moneyEl.textContent = fmt(money);
+      sMissions.textContent = missionsDone;
+      sCash.textContent = totalEarned >= 1000 ? (totalEarned/1000).toFixed(1) + 'k' : totalEarned;
+      showToast('+ ' + fmt(pay) + ' · миссия выполнена');
+    });
+  });
+
+  document.querySelectorAll('.map-legend button').forEach(b => {
+    b.addEventListener('click', () => {
+      document.querySelectorAll('.map-legend button').forEach(x => x.classList.remove('on'));
+      b.classList.add('on');
+      showToast('Слой: ' + b.textContent);
+    });
+  });
+</script>
+</body>
+            </html>
